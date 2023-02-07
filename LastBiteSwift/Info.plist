@@ -4,8 +4,8 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>DM_Sans/DMSans-Bold</string>
-		<string>DM_Sans/DMSans-Regular</string>
+		<string>DM_Sans/DMSans-Bold.ttf</string>
+		<string>DM_Sans/DMSans-Regular.ttf</string>
 	</array>
 </dict>
 </plist>

@@ -48,7 +48,7 @@ struct Login: View {
                 .padding(.leading, 10)
             
             Button(action: {
-                            // Button action here
+                login()
                         }) {
                             Text("Log In")
                                 .font(.headline)
@@ -60,6 +60,16 @@ struct Login: View {
                         .padding(.bottom, 60)
         }
     }
+    
+    func login() {
+          Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
+              if error != nil {
+                  print(error?.localizedDescription ?? "")
+              } else {
+                  print("success")
+              }
+          }
+      }
 }
 
 
