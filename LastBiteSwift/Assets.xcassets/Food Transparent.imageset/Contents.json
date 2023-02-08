@@ -1,10 +1,12 @@
 {
   "images" : [
     {
+      "filename" : "Food Transparent@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "Food Transparent@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
