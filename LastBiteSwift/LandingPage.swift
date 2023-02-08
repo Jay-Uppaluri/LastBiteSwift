@@ -11,9 +11,12 @@ struct LandingPage: View {
     var body: some View {
         ZStack {
             Image("Splash")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .ignoresSafeArea()
+        }
     }
-}
 }
 
 struct LandingPage_Previews: PreviewProvider {
@@ -21,3 +24,6 @@ struct LandingPage_Previews: PreviewProvider {
         LandingPage()
     }
 }
+
+
+
