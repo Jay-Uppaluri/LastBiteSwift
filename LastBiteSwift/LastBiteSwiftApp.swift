@@ -23,7 +23,7 @@ struct LastBiteSwiftApp: App {
     
     var body: some Scene {
         WindowGroup {
-            Login()
+            VerificationPage()
         }
     }
 }

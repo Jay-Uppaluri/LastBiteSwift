@@ -1,76 +1,86 @@
+// SIGN UP PAGE
 //
-//  SignUp.swift
-//  LastBiteSwift
-//
-//  Created by Jay Uppaluri on 2/7/23.
-//
+// TO DO:
+// - update Mobile Number text field so it inputs in format of phone number only
+// - add the option to clear field on each text field (X button at end of text field)
+// - Error states for invalid fields
+// - Sign Up nav to verification code
 
 import SwiftUI
-import FirebaseAuth
 
 struct SignUp: View {
-    @State private var email = ""
-    @State private var password = ""
-    let lightGreyColor = Color(red: 239.0/255.0, green: 243.0/255.0, blue: 244.0/255.0, opacity: 1.0)
+   @State private var mobileNumber: String = ""
+   @State private var fullName: String = ""
+   @State private var emailAddress: String = ""
+   @State private var isSubscribed: Bool = false
+   @State private var isEditingFullName = false
+        
+        
+   var body: some View {
+      
+       
+      VStack(alignment: .leading, spacing: 20) {
+         Text("Sign Up")
+            .font(.custom("DMSans-Bold", size: 39))
+            .padding(.top, 8)
+         
+         VStack(alignment: .leading, spacing: 10) {
+             TextField("Mobile Number", text: $mobileNumber)
+               .padding(12)
+               .frame(height: 55.0)
+               .background(Color("TextfieldColor"))
+               .cornerRadius(8)
+               .foregroundColor(Color("Body"))
+               .font(.custom("DMSans-Bold", size: 16))
+               .keyboardType(.phonePad)
+            
+             TextField("Full Name", text: $fullName)
+               .padding(12)
+               .frame(height: 55.0)
+               .background(Color("TextfieldColor"))
+               .cornerRadius(8)
+               .foregroundColor(Color("Body"))
+               .font(.custom("DMSans-Bold", size: 16))
+             
 
-    var body: some View {
-        VStack {
+            
+            TextField("Email Address", text: $emailAddress)
+               .padding(12)
+               .frame(height: 55.0)
+               .background(Color("TextfieldColor"))
+               .cornerRadius(8)
+               .foregroundColor(Color("Body"))
+               .font(.custom("DMSans-Bold", size: 16))
+               
+               
+         }
+         
+         HStack {
+            Button(action: { self.isSubscribed.toggle() }) {
+               Image(systemName: self.isSubscribed ? "checkmark.square" : "square")
+            }
+            
+            Text("I would like to subscribe to receive alerts from Last Bite for personalized campaigns, advertisements, and promotions")
+                 .font(.custom("DMSans-Regular", size: 13))
+                
+         }
+         
+         Button(action: {}) {
             Text("Sign Up")
-                .font(.custom("DMSans-Bold", size: 39))
-                .fontWeight(.bold)
-                .lineLimit(1)
-                .minimumScaleFactor(0.5)
-                .padding(.bottom, 200)
-                .padding(.trailing, 190)
-            
-            Text("Email")
-                .font(.custom("DMSans-Bold", size:16))
-                .padding(.trailing, 280)
-            TextField("", text: $email)
-                .padding()
-                .background(lightGreyColor)
-                .cornerRadius(5.0)
-                .padding(.bottom, 10)
-                .padding(.trailing, 10)
-                .padding(.leading, 10)
-            
-            Text("Password")
-                .font(.custom("DMSans-Bold", size:16))
-                .padding(.trailing, 251)
-            TextField("", text: $password)
-                .padding()
-                .background(lightGreyColor)
-                .cornerRadius(5.0)
-                .padding(.bottom, 50)
-                .padding(.trailing, 10)
-                .padding(.leading, 10)
-            
-            Button(action: {
-                signUp()
-                        }) {
-                            Text("Sign Up")
-                                .font(.headline)
-                                .foregroundColor(.white)
-                                .padding(EdgeInsets(top: 10, leading: 130, bottom: 10, trailing: 130))
-                                .background(Color.pink)
-                                .cornerRadius(10)
-                        }
-                        .padding(.bottom, 60)
-        }
-    }
-    
-    
-    
-    func signUp() {
-        Auth.auth().createUser(withEmail: email, password: password)  { (result, error) in
-              if error != nil {
-                  print(error?.localizedDescription ?? "")
-              } else {
-                  print("success")
-              }
-          }
+               .frame(width: 358, height: 51)
+               .background(Color("AccentColor"))
+               .foregroundColor(.white)
+               .cornerRadius(100)
+               .font(.custom("DMSans-Bold", size:16))
+         }
+         Spacer()
       }
+      .padding([.top, .leading, .trailing], 20)
+      
+       
+   }
 }
+
 
 struct SignUp_Previews: PreviewProvider {
     static var previews: some View {
