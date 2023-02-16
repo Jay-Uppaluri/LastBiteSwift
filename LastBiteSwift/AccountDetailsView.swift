@@ -36,6 +36,7 @@ struct AccountDetailsView: View {
                                 .font(.custom("DMSans-Regular",size : 13))
                             
                             Image(systemName: "chevron.right")
+                            
                         }
                         
                         HStack(){

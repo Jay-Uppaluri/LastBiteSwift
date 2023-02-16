@@ -23,6 +23,9 @@
 		1CEA85B2299400FB0082F477 /* VerificationPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEA85B1299400FB0082F477 /* VerificationPage.swift */; };
 		1CF755B52994BB81009EAD0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CF755B42994BB81009EAD0D /* Assets.xcassets */; };
 		1CF755B729955ECB009EAD0D /* AccountDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF755B629955ECB009EAD0D /* AccountDetailsView.swift */; };
+		2C19DBE7299EB2E300BA9FC6 /* HelpCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C19DBE6299EB2E300BA9FC6 /* HelpCenter.swift */; };
+		2C19DBE9299EB32700BA9FC6 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C19DBE8299EB32700BA9FC6 /* Components.swift */; };
+		2C19DBEB299EB67B00BA9FC6 /* Discover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C19DBEA299EB67B00BA9FC6 /* Discover.swift */; };
 		C3F99B07299300B400025BEB /* LastBiteSwiftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F99B06299300B400025BEB /* LastBiteSwiftApp.swift */; };
 		C3F99B09299300B400025BEB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F99B08299300B400025BEB /* ContentView.swift */; };
 		C3F99B0E299300B600025BEB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3F99B0D299300B600025BEB /* Preview Assets.xcassets */; };
@@ -51,6 +54,9 @@
 		1CEA85B1299400FB0082F477 /* VerificationPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationPage.swift; sourceTree = "<group>"; };
 		1CF755B42994BB81009EAD0D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1CF755B629955ECB009EAD0D /* AccountDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailsView.swift; sourceTree = "<group>"; };
+		2C19DBE6299EB2E300BA9FC6 /* HelpCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpCenter.swift; sourceTree = "<group>"; };
+		2C19DBE8299EB32700BA9FC6 /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
+		2C19DBEA299EB67B00BA9FC6 /* Discover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Discover.swift; sourceTree = "<group>"; };
 		C3F99B03299300B400025BEB /* LastBiteSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LastBiteSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3F99B06299300B400025BEB /* LastBiteSwiftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastBiteSwiftApp.swift; sourceTree = "<group>"; };
 		C3F99B08299300B400025BEB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -124,6 +130,9 @@
 				1C409BD92994B8E4003F578E /* HomeView.swift */,
 				1C409BDB2994B92E003F578E /* FavoritesView.swift */,
 				1CF755B629955ECB009EAD0D /* AccountDetailsView.swift */,
+				2C19DBE6299EB2E300BA9FC6 /* HelpCenter.swift */,
+				2C19DBE8299EB32700BA9FC6 /* Components.swift */,
+				2C19DBEA299EB67B00BA9FC6 /* Discover.swift */,
 			);
 			path = LastBiteSwift;
 			sourceTree = "<group>";
@@ -224,6 +233,8 @@
 			files = (
 				1C409BDC2994B92E003F578E /* FavoritesView.swift in Sources */,
 				1C409BD62994A20F003F578E /* SuccessView.swift in Sources */,
+				2C19DBE7299EB2E300BA9FC6 /* HelpCenter.swift in Sources */,
+				2C19DBE9299EB32700BA9FC6 /* Components.swift in Sources */,
 				1C409BC52994635E003F578E /* SignUp.swift in Sources */,
 				1C409BC72994648F003F578E /* SettingsView.swift in Sources */,
 				1C409BDA2994B8E5003F578E /* HomeView.swift in Sources */,
@@ -231,6 +242,7 @@
 				C3F99B19299301CF00025BEB /* LandingPage.swift in Sources */,
 				C3F99B09299300B400025BEB /* ContentView.swift in Sources */,
 				C3F99B07299300B400025BEB /* LastBiteSwiftApp.swift in Sources */,
+				2C19DBEB299EB67B00BA9FC6 /* Discover.swift in Sources */,
 				C3F99B17299301BC00025BEB /* SplashPage.swift in Sources */,
 				1CEA85B2299400FB0082F477 /* VerificationPage.swift in Sources */,
 				1C409BD82994AFA1003F578E /* NotificationsView.swift in Sources */,
