@@ -3,7 +3,7 @@ import SwiftUI
 struct SuccessView: View {
     
     var body: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 0) {
             Spacer().frame(height : 86)
             
             Text("Success!")
@@ -11,10 +11,13 @@ struct SuccessView: View {
                 .bold()
             
             Text("You've successfully verified your account! We've also sent you a confirmation to your email.")
-                .font(.custom("DMSans", size: 20))
+                .font(.custom("DMSans-Regular", size: 20))
                 .multilineTextAlignment(.center)
+                .foregroundColor(.gray)
                 .padding()
             
+            
+            Spacer().frame(height : 44)
             Image("Success")
                 .resizable()
                 .aspectRatio(contentMode: .fit)

@@ -110,7 +110,7 @@ struct IconTextField: View {
                     .padding(.leading, 0)
                     .font(.custom("DMSans-Bold", size: 16))
                     .frame(height: 32)
-                    .foregroundColor(Color("Body"))
+                    .foregroundColor(.black)
                 
             }
             .padding(.all, 8)
@@ -140,9 +140,11 @@ struct HomeView: View {
                         
                         //this isn't showing
                         IconTextField(icon: "magnifyingglass", text: $searchplaceholder)
+                        
                     }
                     
                     Spacer().frame(height: 24)
+                    
                     
                     //Header with cards VStack
                     VStack{

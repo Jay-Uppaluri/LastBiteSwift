@@ -10,7 +10,6 @@ struct NotificationsView: View {
             Text("Notifications")
                 .font(.custom("DMSans-Bold", size: 20))
                 
-            
             HStack {
                 Text("Push Notifications")
                     .font(.custom("DMSans-Bold", size: 16))

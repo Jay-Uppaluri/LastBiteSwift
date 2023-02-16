@@ -88,6 +88,7 @@ struct VerificationPage: View {
                 .font(.custom("DMSans-Regular", size: 13))
             }
             Spacer()
+            
         }
         .padding()
         
