@@ -28,7 +28,6 @@
 		C30F060E29A03883007D5807 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30F060D29A03883007D5807 /* HomeView.swift */; };
 		C36DEAE129A0072F00AAF23D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C36DEAE029A0072F00AAF23D /* GoogleService-Info.plist */; };
 		C36DEAE829A0090500AAF23D /* RestaurantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36DEAE729A0090500AAF23D /* RestaurantModel.swift */; };
-		C36DEAEB29A0092000AAF23D /* RestaurantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36DEAEA29A0092000AAF23D /* RestaurantViewModel.swift */; };
 		C36DEAF029A00ED400AAF23D /* RestaurantCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36DEAEF29A00ED400AAF23D /* RestaurantCardView.swift */; };
 		C3F99B07299300B400025BEB /* LastBiteSwiftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F99B06299300B400025BEB /* LastBiteSwiftApp.swift */; };
 		C3F99B09299300B400025BEB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F99B08299300B400025BEB /* ContentView.swift */; };
@@ -61,9 +60,9 @@
 		2C19DBEA299EB67B00BA9FC6 /* Discover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Discover.swift; sourceTree = "<group>"; };
 		C30F060B29A02382007D5807 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		C30F060D29A03883007D5807 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		C30F061129A04434007D5807 /* LastBiteSwift.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LastBiteSwift.entitlements; sourceTree = "<group>"; };
 		C36DEAE029A0072F00AAF23D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C36DEAE729A0090500AAF23D /* RestaurantModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantModel.swift; sourceTree = "<group>"; };
-		C36DEAEA29A0092000AAF23D /* RestaurantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantViewModel.swift; sourceTree = "<group>"; };
 		C36DEAEF29A00ED400AAF23D /* RestaurantCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCardView.swift; sourceTree = "<group>"; };
 		C3F99B03299300B400025BEB /* LastBiteSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LastBiteSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3F99B06299300B400025BEB /* LastBiteSwiftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastBiteSwiftApp.swift; sourceTree = "<group>"; };
@@ -113,7 +112,6 @@
 		C36DEAE929A0091000AAF23D /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				C36DEAEA29A0092000AAF23D /* RestaurantViewModel.swift */,
 				C30F060B29A02382007D5807 /* HomeViewModel.swift */,
 			);
 			path = ViewModels;
@@ -159,6 +157,7 @@
 		C3F99B05299300B400025BEB /* LastBiteSwift */ = {
 			isa = PBXGroup;
 			children = (
+				C30F061129A04434007D5807 /* LastBiteSwift.entitlements */,
 				C36DEAEE29A00EAB00AAF23D /* Views */,
 				C36DEAE929A0091000AAF23D /* ViewModels */,
 				C36DEAE629A008F200AAF23D /* Models */,
@@ -277,7 +276,6 @@
 				1C409BC72994648F003F578E /* SettingsView.swift in Sources */,
 				1CF755B729955ECB009EAD0D /* AccountDetailsView.swift in Sources */,
 				C3F99B19299301CF00025BEB /* LandingPage.swift in Sources */,
-				C36DEAEB29A0092000AAF23D /* RestaurantViewModel.swift in Sources */,
 				C36DEAF029A00ED400AAF23D /* RestaurantCardView.swift in Sources */,
 				C30F060E29A03883007D5807 /* HomeView.swift in Sources */,
 				C3F99B09299300B400025BEB /* ContentView.swift in Sources */,
@@ -411,6 +409,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LastBiteSwift/LastBiteSwift.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LastBiteSwift/Preview Content\"";
@@ -440,6 +439,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LastBiteSwift/LastBiteSwift.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LastBiteSwift/Preview Content\"";
