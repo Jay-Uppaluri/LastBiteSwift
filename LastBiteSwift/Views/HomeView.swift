@@ -4,98 +4,23 @@
 
 import SwiftUI
 
-struct Card: View {
-    @State private var isHeartToggled = false
-    
+struct CardSet: View {
+    @ObservedObject private var viewModel = HomeViewModel()
     var body: some View {
-        VStack {
-            VStack(spacing: 8) {
-                Image("card-image")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 245, height: 140)
-                    .cornerRadius(4)
-                    .overlay(
-                        HStack {
-                            Spacer()
-                            Button(action: {
-                                self.isHeartToggled.toggle()
-                            }) {
-                                if isHeartToggled {
-                                    Image("heart.fill.remix")
-                                        .resizable()
-                                        .frame(width: 24, height: 24)
-                                        .foregroundColor(.red)
-                                } else {
-                                    Image("heart.line.remix")
-                                        .resizable()
-                                        .frame(width: 24, height: 24)
-                                        .foregroundColor(.white)
-                                }
-                            }
-                        }
-                        .padding(),
-                        alignment: .topTrailing
-                    )
-                
-                HStack(){
-                    VStack(spacing: 2){
-                        HStack(){
-                            Text("<Restaurant Title>")
-                                .font(.custom("DMSans-Bold", size: 16))
-                            Spacer()
-                        }
-                        HStack(spacing: 6){
-                            Text("4.9")
-                                .font(.custom("DMSans-Regular", size: 13))
-                            
-                            Image(systemName: "star.fill")
-                                .resizable()
-                                .frame(width: 10.0, height: 10.0)
-                    
-                            
-                            Text("∙")
-                                .font(.custom("DMSans-Regular", size: 13))
-                            
-                            Text("6 miles")
-                                .font(.custom("DMSans-Regular", size: 13))
-                            Spacer()
-                        }
-                        .foregroundColor(.gray)
-                        
-                    }
-                    Text("$4.99")
-                        .font(.custom("DMSans-Bold", size: 16))
-                        .frame(width: 68, height: 27)
-                        .background(Color("AccentColor"))
-                        .foregroundColor(.white)
-                        .cornerRadius(4.0)
-                    
-                    
+        ScrollView(.horizontal, showsIndicators: false) { // Add ScrollView with horizontal axis layout
+            HStack(spacing: 8) { // Add HStack with spacing
+                ForEach(viewModel.restaurants) { restaurant in
+                    RestaurantCardView(restaurant: restaurant)
                 }
             }
-            .frame(width: 245, height: 188)
-            .background(Color.white)
-            .cornerRadius(4)
-            .shadow(radius: 0)
+        }
+        .onAppear() {
+            self.viewModel.fetchData()
         }
     }
 }
 
 
-struct CardSet: View {
-    
-    var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 20) {
-                Card()
-                Card()
-                Card()
-            }
-        }
-    }
-    
-}
     
 struct IconTextField: View {
         var icon: String
@@ -123,7 +48,6 @@ struct IconTextField: View {
 struct HomeView: View {
     @State private var selectedTab = 0
     @State private var searchplaceholder = ""
-    
     var body: some View {
         TabView(selection: $selectedTab) {
             
@@ -149,7 +73,7 @@ struct HomeView: View {
                     //Header with cards VStack
                     VStack{
                         HStack(){
-                            Text("Header")
+                            Text("What's Nearby")
                                 .font(.custom("DMSans-Bold", size: 20))
                             Spacer()
                         }
@@ -161,7 +85,7 @@ struct HomeView: View {
                     
                     VStack{
                         HStack(){
-                            Text("Header")
+                            Text("Your favorites")
                                 .font(.custom("DMSans-Bold", size: 20))
                             Spacer()
                         }
@@ -173,7 +97,7 @@ struct HomeView: View {
                     
                     VStack{
                         HStack(){
-                            Text("Header")
+                            Text("Recommended for you")
                                 .font(.custom("DMSans-Bold", size: 20))
                             Spacer()
                         }
@@ -222,7 +146,6 @@ struct HomeView: View {
         .accentColor(Color("AccentColor"))
         //only for ios 16.0
         //.toolbarBackground(Color.white, for: .tabBar)
-        
     }
         
 }
