@@ -29,12 +29,12 @@ class HomeViewModel: ObservableObject {
                 let createdOn = data["CreatedOn"] as! Timestamp
                 let location = data["Location"] as! GeoPoint
                 let ordersRemaining = data["OrdersRemaining"] as! Int
-                let rating = data["Rating"] as? Float ?? -1.00
+                let rating = data["Rating"] as! NSNumber
                 let description = data["description"] as? String ?? ""
+                let price = data["price"] as! NSNumber
                 return Restaurant(id: queryDocumentSnapshot.documentID, name: name, createdOn: createdOn, location: location,
-                                  ordersRemaining: ordersRemaining, rating: rating, description: description)
+                                  ordersRemaining: ordersRemaining, rating: Float(truncating: rating), description: description, price: Float(truncating: price), ordersLeft: 3)
             }
-            print(self.restaurants)
         }
     }
 }
