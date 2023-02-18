@@ -14,4 +14,5 @@ struct Restaurant: Identifiable {
     let rating: Float
     let description: String
     let price: Float
+    let ordersLeft: Int
 }
