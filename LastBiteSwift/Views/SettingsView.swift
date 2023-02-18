@@ -25,11 +25,14 @@ struct SettingsView: View {
                     
                     //Item List
                     VStack(spacing:20){
-                        HStack(){
-                            Text("Account Details")
-                                .font(.custom("DMSans-Regular", size: 18))
-                            Spacer()
-                            Image(systemName: "chevron.right")
+                        NavigationLink(destination:AccountDetailsView()) {
+                            HStack(){
+                                Text("Account Details")
+                                    .font(.custom("DMSans-Regular", size: 18))
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                            }
+                            .foregroundColor(.black)
                         }
                         
                         NavigationLink(destination:NotificationsView()) {
@@ -62,11 +65,14 @@ struct SettingsView: View {
                     }
                     
                     VStack(spacing:20){
-                        HStack(){
-                            Text("Help Center")
-                                .font(.custom("DMSans-Regular", size: 18))
-                            Spacer()
-                            Image(systemName: "chevron.right")
+                        NavigationLink(destination:HelpCenter()) {
+                            HStack(){
+                                Text("Help Center")
+                                    .font(.custom("DMSans-Regular", size: 18))
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                            }
+                            .foregroundColor(.black)
                         }
                         
                         HStack(){
