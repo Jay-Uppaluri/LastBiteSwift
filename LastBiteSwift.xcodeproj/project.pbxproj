@@ -18,7 +18,6 @@
 		1C409BD62994A20F003F578E /* SuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C409BD52994A20F003F578E /* SuccessView.swift */; };
 		1C409BD82994AFA1003F578E /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C409BD72994AFA1003F578E /* NotificationsView.swift */; };
 		1C409BDC2994B92E003F578E /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C409BDB2994B92E003F578E /* FavoritesView.swift */; };
-		1C7B81EB29BAA6AA00109DE5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1C7B81EA29BAA6AA00109DE5 /* GoogleService-Info.plist */; };
 		1C7B81ED29BAA70C00109DE5 /* LogIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B81EC29BAA70C00109DE5 /* LogIn.swift */; };
 		1CEA85B2299400FB0082F477 /* VerificationPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEA85B1299400FB0082F477 /* VerificationPage.swift */; };
 		1CF755B52994BB81009EAD0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CF755B42994BB81009EAD0D /* Assets.xcassets */; };
@@ -33,6 +32,7 @@
 		2C2AC23629A18C530002BBD9 /* PaymentMethodEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2AC23329A18C530002BBD9 /* PaymentMethodEmpty.swift */; };
 		2C2AC23729A18C530002BBD9 /* NewPaymentMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2AC23429A18C530002BBD9 /* NewPaymentMethod.swift */; };
 		2C2AC23B29A18D6B0002BBD9 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2AC23A29A18D6B0002BBD9 /* SplashScreenView.swift */; };
+		2CD2EEFB29BAC55C008542BB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2CD2EEFA29BAC55C008542BB /* GoogleService-Info.plist */; };
 		C30F060C29A02382007D5807 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30F060B29A02382007D5807 /* HomeViewModel.swift */; };
 		C30F060E29A03883007D5807 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30F060D29A03883007D5807 /* HomeView.swift */; };
 		C36DEAE829A0090500AAF23D /* RestaurantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36DEAE729A0090500AAF23D /* RestaurantModel.swift */; };
@@ -58,7 +58,6 @@
 		1C409BD52994A20F003F578E /* SuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessView.swift; sourceTree = "<group>"; };
 		1C409BD72994AFA1003F578E /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 		1C409BDB2994B92E003F578E /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
-		1C7B81EA29BAA6AA00109DE5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1C7B81EC29BAA70C00109DE5 /* LogIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogIn.swift; sourceTree = "<group>"; };
 		1CEA85B1299400FB0082F477 /* VerificationPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationPage.swift; sourceTree = "<group>"; };
 		1CF755B42994BB81009EAD0D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -73,6 +72,7 @@
 		2C2AC23329A18C530002BBD9 /* PaymentMethodEmpty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodEmpty.swift; sourceTree = "<group>"; };
 		2C2AC23429A18C530002BBD9 /* NewPaymentMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPaymentMethod.swift; sourceTree = "<group>"; };
 		2C2AC23A29A18D6B0002BBD9 /* SplashScreenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
+		2CD2EEFA29BAC55C008542BB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C30F060B29A02382007D5807 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		C30F060D29A03883007D5807 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		C30F061129A04434007D5807 /* LastBiteSwift.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LastBiteSwift.entitlements; sourceTree = "<group>"; };
@@ -215,7 +215,7 @@
 		C3F99B05299300B400025BEB /* LastBiteSwift */ = {
 			isa = PBXGroup;
 			children = (
-				1C7B81EA29BAA6AA00109DE5 /* GoogleService-Info.plist */,
+				2CD2EEFA29BAC55C008542BB /* GoogleService-Info.plist */,
 				C30F061129A04434007D5807 /* LastBiteSwift.entitlements */,
 				C36DEAEE29A00EAB00AAF23D /* Views */,
 				C36DEAE929A0091000AAF23D /* ViewModels */,
@@ -307,7 +307,7 @@
 			files = (
 				C3F99B0E299300B600025BEB /* Preview Assets.xcassets in Resources */,
 				1C409BD229946514003F578E /* DMSans-Regular.ttf in Resources */,
-				1C7B81EB29BAA6AA00109DE5 /* GoogleService-Info.plist in Resources */,
+				2CD2EEFB29BAC55C008542BB /* GoogleService-Info.plist in Resources */,
 				1C409BD429946514003F578E /* DMSans-MediumItalic.ttf in Resources */,
 				1CF755B52994BB81009EAD0D /* Assets.xcassets in Resources */,
 				1C409BD029946514003F578E /* DMSans-Italic.ttf in Resources */,
@@ -477,6 +477,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LastBiteSwift/Preview Content\"";
+				DEVELOPMENT_TEAM = GLGW75V62Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LastBiteSwift/Info.plist;
@@ -489,8 +490,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = LastBite.LastBiteSwift;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lastbiteapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -507,7 +508,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LastBiteSwift/Preview Content\"";
-				DEVELOPMENT_TEAM = 6N49NLGUU2;
+				DEVELOPMENT_TEAM = GLGW75V62Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LastBiteSwift/Info.plist;
@@ -520,7 +521,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lastbiteapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
