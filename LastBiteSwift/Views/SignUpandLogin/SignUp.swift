@@ -93,8 +93,12 @@ struct SignUp: View {
         Auth.auth().createUser(withEmail: emailAddress, password: passWord) { result, error in
             if error != nil {
                 print(error!.localizedDescription)
+            } else {
+                UserService.addUserToFirestore(name: "John placeholder", email: emailAddress)
             }
         }
+        
+        
     }
 
 }
