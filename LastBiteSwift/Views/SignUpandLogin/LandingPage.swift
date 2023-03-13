@@ -35,16 +35,15 @@ struct LandingPage: View {
                                  .font(.custom("DMSans-Bold", size: 16))
 
                         }
-
-                        Button("Log In") {
-                        }
+                NavigationLink(destination: LogIn()) {
+                        Text("Log In")
                         .accentColor(Color("Body"))
                         .cornerRadius(100.0)
                         .font(.custom("DMSans-Bold", size: 16))
 
                     }
 
-
+            }
                     }
 
     }
