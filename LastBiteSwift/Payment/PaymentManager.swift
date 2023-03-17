@@ -84,6 +84,6 @@ struct CheckoutView: View {
       }
     }.onAppear { model.preparePaymentSheet() }
   }
-  }
+  
 }
 
