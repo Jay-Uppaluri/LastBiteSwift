@@ -8,7 +8,8 @@ class PaymentManager: ObservableObject {
   @Published var paymentResult: PaymentSheetResult?
 
   func preparePaymentSheet() {
-      let paymentData = Payment(amount: 499)
+      let userId = AuthenticationManager.shared.getUserId()
+      let paymentData = Payment(amount: 499, userId: userId!)
       var request = URLRequest(url: backendCheckoutUrl)
       request.httpMethod = "POST"
       request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -82,6 +83,7 @@ struct CheckoutView: View {
         Text("Loading…")
       }
     }.onAppear { model.preparePaymentSheet() }
+  }
   }
 }
 

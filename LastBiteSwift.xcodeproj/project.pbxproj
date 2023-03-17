@@ -42,6 +42,7 @@
 		C36DEAE829A0090500AAF23D /* RestaurantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36DEAE729A0090500AAF23D /* RestaurantModel.swift */; };
 		C36DEAF029A00ED400AAF23D /* RestaurantCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36DEAEF29A00ED400AAF23D /* RestaurantCardView.swift */; };
 		C3A4C52629C3DB23007E59F1 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A4C52529C3DB23007E59F1 /* UserService.swift */; };
+		C3A4C52929C42177007E59F1 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A4C52829C42177007E59F1 /* AuthenticationManager.swift */; };
 		C3CB778A29C2B62300D45EA8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C3CB778929C2B62300D45EA8 /* GoogleService-Info.plist */; };
 		C3CB779629C2BB1F00D45EA8 /* PaymentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CB779529C2BB1F00D45EA8 /* PaymentManager.swift */; };
 		C3F99B07299300B400025BEB /* LastBiteSwiftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F99B06299300B400025BEB /* LastBiteSwiftApp.swift */; };
@@ -88,6 +89,7 @@
 		C36DEAE729A0090500AAF23D /* RestaurantModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantModel.swift; sourceTree = "<group>"; };
 		C36DEAEF29A00ED400AAF23D /* RestaurantCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCardView.swift; sourceTree = "<group>"; };
 		C3A4C52529C3DB23007E59F1 /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		C3A4C52829C42177007E59F1 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		C3CB778929C2B62300D45EA8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C3CB779529C2BB1F00D45EA8 /* PaymentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentManager.swift; sourceTree = "<group>"; };
 		C3F99B03299300B400025BEB /* LastBiteSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LastBiteSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -227,6 +229,14 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		C3A4C52729C4216A007E59F1 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				C3A4C52829C42177007E59F1 /* AuthenticationManager.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
 		C3CB779429C2BB0F00D45EA8 /* Payment */ = {
 			isa = PBXGroup;
 			children = (
@@ -256,6 +266,7 @@
 		C3F99B05299300B400025BEB /* LastBiteSwift */ = {
 			isa = PBXGroup;
 			children = (
+				C3A4C52729C4216A007E59F1 /* Authentication */,
 				C3A4C52429C3DB23007E59F1 /* Services */,
 				C3CB779429C2BB0F00D45EA8 /* Payment */,
 				C3CB778929C2B62300D45EA8 /* GoogleService-Info.plist */,
@@ -373,6 +384,7 @@
 				C30F060C29A02382007D5807 /* HomeViewModel.swift in Sources */,
 				1C409BDC2994B92E003F578E /* FavoritesView.swift in Sources */,
 				1C409BD62994A20F003F578E /* SuccessView.swift in Sources */,
+				C3A4C52929C42177007E59F1 /* AuthenticationManager.swift in Sources */,
 				C3CB779629C2BB1F00D45EA8 /* PaymentManager.swift in Sources */,
 				C3558D4229C3907200DD76B0 /* PaymentModel.swift in Sources */,
 				2C19DBE7299EB2E300BA9FC6 /* HelpCenter.swift in Sources */,
@@ -542,7 +554,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.lastbiteapp.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lastbite.lastbite;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -573,7 +585,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.lastbiteapp.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lastbite.lastbite;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

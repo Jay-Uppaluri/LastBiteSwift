@@ -94,7 +94,11 @@ struct SignUp: View {
             if error != nil {
                 print(error!.localizedDescription)
             } else {
-                UserService.addUserToFirestore(name: "John placeholder", email: emailAddress)
+                let user = Auth.auth().currentUser
+                let userId = user?.uid
+                if let userId = userId {
+                    UserService.addUserToFirestore(uid: userId, name: "John placeholder", email: emailAddress)
+                }
             }
         }
         
