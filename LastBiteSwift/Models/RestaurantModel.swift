@@ -16,5 +16,7 @@ struct Restaurant: Identifiable, Codable {
     let price: Float
     let ordersLeft: Int
     var distanceFromUser: Double?
+    let address: String
+    let type: String
 }
 

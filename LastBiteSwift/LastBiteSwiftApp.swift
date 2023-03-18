@@ -25,7 +25,7 @@ struct LastBiteSwiftApp: App {
     
     var body: some Scene {
         WindowGroup {
-            CheckoutView()
+            HomeView()
         }
     }
 }
