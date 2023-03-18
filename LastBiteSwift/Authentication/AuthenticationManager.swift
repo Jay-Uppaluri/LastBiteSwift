@@ -1,8 +1,3 @@
-
-// This class is a Singleton, meaning there is only one instance of it
-
-import Foundation
-
 import FirebaseAuth
 
 class AuthenticationManager {
@@ -24,5 +19,16 @@ class AuthenticationManager {
     func isUserLoggedIn() -> Bool {
         return user != nil
     }
+    
+    func isEmailVerified(completion: @escaping (Bool) -> Void) {
+        user?.reload(completion: { error in
+            if let error = error {
+                print("Error reloading user: \(error.localizedDescription)")
+                completion(false)
+            } else {
+                let isVerified = self.user?.isEmailVerified ?? false
+                completion(isVerified)
+            }
+        })
+    }
 }
-

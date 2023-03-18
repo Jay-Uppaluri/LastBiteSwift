@@ -98,11 +98,16 @@ struct SignUp: View {
                 let userId = user?.uid
                 if let userId = userId {
                     UserService.addUserToFirestore(uid: userId, name: "John placeholder", email: emailAddress)
+                    user?.sendEmailVerification(completion: { error in
+                        if let error = error {
+                            print(error.localizedDescription)
+                        } else {
+                            print("Verification email sent to \(emailAddress)")
+                        }
+                    })
                 }
             }
         }
-        
-        
     }
 
 }
