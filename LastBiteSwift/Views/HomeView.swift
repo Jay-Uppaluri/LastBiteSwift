@@ -5,20 +5,19 @@
 import SwiftUI
 
 struct CardSet: View {
-    @ObservedObject private var viewModel = HomeViewModel()
+    let restaurants: [Restaurant]
+    
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) { // Add ScrollView with horizontal axis layout
-            HStack(spacing: 8) { // Add HStack with spacing
-                ForEach(viewModel.restaurants) { restaurant in
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 8) {
+                ForEach(restaurants) { restaurant in
                     RestaurantCardView(restaurant: restaurant)
                 }
             }
         }
-        .onAppear() {
-            self.viewModel.fetchData()
-        }
     }
 }
+
 
 
     
@@ -46,9 +45,17 @@ struct IconTextField: View {
     }
 
 struct HomeView: View {
+    @ObservedObject private var viewModel = HomeViewModel()
     @State private var selectedTab = 0
     @State private var searchplaceholder = ""
     var body: some View {
+        let restaurants = viewModel.restaurants
+        let pizza = restaurants.filter{ $0.type.contains("pizza") }
+        let healthy = restaurants.filter{ $0.type.contains("healthy") }
+        let fastFood = restaurants.filter {
+            print("Restaurant type: \($0.type)")
+            return $0.type.contains("fast food")
+        }
         NavigationView {
         TabView(selection: $selectedTab) {
             
@@ -79,31 +86,31 @@ struct HomeView: View {
                             Spacer()
                         }
                         
-                        CardSet()
+                        CardSet(restaurants: pizza)
                     }
                     
                     Spacer().frame(height: 24)
                     
                     VStack{
                         HStack(){
-                            Text("Your favorites")
+                            Text("Healthy")
                                 .font(.custom("DMSans-Bold", size: 20))
                             Spacer()
                         }
                         
-                        CardSet()
+                        CardSet(restaurants: healthy)
                     }
                     
                     Spacer().frame(height: 24)
                     
                     VStack{
                         HStack(){
-                            Text("Recommended for you")
+                            Text("Fast food")
                                 .font(.custom("DMSans-Bold", size: 20))
                             Spacer()
                         }
                         
-                        CardSet()
+                        CardSet(restaurants: fastFood)
                     }
                 }.padding()
             }
@@ -142,9 +149,11 @@ struct HomeView: View {
                         .font(.custom("DMSans-Regular", size: 13.0))
                 }
                 .tag(3)
-            
         }
         .accentColor(Color("AccentColor"))
+        .onAppear() {
+            self.viewModel.fetchData()
+        }
         //only for ios 16.0
         //.toolbarBackground(Color.white, for: .tabBar)
     }
