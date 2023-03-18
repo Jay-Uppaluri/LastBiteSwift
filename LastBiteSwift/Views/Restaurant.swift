@@ -6,7 +6,6 @@ import FirebaseFirestore
 struct RestaurantView: View {
     @State private var region = MKCoordinateRegion()
     let restaurant: Restaurant
-    @State private var address: String = "Loading..."
 
     var body: some View {
         ZStack {
@@ -58,7 +57,7 @@ struct RestaurantView: View {
                                                     .font(.system(size: 18, weight: .bold))
                                                     .foregroundColor(.black)
 
-                                                Text(address)
+                    Text(restaurant.address)
                                                     .font(.system(size: 16))
                                                     .foregroundColor(.black)
 
@@ -75,9 +74,6 @@ struct RestaurantView: View {
                                             }
                                             .padding()
                                             .onAppear {
-                                                getAddressFromCoordinates { address in
-                                                    self.address = address
-                                                }
                                             }
                 primaryButtonLarge(text: "Reserve")
                                         }
@@ -89,27 +85,27 @@ struct RestaurantView: View {
     
     
 
-                                func getAddressFromCoordinates(completion: @escaping (String) -> Void) {
-                                    let geocoder = CLGeocoder()
-                                    let location = CLLocation(latitude: restaurant.location.latitude, longitude: restaurant.location.longitude)
-
-                                    geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
-                                        if let error = error {
-                                            print("Error getting the address from the coordinates: \(error.localizedDescription)")
-                                            completion("Address not found")
-                                        } else if let placemark = placemarks?.first {
-                                            let address = "\(placemark.name ?? "") \(placemark.locality ?? ""), \(placemark.administrativeArea ?? "") \(placemark.postalCode ?? "")"
-                                            completion(address)
-                                        } else {
-                                            completion("Address not found")
-                                        }
-                                    }
-                                }
+//                                func getAddressFromCoordinates(completion: @escaping (String) -> Void) {
+//                                    let geocoder = CLGeocoder()
+//                                    let location = CLLocation(latitude: restaurant.location.latitude, longitude: restaurant.location.longitude)
+//
+//                                    geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+//                                        if let error = error {
+//                                            print("Error getting the address from the coordinates: \(error.localizedDescription)")
+//                                            completion("Address not found")
+//                                        } else if let placemark = placemarks?.first {
+//                                            let address = "\(placemark.name ?? "") \(placemark.locality ?? ""), \(placemark.administrativeArea ?? "") \(placemark.postalCode ?? "")"
+//                                            completion(address)
+//                                        } else {
+//                                            completion("Address not found")
+//                                        }
+//                                    }
+//                                }
                             }
 
                             struct RestaurantView_Previews: PreviewProvider {
                                 static var previews: some View {
-                                    RestaurantView(restaurant: Restaurant(id: "1", name: "Test Restaurant", createdOn: Timestamp(), location: GeoPoint(latitude: 37.7749, longitude: -122.4194), ordersRemaining: 10, rating: 4.5, description: "This is a test restaurant.", price: 25.0, ordersLeft: 5))
+                                    RestaurantView(restaurant: Restaurant(id: "1", name: "Test Restaurant", createdOn: Timestamp(), location: GeoPoint(latitude: 37.7749, longitude: -122.4194), ordersRemaining: 10, rating: 4.5, description: "This is a test restaurant.", price: 25.0, ordersLeft: 5, address: "test", type: "Pizza"))
                                 }
                             }
 
