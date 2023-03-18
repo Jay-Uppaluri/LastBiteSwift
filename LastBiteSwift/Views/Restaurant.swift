@@ -4,7 +4,6 @@ import MapKit
 import FirebaseFirestore
 
 struct RestaurantView: View {
-    @State private var region = MKCoordinateRegion()
     let restaurant: Restaurant
 
     var body: some View {

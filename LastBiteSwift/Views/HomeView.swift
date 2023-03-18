@@ -126,7 +126,7 @@ struct HomeView: View {
             }
             .tag(0)
             
-            Text("Discover")
+            ContentView()
                 .tabItem {
                     Image(systemName: "map")
                     Text("Discover")
