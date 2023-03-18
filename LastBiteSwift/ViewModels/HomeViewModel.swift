@@ -27,7 +27,7 @@ class HomeViewModel: ObservableObject {
                 let rating = data["Rating"] as! NSNumber
                 let description = data["description"] as? String ?? ""
                 let price = data["price"] as! NSNumber
-                return Restaurant(id: queryDocumentSnapshot.documentID, name: name, createdOn: createdOn, location: location,
+                return Restaurant(name: name, createdOn: createdOn, location: location,
                                   ordersRemaining: ordersRemaining, rating: Float(truncating: rating), description: description, price: Float(truncating: price), ordersLeft: 3)
             }
         }
