@@ -49,6 +49,7 @@ struct HomeView: View {
     @State private var selectedTab = 0
     @State private var searchplaceholder = ""
     var body: some View {
+        NavigationView {
         TabView(selection: $selectedTab) {
             
             ScrollView {
@@ -146,6 +147,7 @@ struct HomeView: View {
         .accentColor(Color("AccentColor"))
         //only for ios 16.0
         //.toolbarBackground(Color.white, for: .tabBar)
+    }
     }
         
 }

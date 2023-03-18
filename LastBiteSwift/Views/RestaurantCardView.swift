@@ -9,6 +9,7 @@ struct RestaurantCardView: View {
     @State private var isHeartToggled = false
     
     var body: some View {
+        NavigationLink(destination: RestaurantView(restaurant: restaurant)) {
         VStack {
             VStack(spacing: 8) {
                 Image("card-image")
@@ -80,6 +81,7 @@ struct RestaurantCardView: View {
             .cornerRadius(4)
             .shadow(radius: 0)
         }
+    }
     }
 }
 

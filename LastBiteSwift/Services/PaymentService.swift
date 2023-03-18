@@ -3,7 +3,6 @@ import SwiftUI
 
 class PaymentService: ObservableObject {
   let backendCheckoutUrl = URL(string: "https://us-central1-lastbite-907b1.cloudfunctions.net/paymentSheet")!
- // Your backend endpoint
   @Published var paymentSheet: PaymentSheet?
   @Published var paymentResult: PaymentSheetResult?
 
