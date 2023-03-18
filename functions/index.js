@@ -11,7 +11,14 @@ const db = getFirestore();
 
 
 exports.paymentSheet = functions.https.onRequest(async (req, res) => {
-  const customer = await stripe.customers.create();
+  const userId = req.body.userId;
+  const customerId = await getCustomerIdFromDb(userId);
+  let customer;
+  if (customerId != undefined && customerId != null) {
+    customer = await stripe.customers.retrieve(customerId);
+  } else {
+    customer = await stripe.customers.create();
+  }
   const ephemeralKey = await stripe.ephemeralKeys.create(
     {customer: customer.id},
     {apiVersion: '2022-11-15'}
@@ -27,11 +34,14 @@ exports.paymentSheet = functions.https.onRequest(async (req, res) => {
     amount: amount,
     currency: 'usd',
     customer: customer.id,
+    setup_future_usage: 'off_session',
     automatic_payment_methods: {
       enabled: true,
     },
   });
 
+  await addCustomerIdToUserDocument(userId, customer.id);
+  
   res.json({
     paymentIntent: paymentIntent.client_secret,
     ephemeralKey: ephemeralKey.secret,
@@ -39,6 +49,38 @@ exports.paymentSheet = functions.https.onRequest(async (req, res) => {
     publishableKey: 'pk_test_51Mm5YMJa42zn3jCLDGyMInDAgUBxKBCNjFLeqCdpSi2QTwZwKFahXKbvd23gHy18En2nS3eqCfthgRPNEZwxZy4V00chCbTmqB'
   });
 });
+
+async function getCustomerIdFromDb(userId) {
+  try {
+    const userRef = db.collection("users").doc(userId);
+    const userDoc = await userRef.get();
+
+    if (!userDoc.exists) {
+      console.log("User not found");
+      return null;
+    }
+
+    const userData = userDoc.data();
+    return userData.customerId;
+  } catch (error) {
+    console.error("Error fetching customer ID from Firestore:", error);
+    return null;
+  }
+}
+
+async function addCustomerIdToUserDocument(userId, customerId) {
+  try {
+    const userRef = db.collection("users").doc(userId);
+
+    // Update the user document with the provided customerId
+    await userRef.update({ customerId: customerId });
+
+    console.log(`Customer ID ${customerId} added to user document for user ID ${userId}`);
+  } catch (error) {
+    console.error("Error adding customer ID to Firestore:", error);
+  }
+}
+
 
 exports.paymentSuccess = functions.https.onRequest(async (req, res) => {
   // Verify the signature of the Stripe webhook event
