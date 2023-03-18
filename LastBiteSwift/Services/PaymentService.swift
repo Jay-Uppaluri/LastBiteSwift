@@ -1,7 +1,7 @@
 import StripePaymentSheet
 import SwiftUI
 
-class PaymentManager: ObservableObject {
+class PaymentService: ObservableObject {
   let backendCheckoutUrl = URL(string: "https://us-central1-lastbite-907b1.cloudfunctions.net/paymentSheet")!
  // Your backend endpoint
   @Published var paymentSheet: PaymentSheet?
@@ -47,43 +47,5 @@ class PaymentManager: ObservableObject {
       self.paymentResult = result
       self.paymentSheet = nil
   }
-}
-
-struct CheckoutView: View {
-  @ObservedObject var model = PaymentManager()
-
-  var body: some View {
-    VStack {
-      if let paymentSheet = model.paymentSheet {
-        PaymentSheet.PaymentButton(
-          paymentSheet: paymentSheet,
-          onCompletion: { result in
-            model.onPaymentCompletion(result: result)
-            model.paymentSheet = nil
-          }
-        ) {
-          Text("Buy")
-        }
-      } else if let result = model.paymentResult {
-        switch result {
-        case .completed:
-          Text("Payment complete")
-        case .failed(let error):
-          Text("Payment failed: \(error.localizedDescription)")
-        case .canceled:
-          Text("Payment canceled.")
-        }
-          Button(action: {
-              model.preparePaymentSheet()
-              model.paymentSheet = nil
-          }) {
-              Text("Buy again")
-          }
-      } else {
-        Text("Loading…")
-      }
-    }.onAppear { model.preparePaymentSheet() }
-  }
-  
 }
 
