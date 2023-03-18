@@ -10,6 +10,35 @@ admin.initializeApp();
 const db = getFirestore();
 
 
+const nodemailer = require('nodemailer');
+//const emailCredentials = functions.config().email.credentials;
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail', // or any other email provider
+  auth: {
+    user: "lastbitecompany@gmail.com",
+    pass: "7br29BFDBg",
+  },
+});
+
+
+async function sendOrderConfirmationEmail(orderId, userEmail) {
+  const mailOptions = {
+    from: emailCredentials.email,
+    to: userEmail,
+    subject: 'Order Confirmation',
+    text: `Thank you for your order! Your order ID is: ${orderId}`,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully');
+  } catch (error) {
+    console.error('Error sending email:', error);
+  }
+}
+
+
 exports.paymentSheet = functions.https.onRequest(async (req, res) => {
   const userId = req.body.userId;
   const customerId = await getCustomerIdFromDb(userId);
@@ -37,6 +66,9 @@ exports.paymentSheet = functions.https.onRequest(async (req, res) => {
     setup_future_usage: 'off_session',
     automatic_payment_methods: {
       enabled: true,
+    },
+    metadata: {
+      userId: userId,
     },
   });
 
@@ -98,6 +130,9 @@ exports.paymentSuccess = functions.https.onRequest(async (req, res) => {
   if (event.type === 'payment_intent.succeeded') {
     const paymentIntent = event.data.object;
 
+    const user_id = paymentIntent.metadata.userId;
+
+
     // Log the payment information to your Firestore database
     const paymentRef = admin.firestore().collection('Payments').doc(paymentIntent.id);
     await paymentRef.set({
@@ -111,6 +146,10 @@ exports.paymentSuccess = functions.https.onRequest(async (req, res) => {
 
     console.log(`Payment intent succeeded: ${paymentIntent.id}`);
   }
+
+  const userDoc = await db.collection('users').doc(user_id).get();
+  const userEmail = userDoc.data().email;
+  await sendOrderConfirmationEmail(paymentIntent.id, userEmail);
 
   res.status(200).send();
 });

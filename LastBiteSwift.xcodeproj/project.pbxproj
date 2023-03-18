@@ -41,6 +41,8 @@
 		C3558D4229C3907200DD76B0 /* PaymentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3558D4129C3907200DD76B0 /* PaymentModel.swift */; };
 		C36DEAE829A0090500AAF23D /* RestaurantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36DEAE729A0090500AAF23D /* RestaurantModel.swift */; };
 		C36DEAF029A00ED400AAF23D /* RestaurantCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36DEAEF29A00ED400AAF23D /* RestaurantCardView.swift */; };
+		C39D306429C50DDB00FA1395 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C39D306329C50DDB00FA1395 /* FirebaseFirestoreSwift */; };
+		C39D306929C50FCC00FA1395 /* Geohash in Frameworks */ = {isa = PBXBuildFile; productRef = C39D306829C50FCC00FA1395 /* Geohash */; };
 		C3A4C52629C3DB23007E59F1 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A4C52529C3DB23007E59F1 /* UserService.swift */; };
 		C3A4C52929C42177007E59F1 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A4C52829C42177007E59F1 /* AuthenticationManager.swift */; };
 		C3CB778A29C2B62300D45EA8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C3CB778929C2B62300D45EA8 /* GoogleService-Info.plist */; };
@@ -107,8 +109,10 @@
 				C3F99B23299302BE00025BEB /* FirebaseDatabase in Frameworks */,
 				C3F99B25299302BE00025BEB /* FirebaseFirestore in Frameworks */,
 				C3F99B1F299302BE00025BEB /* FirebaseAnalytics in Frameworks */,
+				C39D306429C50DDB00FA1395 /* FirebaseFirestoreSwift in Frameworks */,
 				C3F99B21299302BE00025BEB /* FirebaseAuth in Frameworks */,
 				C3041DC929C2CF0400E44A1F /* StripePaymentSheet in Frameworks */,
+				C39D306929C50FCC00FA1395 /* Geohash in Frameworks */,
 				C3558D4029C3860600DD76B0 /* Stripe in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -315,6 +319,8 @@
 				C3F99B24299302BE00025BEB /* FirebaseFirestore */,
 				C3041DC829C2CF0400E44A1F /* StripePaymentSheet */,
 				C3558D3F29C3860600DD76B0 /* Stripe */,
+				C39D306329C50DDB00FA1395 /* FirebaseFirestoreSwift */,
+				C39D306829C50FCC00FA1395 /* Geohash */,
 			);
 			productName = LastBiteSwift;
 			productReference = C3F99B03299300B400025BEB /* LastBiteSwift.app */;
@@ -347,6 +353,7 @@
 			packageReferences = (
 				C3F99B1D299302BE00025BEB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				C3CB779729C2CE3900D45EA8 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */,
+				C39D306729C50FCC00FA1395 /* XCRemoteSwiftPackageReference "Geohash" */,
 			);
 			productRefGroup = C3F99B04299300B400025BEB /* Products */;
 			projectDirPath = "";
@@ -617,6 +624,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		C39D306729C50FCC00FA1395 /* XCRemoteSwiftPackageReference "Geohash" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nh7a/Geohash.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		C3CB779729C2CE3900D45EA8 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/stripe/stripe-ios-spm";
@@ -645,6 +660,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C3CB779729C2CE3900D45EA8 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
 			productName = Stripe;
+		};
+		C39D306329C50DDB00FA1395 /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C3F99B1D299302BE00025BEB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
+		C39D306829C50FCC00FA1395 /* Geohash */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C39D306729C50FCC00FA1395 /* XCRemoteSwiftPackageReference "Geohash" */;
+			productName = Geohash;
 		};
 		C3F99B1E299302BE00025BEB /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;

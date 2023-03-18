@@ -3,10 +3,10 @@
 import Foundation
 
 import FirebaseFirestore
+import FirebaseFirestoreSwift
 
-
-struct Restaurant: Identifiable {
-    var id: String = UUID().uuidString
+struct Restaurant: Identifiable, Codable {
+    @DocumentID var id: String?
     let name: String
     let createdOn: Timestamp
     let location: GeoPoint
@@ -15,4 +15,6 @@ struct Restaurant: Identifiable {
     let description: String
     let price: Float
     let ordersLeft: Int
+    var distanceFromUser: Double?
 }
+
