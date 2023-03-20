@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 
-class UserService {
+class UserService: ObservableObject {
     
     static func addUserToFirestore(uid: String, name: String, email: String) {
         let db = Firestore.firestore()
@@ -27,6 +27,37 @@ class UserService {
             } else {
                 print("User added to Firestore with ID: \(uid)")
             }
+        }
+    }
+    
+    func updateUserFavorites(restaurantId: String, isFavorite: Bool, completion: @escaping (Bool) -> Void) {
+        let db = Firestore.firestore()
+        let userRef = db.collection("users").document(AuthenticationManager.shared.getUserId()!)
+
+        if isFavorite {
+           // Add the restaurantId to the user's favorites list
+           userRef.updateData([
+               "favorites": FieldValue.arrayUnion([restaurantId])
+           ]) { error in
+               if let error = error {
+                   print("Error adding restaurant to favorites: \(error.localizedDescription)")
+                   completion(false)
+               } else {
+                   completion(true)
+               }
+           }
+        } else {
+           // Remove the restaurantId from the user's favorites list
+           userRef.updateData([
+               "favorites": FieldValue.arrayRemove([restaurantId])
+           ]) { error in
+               if let error = error {
+                   print("Error removing restaurant from favorites: \(error.localizedDescription)")
+                   completion(false)
+               } else {
+                   completion(true)
+               }
+           }
         }
     }
     

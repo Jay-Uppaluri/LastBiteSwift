@@ -7,6 +7,7 @@ import FirebaseFirestore
 struct RestaurantCardView: View {
     var restaurant: Restaurant
     @State private var isHeartToggled = false
+    @EnvironmentObject var userService: UserService
     
     var body: some View {
         NavigationLink(destination: RestaurantView(restaurant: restaurant)) {
@@ -22,6 +23,15 @@ struct RestaurantCardView: View {
                             Spacer()
                             Button(action: {
                                 self.isHeartToggled.toggle()
+                                userService.updateUserFavorites(restaurantId: restaurant.id ?? "", isFavorite: isHeartToggled) { success in
+                                    if success {
+                                        print("User's favorites updated successfully.")
+                                    } else {
+                                        print("Error updating user's favorites.")
+                                        // You can also toggle the isHeartToggled back to the previous state if the operation fails
+                                        self.isHeartToggled.toggle()
+                                    }
+                                }
                             }) {
                                 if isHeartToggled {
                                     Image("heart.fill.remix")
@@ -87,6 +97,7 @@ struct RestaurantCardView: View {
 
 struct RestaurantCardView_Previews: PreviewProvider {
     static var previews: some View {
-        RestaurantCardView(restaurant: Restaurant(id: UUID().uuidString, name: "Restaurant 1", createdOn: Timestamp(), location: GeoPoint(latitude: 0, longitude: 0), ordersRemaining: 0, rating: 4.9, description: "A great restaurant", price: 3.98, ordersLeft: 3, address: "421 East Falls Lane", type: "Healthy"))
+        RestaurantCardView(restaurant: Restaurant(name: "Restaurant 1", createdOn: Timestamp(), location: GeoPoint(latitude: 0, longitude: 0), ordersRemaining: 0, rating: 4.9, description: "A great restaurant", price: 3.98, ordersLeft: 3, address: "421 East Falls Lane", type: "Healthy"))
+            .environmentObject(UserService())
     }
 }

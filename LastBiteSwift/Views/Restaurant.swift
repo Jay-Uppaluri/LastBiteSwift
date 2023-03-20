@@ -104,7 +104,7 @@ struct RestaurantView: View {
 
                             struct RestaurantView_Previews: PreviewProvider {
                                 static var previews: some View {
-                                    RestaurantView(restaurant: Restaurant(id: "1", name: "Test Restaurant", createdOn: Timestamp(), location: GeoPoint(latitude: 37.7749, longitude: -122.4194), ordersRemaining: 10, rating: 4.5, description: "This is a test restaurant.", price: 25.0, ordersLeft: 5, address: "test", type: "Pizza"))
+                                    RestaurantView(restaurant: Restaurant(name: "Test Restaurant", createdOn: Timestamp(), location: GeoPoint(latitude: 37.7749, longitude: -122.4194), ordersRemaining: 10, rating: 4.5, description: "This is a test restaurant.", price: 25.0, ordersLeft: 5, address: "test", type: "Pizza"))
                                 }
                             }
 

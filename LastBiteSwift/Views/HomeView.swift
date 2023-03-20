@@ -45,6 +45,7 @@ struct IconTextField: View {
     }
 
 struct HomeView: View {
+    @StateObject var userService = UserService()
     @ObservedObject private var viewModel = HomeViewModel()
     @State private var selectedTab = 0
     @State private var searchplaceholder = ""
@@ -52,10 +53,8 @@ struct HomeView: View {
         let restaurants = viewModel.restaurants
         let pizza = restaurants.filter{ $0.type.contains("pizza") }
         let healthy = restaurants.filter{ $0.type.contains("healthy") }
-        let fastFood = restaurants.filter {
-            print("Restaurant type: \($0.type)")
-            return $0.type.contains("fast food")
-        }
+        let fastFood = restaurants.filter { $0.type.contains("fast food") }
+        
         NavigationView {
         TabView(selection: $selectedTab) {
             
@@ -154,6 +153,7 @@ struct HomeView: View {
         .onAppear() {
             self.viewModel.fetchData()
         }
+        .environmentObject(userService)
         //only for ios 16.0
         //.toolbarBackground(Color.white, for: .tabBar)
     }

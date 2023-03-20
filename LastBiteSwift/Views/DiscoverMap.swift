@@ -10,6 +10,15 @@ import FirebaseFirestore
 import Foundation
 import MapKit
 
+extension MKCoordinateRegion: Equatable {
+    public static func == (lhs: MKCoordinateRegion, rhs: MKCoordinateRegion) -> Bool {
+        return lhs.center.latitude == rhs.center.latitude &&
+            lhs.center.longitude == rhs.center.longitude &&
+            lhs.span.latitudeDelta == rhs.span.latitudeDelta &&
+            lhs.span.longitudeDelta == rhs.span.longitudeDelta
+    }
+}
+
 struct ContentView: View {
     @StateObject var viewModel = HomeViewModel()
     @State private var region = MKCoordinateRegion(
@@ -19,16 +28,23 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            Map(coordinateRegion: $region, annotationItems: viewModel.restaurants) { restaurant in
+            Map(coordinateRegion: $region, annotationItems: viewModel.annotationsForVisibleRegion(region: region)) { restaurant in
                 MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: restaurant.location.latitude, longitude: restaurant.location.longitude)) {
                     MarkerView(restaurant: restaurant)
                 }
             }
             .onAppear(perform: viewModel.fetchData)
             .edgesIgnoringSafeArea(.top)
+            .onChange(of: region) { newRegion in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    viewModel.fetchData();
+                }
+            }
         }
     }
 }
+
+
 
 struct MarkerView: View {
     let restaurant: Restaurant
