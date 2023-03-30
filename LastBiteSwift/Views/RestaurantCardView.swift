@@ -6,12 +6,14 @@ import FirebaseFirestore
 
 struct RestaurantCardView: View {
     var restaurant: Restaurant
-    @EnvironmentObject var userService: UserService
     @State private var isHeartToggled: Bool
+    var onHeartToggle: (() -> Void)? = nil
+    @EnvironmentObject var userService: UserService
     
-    init(restaurant: Restaurant, isHeartToggled: Bool) {
+    init(restaurant: Restaurant, isHeartToggled: Bool, onHeartToggle: (() -> Void)? = nil) {
         self.restaurant = restaurant
-        self._isHeartToggled = State(initialValue: isHeartToggled)
+        _isHeartToggled = State(initialValue: isHeartToggled)
+        self.onHeartToggle = onHeartToggle
     }
     
     var body: some View {
@@ -27,17 +29,18 @@ struct RestaurantCardView: View {
                         HStack {
                             Spacer()
                             Button(action: {
-                                self.isHeartToggled.toggle()
-                                userService.updateUserFavorites(restaurantId: restaurant.id ?? "", isFavorite: isHeartToggled) { success in
-                                    if success {
-                                        print("User's favorites updated successfully.")
-                                    } else {
-                                        print("Error updating user's favorites.")
-                                        // You can also toggle the isHeartToggled back to the previous state if the operation fails
-                                        self.isHeartToggled.toggle()
-                                    }
-                                }
-                            }) {
+                                 self.isHeartToggled.toggle()
+                                 userService.updateUserFavorites(restaurantId: restaurant.id ?? "", isFavorite: isHeartToggled) { success in
+                                     if success {
+                                         print("User's favorites updated successfully.")
+                                         onHeartToggle?()
+                                     } else {
+                                         print("Error updating user's favorites.")
+                                         // You can also toggle the isHeartToggled back to the previous state if the operation fails
+                                         isHeartToggled.toggle()
+                                     }
+                                 }
+                             }) {
                                 if isHeartToggled {
                                     Image("heart.fill.remix")
                                         .resizable()

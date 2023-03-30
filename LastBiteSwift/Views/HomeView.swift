@@ -146,6 +146,8 @@ struct HomeView: View {
                 .tag(1)
             
             FavoritesView()
+                .environmentObject(userService)
+                .environmentObject(viewModel)
                 .tabItem {
                     Image(systemName: "heart")
                     Text("Favorites")

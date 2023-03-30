@@ -59,40 +59,44 @@ struct CardLarge: View {
     
     
 struct FavoritesView: View {
-    @State private var searchplaceholder = ""
+    @EnvironmentObject var userService: UserService
+    @EnvironmentObject var homeViewModel: HomeViewModel
+    @State private var favorites: [String] = []
+    
+    var favoriteRestaurants: [Restaurant] {
+        return homeViewModel.restaurants.filter { restaurant in
+            favorites.contains(restaurant.id ?? "")
+        }
+    }
+    
     var body: some View {
-        
-        ScrollView{
-            VStack(){
+            VStack {
+                Text("Your Favorite Restaurants")
+                    .font(.title)
+                    .padding()
                 
-                Text("Favorites")
-                    .font(.custom("DMSans-Bold", size: 20))
-                    .foregroundColor(Color("AccentColor"))
-                    .frame(width: 100, height: 24)
-                
-                Spacer().frame(height: 24)
-                
-                IconTextField(icon: "magnifyingglass", text: $searchplaceholder)
-                
-                Spacer().frame(height: 24)
-                
-                
-                VStack{
-                    CardLarge()
-                    Spacer().frame(height: 24)
-                    CardLarge()
-                    Spacer().frame(height: 24)
-                    CardLarge()
-                    Spacer().frame(height: 24)
-                    CardLarge()
-                    Spacer().frame(height: 24)
-                    CardLarge()
+                ScrollView {
+                    VStack {
+                        ForEach(favoriteRestaurants) { restaurant in
+                            let isHeartToggled = favorites.contains(restaurant.id ?? "")
+                            RestaurantCardView(restaurant: restaurant, isHeartToggled: isHeartToggled) {
+                                if let index = favorites.firstIndex(of: restaurant.id ?? "") {
+                                    favorites.remove(at: index)
+                                }
+                            }
+                            .padding(.bottom)
+                        }
+                    }
                 }
             }
-        }.padding()
+            .onAppear {
+                userService.fetchUserFavorites { fetchedFavorites in
+                    favorites = fetchedFavorites ?? []
+                }
+            }
+        }
     }
-}
-    
+
     struct FavoritesView_Previews: PreviewProvider {
         static var previews: some View {
             FavoritesView()
