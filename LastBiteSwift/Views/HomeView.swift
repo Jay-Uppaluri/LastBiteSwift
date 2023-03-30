@@ -150,8 +150,14 @@ struct HomeView: View {
                 .tag(3)
         }
         .accentColor(Color("AccentColor"))
-        .onAppear() {
-            self.viewModel.fetchData()
+        .onAppear {
+            Task {
+                do {
+                    try await viewModel.fetchData()
+                } catch {
+                    print("Error fetching data: \(error)")
+                }
+            }
         }
         .environmentObject(userService)
         //only for ios 16.0

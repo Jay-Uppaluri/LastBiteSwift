@@ -33,16 +33,31 @@ struct ContentView: View {
                     MarkerView(restaurant: restaurant)
                 }
             }
-            .onAppear(perform: viewModel.fetchData)
+            .onAppear {
+                Task {
+                    do {
+                        try await viewModel.fetchData()
+                    } catch {
+                        print("Error fetching data: \(error)")
+                    }
+                }
+            }
             .edgesIgnoringSafeArea(.top)
             .onChange(of: region) { newRegion in
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    viewModel.fetchData();
+                    Task {
+                        do {
+                            try await viewModel.fetchData()
+                        } catch {
+                            print("Error fetching data: \(error)")
+                        }
+                    }
                 }
             }
         }
     }
 }
+
 
 
 
