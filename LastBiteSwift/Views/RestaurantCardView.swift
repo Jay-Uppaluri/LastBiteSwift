@@ -6,8 +6,13 @@ import FirebaseFirestore
 
 struct RestaurantCardView: View {
     var restaurant: Restaurant
-    @State private var isHeartToggled = false
     @EnvironmentObject var userService: UserService
+    @State private var isHeartToggled: Bool
+    
+    init(restaurant: Restaurant, isHeartToggled: Bool) {
+        self.restaurant = restaurant
+        self._isHeartToggled = State(initialValue: isHeartToggled)
+    }
     
     var body: some View {
         NavigationLink(destination: RestaurantView(restaurant: restaurant)) {
@@ -97,7 +102,7 @@ struct RestaurantCardView: View {
 
 struct RestaurantCardView_Previews: PreviewProvider {
     static var previews: some View {
-        RestaurantCardView(restaurant: Restaurant(name: "Restaurant 1", createdOn: Timestamp(), location: GeoPoint(latitude: 0, longitude: 0), ordersRemaining: 0, rating: 4.9, description: "A great restaurant", price: 3.98, ordersLeft: 3, address: "421 East Falls Lane", type: "Healthy"))
+        RestaurantCardView(restaurant: Restaurant(name: "Restaurant 1", createdOn: Timestamp(), location: GeoPoint(latitude: 0, longitude: 0), ordersRemaining: 0, rating: 4.9, description: "A great restaurant", price: 3.98, ordersLeft: 3, address: "421 East Falls Lane", type: "Healthy"), isHeartToggled: false)
             .environmentObject(UserService())
     }
 }

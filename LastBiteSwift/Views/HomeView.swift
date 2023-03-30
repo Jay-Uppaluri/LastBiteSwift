@@ -6,17 +6,29 @@ import SwiftUI
 
 struct CardSet: View {
     let restaurants: [Restaurant]
-    
+    @State private var userFavorites: [String] = []
+    @State private var userService = UserService()
+
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 8) {
-                ForEach(restaurants) { restaurant in
-                    RestaurantCardView(restaurant: restaurant)
+                ForEach(restaurants.indices, id: \.self) { index in
+                    let isHeartToggled = userFavorites.contains(restaurants[index].id!)
+                    RestaurantCardView(restaurant: restaurants[index], isHeartToggled: isHeartToggled)
+                }
+            }
+        }
+        .onAppear {
+            userService.fetchUserFavorites { fetchedFavorites in
+                if let fetchedFavorites = fetchedFavorites {
+                    userFavorites = fetchedFavorites
                 }
             }
         }
     }
 }
+
+
 
 
 

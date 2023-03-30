@@ -61,6 +61,27 @@ class UserService: ObservableObject {
         }
     }
     
+    func fetchUserFavorites(completion: @escaping ([String]?) -> Void) {
+        guard let userId = AuthenticationManager.shared.getUserId() else {
+            completion(nil)
+            return
+        }
+        
+        let db = Firestore.firestore()
+        let userRef = db.collection("users").document(userId)
+        
+        userRef.getDocument { documentSnapshot, error in
+            if let error = error {
+                print("Error fetching user favorites: \(error.localizedDescription)")
+                completion(nil)
+            } else {
+                let favorites = documentSnapshot?.data()?["favorites"] as? [String] ?? []
+                completion(favorites)
+            }
+        }
+    }
+
+    
 }
 
 
