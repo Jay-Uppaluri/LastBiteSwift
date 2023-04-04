@@ -6,17 +6,40 @@ import SwiftUI
 
 struct CardSet: View {
     let restaurants: [Restaurant]
-    
+    @State private var userFavorites: [String] = []
+    @ObservedObject private var userService = UserService()
+
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 8) {
-                ForEach(restaurants) { restaurant in
-                    RestaurantCardView(restaurant: restaurant)
+                ForEach(restaurants.indices, id: \.self) { index in
+                    let isHeartToggled = Binding(
+                        get: { userService.favorites.contains(restaurants[index].id!) },
+                        set: { newValue in
+                            if newValue {
+                                userService.favorites.append(restaurants[index].id!)
+                            } else {
+                                userService.favorites.removeAll { $0 == restaurants[index].id! }
+                            }
+                        }
+                    )
+                    RestaurantCardView(restaurant: restaurants[index], isHeartToggled: isHeartToggled)
                 }
+
+            }
+        }
+        .onAppear {
+            userService.fetchUserFavorites { fetchedFavorites in
+                if let fetchedFavorites = fetchedFavorites {
+                    userService.favorites = fetchedFavorites
+                }
+                
             }
         }
     }
 }
+
+
 
 
 
@@ -45,6 +68,7 @@ struct IconTextField: View {
     }
 
 struct HomeView: View {
+    @StateObject var userService = UserService()
     @ObservedObject private var viewModel = HomeViewModel()
     @State private var selectedTab = 0
     @State private var searchplaceholder = ""
@@ -52,10 +76,8 @@ struct HomeView: View {
         let restaurants = viewModel.restaurants
         let pizza = restaurants.filter{ $0.type.contains("pizza") }
         let healthy = restaurants.filter{ $0.type.contains("healthy") }
-        let fastFood = restaurants.filter {
-            print("Restaurant type: \($0.type)")
-            return $0.type.contains("fast food")
-        }
+        let fastFood = restaurants.filter { $0.type.contains("fast food") }
+        
         NavigationView {
         TabView(selection: $selectedTab) {
             
@@ -135,6 +157,8 @@ struct HomeView: View {
                 .tag(1)
             
             FavoritesView()
+                .environmentObject(userService)
+                .environmentObject(viewModel)
                 .tabItem {
                     Image(systemName: "heart")
                     Text("Favorites")
@@ -151,9 +175,16 @@ struct HomeView: View {
                 .tag(3)
         }
         .accentColor(Color("AccentColor"))
-        .onAppear() {
-            self.viewModel.fetchData()
+        .onAppear {
+            Task {
+                do {
+                    try await viewModel.fetchData()
+                } catch {
+                    print("Error fetching data: \(error)")
+                }
+            }
         }
+        .environmentObject(userService)
         //only for ios 16.0
         //.toolbarBackground(Color.white, for: .tabBar)
     }

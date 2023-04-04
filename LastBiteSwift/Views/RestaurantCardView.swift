@@ -6,7 +6,17 @@ import FirebaseFirestore
 
 struct RestaurantCardView: View {
     var restaurant: Restaurant
-    @State private var isHeartToggled = false
+    @Binding private var isHeartToggled: Bool
+    var onHeartToggle: (() -> Void)? = nil
+    @EnvironmentObject var userService: UserService
+    
+    
+    init(restaurant: Restaurant, isHeartToggled: Binding<Bool>, onHeartToggle: (() -> Void)? = nil) {
+        self.restaurant = restaurant
+        _isHeartToggled = isHeartToggled
+        self.onHeartToggle = onHeartToggle
+    }
+
     
     var body: some View {
         NavigationLink(destination: RestaurantView(restaurant: restaurant)) {
@@ -21,8 +31,18 @@ struct RestaurantCardView: View {
                         HStack {
                             Spacer()
                             Button(action: {
-                                self.isHeartToggled.toggle()
-                            }) {
+                                 self.isHeartToggled.toggle()
+                                 userService.updateUserFavorites(restaurantId: restaurant.id ?? "", isFavorite: isHeartToggled) { success in
+                                     if success {
+                                         print("User's favorites updated successfully.")
+                                         onHeartToggle?()
+                                     } else {
+                                         print("Error updating user's favorites.")
+                                         // You can also toggle the isHeartToggled back to the previous state if the operation fails
+                                         isHeartToggled.toggle()
+                                     }
+                                 }
+                             }) {
                                 if isHeartToggled {
                                     Image("heart.fill.remix")
                                         .resizable()
@@ -87,6 +107,7 @@ struct RestaurantCardView: View {
 
 struct RestaurantCardView_Previews: PreviewProvider {
     static var previews: some View {
-        RestaurantCardView(restaurant: Restaurant(id: UUID().uuidString, name: "Restaurant 1", createdOn: Timestamp(), location: GeoPoint(latitude: 0, longitude: 0), ordersRemaining: 0, rating: 4.9, description: "A great restaurant", price: 3.98, ordersLeft: 3, address: "421 East Falls Lane", type: "Healthy"))
+        RestaurantCardView(restaurant: Restaurant(name: "Restaurant 1", createdOn: Timestamp(), location: GeoPoint(latitude: 0, longitude: 0), ordersRemaining: 0, rating: 4.9, description: "A great restaurant", price: 3.98, ordersLeft: 3, address: "421 East Falls Lane", type: "Healthy"), isHeartToggled: .constant(false))
+            .environmentObject(UserService())
     }
 }
