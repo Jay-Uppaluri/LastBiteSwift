@@ -78,7 +78,16 @@ struct FavoritesView: View {
                 ScrollView {
                     VStack {
                         ForEach(favoriteRestaurants) { restaurant in
-                            let isHeartToggled = favorites.contains(restaurant.id ?? "")
+                            let isHeartToggled = Binding(
+                                get: { favorites.contains(restaurant.id ?? "") },
+                                set: { newValue in
+                                    if newValue {
+                                        favorites.append(restaurant.id ?? "")
+                                    } else {
+                                        favorites.removeAll { $0 == restaurant.id! }
+                                    }
+                                }
+                            )
                             RestaurantCardView(restaurant: restaurant, isHeartToggled: isHeartToggled) {
                                 if let index = favorites.firstIndex(of: restaurant.id ?? "") {
                                     favorites.remove(at: index)

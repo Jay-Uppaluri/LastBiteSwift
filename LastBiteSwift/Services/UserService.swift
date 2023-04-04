@@ -10,6 +10,7 @@ import Firebase
 import FirebaseFirestore
 
 class UserService: ObservableObject {
+    @Published var favorites: [String] = []
     
     static func addUserToFirestore(uid: String, name: String, email: String) {
         let db = Firestore.firestore()
