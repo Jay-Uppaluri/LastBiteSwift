@@ -1,5 +1,5 @@
 const stripe = require('stripe')('sk_test_51Mm5YMJa42zn3jCLGFx3TVg1OsHS5QYnxZXXM3BksjK6muoefYGzLUHwujpZmT2SSAwx5CIlfXK6kWBhZ0rV9DLL000ufSmDld');
-const { logPaymentInfo } = require('./helper');
+const { logPaymentInfo, logOrdersInfo } = require('./helper');
 
 module.exports = async (req, res) => {
   // Verify the signature of the Stripe webhook event
@@ -16,9 +16,14 @@ module.exports = async (req, res) => {
   // Handle the payment_intent.succeeded event
   if (event.type === 'payment_intent.succeeded') {
     const paymentIntent = event.data.object;
+    const userId = paymentIntent.metadata.userId;
+    const restaurantId = paymentIntent.metadata.restaurantId;
   
     // Log the payment information to your Firestore database
     await logPaymentInfo(paymentIntent);
+    await logOrdersInfo(userId, restaurantId, paymentIntent, true)
+
+    
   
     console.log(`Payment intent succeeded: ${paymentIntent.id}`);
   }

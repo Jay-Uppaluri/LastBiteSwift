@@ -8,7 +8,7 @@ class PaymentService: ObservableObject {
 
   func preparePaymentSheet() {
       let userId = AuthenticationManager.shared.getUserId()
-      let paymentData = Payment(amount: 499, userId: userId!)
+      let paymentData = Payment(amount: 499, userId: userId!, restaurantId: "U7CAGHs9c4zFWuV4XByi")
       var request = URLRequest(url: backendCheckoutUrl)
       request.httpMethod = "POST"
       request.setValue("application/json", forHTTPHeaderField: "Content-Type")

@@ -1,6 +1,8 @@
 const { getFirestore } = require('firebase-admin/firestore');
 
 const db = getFirestore();
+const admin = require('firebase-admin');
+
 
 async function getCustomerIdFromDb(userId) {
   try {
@@ -50,8 +52,24 @@ async function logPaymentInfo(paymentIntent) {
   }
 }
 
+async function logOrdersInfo(userId, restaurantId, paymentIntentId, active) {
+  const ordersRef = db.collection("orders");
+
+  const newOrder = {
+    userId: userId,
+    restaurantId: restaurantId,
+    timestamp: admin.firestore.Timestamp.now(),
+    active: active,
+    paymentIntent: paymentIntentId
+  };
+
+  const orderDoc = await ordersRef.add(newOrder);
+  console.log(`Order logged with ID: ${orderDoc.id}`);
+}
+
 module.exports = {
   getCustomerIdFromDb,
   addCustomerIdToUserDocument,
-  logPaymentInfo
+  logPaymentInfo,
+  logOrdersInfo
 };

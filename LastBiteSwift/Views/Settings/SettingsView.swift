@@ -22,7 +22,21 @@ struct SettingsView: View {
                             Spacer()
                         }
                     }
-                    
+                    VStack(spacing: 20) {
+                        NavigationLink(destination:OrdersView()) {
+                            HStack {
+                                Text("Orders")
+                                    .font(.custom("DMSans-Regular", size: 18))
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                            }
+                            .foregroundColor(.black)
+                            .background(
+                                NavigationLink("", destination: OrdersView())
+                                    .opacity(0)
+                            )
+                        }
+                    }
                     //Item List
                     VStack(spacing:20){
                         NavigationLink(destination:AccountDetailsView()) {

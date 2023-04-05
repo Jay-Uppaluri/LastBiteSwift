@@ -45,8 +45,8 @@ struct Discover: View {
                     .foregroundColor(Color("AccentColor"))
                     .padding(.top)
                 
-                IconTextField(icon: "magnifyingglass", text: $searchplaceholder)
-                    .padding()
+//                IconTextField(icon: "magnifyingglass", text: $searchplaceholder)
+//                    .padding()
             }
             
             MapView()

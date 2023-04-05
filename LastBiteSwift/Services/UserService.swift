@@ -11,6 +11,14 @@ import FirebaseFirestore
 
 class UserService: ObservableObject {
     @Published var favorites: [String] = []
+
+    init() {
+        fetchUserFavorites { fetchedFavorites in
+            if let fetchedFavorites = fetchedFavorites {
+                self.favorites = fetchedFavorites
+            }
+        }
+    }
     
     static func addUserToFirestore(uid: String, name: String, email: String) {
         let db = Firestore.firestore()
