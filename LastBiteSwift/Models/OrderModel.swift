@@ -1,9 +1,9 @@
-// OrdersModel.swift
+import FirebaseFirestoreSwift
 import Foundation
 
-struct OrdersModel: Identifiable {
-    var id: String
-    var paymentIntent: [String: Any]
+struct OrdersModel: Identifiable, Codable {
+    @DocumentID var id: String?
+    var paymentIntentId: String
     var restaurantId: String
     var active: Bool
     var timestamp: Date

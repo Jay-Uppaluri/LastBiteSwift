@@ -60,7 +60,7 @@ async function logOrdersInfo(userId, restaurantId, paymentIntentId, active) {
     restaurantId: restaurantId,
     timestamp: admin.firestore.Timestamp.now(),
     active: active,
-    paymentIntent: paymentIntentId
+    paymentIntentId: paymentIntentId
   };
 
   const orderDoc = await ordersRef.add(newOrder);

@@ -15,7 +15,7 @@ struct RestaurantView: View {
     
     init(restaurant: Restaurant) {
         self.restaurant = restaurant
-        model.preparePaymentSheet()
+        model.preparePaymentSheet(restaurantId: restaurant.id!)
     }
 
     var body: some View {
@@ -112,7 +112,7 @@ struct RestaurantView: View {
                            }
                        }
                        .background(Color.white.edgesIgnoringSafeArea(.all))
-                       .onAppear { model.preparePaymentSheet() }
+                       .onAppear { model.preparePaymentSheet(restaurantId: restaurant.id!) }
                    }
                }
 

@@ -6,14 +6,12 @@ struct OrdersCardView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Order ID: \(order.id)")
-                .font(.headline)
-                .foregroundColor(Color("AccentColor"))
 
-            Text("Restaurant ID: \(order.restaurantId)")
+
+            Text("Restaurant Id: \(order.restaurantId)")
                 .font(.subheadline)
 
-            Text("Date: \(order.timestamp, formatter: DateFormatter.localizedDateFormatter)")
+            Text("Date: \(formattedDate(from: order.timestamp))")
                 .font(.subheadline)
 
             if order.active {
@@ -31,13 +29,12 @@ struct OrdersCardView: View {
         .cornerRadius(8)
         .shadow(radius: 4)
     }
-}
 
-extension DateFormatter {
-    static let localizedDateFormatter: DateFormatter = {
+    private func formattedDate(from date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .short
-        return dateFormatter
-    }()
+        return dateFormatter.string(from: date)
+    }
 }
+

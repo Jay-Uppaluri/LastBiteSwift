@@ -10,7 +10,7 @@ struct OrdersView: View {
                     .font(.title)
                     .bold()
 
-                ForEach(viewModel.orders.filter { $0.active }) { order in
+                ForEach(viewModel.orders.filter { $0.active }.sorted(by: { $0.timestamp > $1.timestamp })) { order in
                     OrdersCardView(order: order)
                         .padding(.bottom, 8)
                 }
@@ -19,7 +19,7 @@ struct OrdersView: View {
                     .font(.title)
                     .bold()
 
-                ForEach(viewModel.orders.filter { !$0.active }) { order in
+                ForEach(viewModel.orders.filter { !$0.active }.sorted(by: { $0.timestamp > $1.timestamp })) { order in
                     OrdersCardView(order: order)
                         .padding(.bottom, 8)
                 }

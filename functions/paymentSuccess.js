@@ -21,7 +21,7 @@ module.exports = async (req, res) => {
   
     // Log the payment information to your Firestore database
     await logPaymentInfo(paymentIntent);
-    await logOrdersInfo(userId, restaurantId, paymentIntent, true)
+    await logOrdersInfo(userId, restaurantId, paymentIntent.id, true)
 
     
   
