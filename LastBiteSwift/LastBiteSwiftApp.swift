@@ -26,7 +26,7 @@ struct LastBiteSwiftApp: App {
     var body: some Scene {
         let userService = UserService()
         WindowGroup {
-            HomeView()
+            RootView()
                 .environmentObject(userService)
         }
     }

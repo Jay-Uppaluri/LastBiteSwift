@@ -227,9 +227,14 @@ struct HomeView: View {
             }
         }
         .environmentObject(userService)
+        .edgesIgnoringSafeArea([.top])
         //only for ios 16.0
         //.toolbarBackground(Color.white, for: .tabBar)
     }
+        .navigationBarTitle("", displayMode: .inline)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
+        .edgesIgnoringSafeArea([.top])
     }
     
     private func handleSearch(searchText: String) {

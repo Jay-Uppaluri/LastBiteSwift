@@ -114,12 +114,15 @@ struct SettingsView: View {
                         }
                     }
                     
-                    VStack(spacing:20){
-                        HStack(){
-                            Text("Log Out")
-                                .font(.custom("DMSans-Regular", size: 18))
-                                .foregroundColor(.red)
-                            
+                    VStack(spacing: 20) {
+                        HStack() {
+                            Button(action: {
+                                AuthenticationManager.shared.signOut()
+                            }) {
+                                Text("Log Out")
+                                    .font(.custom("DMSans-Regular", size: 18))
+                                    .foregroundColor(.red)
+                            }
                             Spacer()
                         }
                     }

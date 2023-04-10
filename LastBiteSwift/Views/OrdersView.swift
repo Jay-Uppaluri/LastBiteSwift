@@ -1,8 +1,13 @@
 import SwiftUI
 
 struct OrdersView: View {
-    @StateObject private var viewModel = OrderViewModel()
+    let userId = AuthenticationManager.shared.getUserId()
+    @StateObject private var viewModel: OrderViewModel
 
+    init() {
+        let userId = AuthenticationManager.shared.getUserId() ?? ""
+        _viewModel = StateObject(wrappedValue: OrderViewModel(userId: userId))
+    }
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {

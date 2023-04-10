@@ -7,8 +7,10 @@ class OrderViewModel: ObservableObject {
     @Published var orders: [OrdersModel] = []
 
     private var db = Firestore.firestore()
+    private var userId: String // assuming you have the current user's ID available
 
-    init() {
+    init(userId: String) {
+        self.userId = userId
         Task {
             do {
                 try await fetchData()
@@ -19,11 +21,10 @@ class OrderViewModel: ObservableObject {
     }
 
     func fetchData() async throws {
-        let fetchedOrders = try await db.collection("orders").getDocuments().documents.compactMap { document in
+        let fetchedOrders = try await db.collection("orders").whereField("userId", isEqualTo: userId).getDocuments().documents.compactMap { document in
             try document.data(as: OrdersModel.self)
         }
 
         self.orders = fetchedOrders
     }
 }
-
