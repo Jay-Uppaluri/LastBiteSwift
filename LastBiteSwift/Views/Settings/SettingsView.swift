@@ -22,7 +22,21 @@ struct SettingsView: View {
                             Spacer()
                         }
                     }
-                    
+                    VStack(spacing: 20) {
+                        NavigationLink(destination:OrdersView()) {
+                            HStack {
+                                Text("Orders")
+                                    .font(.custom("DMSans-Regular", size: 18))
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                            }
+                            .foregroundColor(.black)
+                            .background(
+                                NavigationLink("", destination: OrdersView())
+                                    .opacity(0)
+                            )
+                        }
+                    }
                     //Item List
                     VStack(spacing:20){
                         NavigationLink(destination:AccountDetailsView()) {
@@ -100,12 +114,15 @@ struct SettingsView: View {
                         }
                     }
                     
-                    VStack(spacing:20){
-                        HStack(){
-                            Text("Log Out")
-                                .font(.custom("DMSans-Regular", size: 18))
-                                .foregroundColor(.red)
-                            
+                    VStack(spacing: 20) {
+                        HStack() {
+                            Button(action: {
+                                AuthenticationManager.shared.signOut()
+                            }) {
+                                Text("Log Out")
+                                    .font(.custom("DMSans-Regular", size: 18))
+                                    .foregroundColor(.red)
+                            }
                             Spacer()
                         }
                     }

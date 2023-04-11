@@ -24,8 +24,10 @@ struct LastBiteSwiftApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     var body: some Scene {
+        let userService = UserService()
         WindowGroup {
-            HomeView()
+            RootView()
+                .environmentObject(userService)
         }
     }
 }

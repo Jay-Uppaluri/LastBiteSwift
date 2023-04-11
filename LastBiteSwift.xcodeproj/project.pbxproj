@@ -37,6 +37,11 @@
 		C3041DC929C2CF0400E44A1F /* StripePaymentSheet in Frameworks */ = {isa = PBXBuildFile; productRef = C3041DC829C2CF0400E44A1F /* StripePaymentSheet */; };
 		C30F060C29A02382007D5807 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30F060B29A02382007D5807 /* HomeViewModel.swift */; };
 		C30F060E29A03883007D5807 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30F060D29A03883007D5807 /* HomeView.swift */; };
+		C33A957129E487D0001F4594 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33A957029E487D0001F4594 /* RootView.swift */; };
+		C346C03F29DD026E00D946BA /* OrderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C346C03E29DD026E00D946BA /* OrderModel.swift */; };
+		C346C04129DD028B00D946BA /* OrdersCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C346C04029DD028B00D946BA /* OrdersCardView.swift */; };
+		C346C04329DD02A400D946BA /* OrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C346C04229DD02A400D946BA /* OrdersView.swift */; };
+		C346C04529DD0DDC00D946BA /* OrderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C346C04429DD0DDC00D946BA /* OrderViewModel.swift */; };
 		C3558D4029C3860600DD76B0 /* Stripe in Frameworks */ = {isa = PBXBuildFile; productRef = C3558D3F29C3860600DD76B0 /* Stripe */; };
 		C3558D4229C3907200DD76B0 /* PaymentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3558D4129C3907200DD76B0 /* PaymentModel.swift */; };
 		C36DEAE829A0090500AAF23D /* RestaurantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36DEAE729A0090500AAF23D /* RestaurantModel.swift */; };
@@ -89,6 +94,11 @@
 		C30F060B29A02382007D5807 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		C30F060D29A03883007D5807 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		C30F061129A04434007D5807 /* LastBiteSwift.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LastBiteSwift.entitlements; sourceTree = "<group>"; };
+		C33A957029E487D0001F4594 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		C346C03E29DD026E00D946BA /* OrderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderModel.swift; sourceTree = "<group>"; };
+		C346C04029DD028B00D946BA /* OrdersCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersCardView.swift; sourceTree = "<group>"; };
+		C346C04229DD02A400D946BA /* OrdersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersView.swift; sourceTree = "<group>"; };
+		C346C04429DD0DDC00D946BA /* OrderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewModel.swift; sourceTree = "<group>"; };
 		C3558D4129C3907200DD76B0 /* PaymentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentModel.swift; sourceTree = "<group>"; };
 		C36DEAE729A0090500AAF23D /* RestaurantModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantModel.swift; sourceTree = "<group>"; };
 		C36DEAEF29A00ED400AAF23D /* RestaurantCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCardView.swift; sourceTree = "<group>"; };
@@ -201,6 +211,7 @@
 				C36DEAE729A0090500AAF23D /* RestaurantModel.swift */,
 				1C6C4A1229BBA31300430C90 /* UserModel.swift */,
 				C3558D4129C3907200DD76B0 /* PaymentModel.swift */,
+				C346C03E29DD026E00D946BA /* OrderModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -210,6 +221,7 @@
 			children = (
 				C30F060B29A02382007D5807 /* HomeViewModel.swift */,
 				1C6C4A1429BBA37B00430C90 /* UserViewModel.swift */,
+				C346C04429DD0DDC00D946BA /* OrderViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -228,6 +240,9 @@
 				C39D306C29C57CDA00FA1395 /* CheckoutView.swift */,
 				C39D307229C649B500FA1395 /* Restaurant.swift */,
 				C39D307629C67A3D00FA1395 /* DiscoverMap.swift */,
+				C346C04029DD028B00D946BA /* OrdersCardView.swift */,
+				C346C04229DD02A400D946BA /* OrdersView.swift */,
+				C33A957029E487D0001F4594 /* RootView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -385,11 +400,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C346C03F29DD026E00D946BA /* OrderModel.swift in Sources */,
 				C30F060C29A02382007D5807 /* HomeViewModel.swift in Sources */,
 				C39D306D29C57CDA00FA1395 /* CheckoutView.swift in Sources */,
 				1C409BDC2994B92E003F578E /* FavoritesView.swift in Sources */,
 				1C409BD62994A20F003F578E /* SuccessView.swift in Sources */,
 				C3A4C52929C42177007E59F1 /* AuthenticationManager.swift in Sources */,
+				C33A957129E487D0001F4594 /* RootView.swift in Sources */,
 				C3558D4229C3907200DD76B0 /* PaymentModel.swift in Sources */,
 				2C19DBE7299EB2E300BA9FC6 /* HelpCenter.swift in Sources */,
 				2C19DBE9299EB32700BA9FC6 /* Components.swift in Sources */,
@@ -401,8 +418,10 @@
 				1C6C4A1529BBA37B00430C90 /* UserViewModel.swift in Sources */,
 				2C2AC23B29A18D6B0002BBD9 /* SplashScreenView.swift in Sources */,
 				1C409BC52994635E003F578E /* SignUp.swift in Sources */,
+				C346C04329DD02A400D946BA /* OrdersView.swift in Sources */,
 				1C409BC72994648F003F578E /* SettingsView.swift in Sources */,
 				2C2AC22D29A18C180002BBD9 /* EditPhoneNumber.swift in Sources */,
+				C346C04129DD028B00D946BA /* OrdersCardView.swift in Sources */,
 				C3A4C52629C3DB23007E59F1 /* UserService.swift in Sources */,
 				2C2AC23729A18C530002BBD9 /* NewPaymentMethod.swift in Sources */,
 				C39D307329C649B500FA1395 /* Restaurant.swift in Sources */,
@@ -414,6 +433,7 @@
 				2C2AC23529A18C530002BBD9 /* PaymentMethod.swift in Sources */,
 				C30F060E29A03883007D5807 /* HomeView.swift in Sources */,
 				C3F99B07299300B400025BEB /* LastBiteSwiftApp.swift in Sources */,
+				C346C04529DD0DDC00D946BA /* OrderViewModel.swift in Sources */,
 				2C19DBEB299EB67B00BA9FC6 /* Discover.swift in Sources */,
 				1CEA85B2299400FB0082F477 /* VerificationPage.swift in Sources */,
 				1C409BD82994AFA1003F578E /* NotificationsView.swift in Sources */,

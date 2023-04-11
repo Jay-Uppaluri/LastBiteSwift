@@ -16,7 +16,8 @@ module.exports = async (req, res) => {
     {apiVersion: '2022-11-15'}
   );
   const data = req.body;
-  const amount = data.amount
+  const amount = data.amount;
+  const restaurantId = data.restaurantId;
   if (!validAmounts.includes(amount)) {
     Response.status(400).send("Invalid payment amount");
     return;
@@ -31,6 +32,7 @@ module.exports = async (req, res) => {
     },
     metadata: {
       userId: userId,
+      restaurantId: restaurantId
     },
   });
 

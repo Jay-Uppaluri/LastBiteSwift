@@ -6,8 +6,7 @@ import SwiftUI
 
 struct CardSet: View {
     let restaurants: [Restaurant]
-    @State private var userFavorites: [String] = []
-    @ObservedObject private var userService = UserService()
+    @EnvironmentObject private var userService: UserService
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -43,17 +42,23 @@ struct CardSet: View {
 
 
 
+
+
+
     
 struct IconTextField: View {
-        var icon: String
-        @Binding var text: String
+    var icon: String
+    @Binding var text: String
+    var onEditingChanged: (String) -> Void
         
         var body: some View {
             HStack(spacing: 10) {
                 Image(systemName: icon)
                     .foregroundColor(Color("PlaceholderText"))
                 
-                TextField("Search for Places or Services", text: $text)
+                TextField("Search for Places or Services", text: $text, onEditingChanged: { _ in }) { 
+                    onEditingChanged(text)
+                }
                     .padding(.leading, 0)
                     .font(.custom("DMSans-Bold", size: 16))
                     .frame(height: 32)
@@ -67,11 +72,29 @@ struct IconTextField: View {
         }
     }
 
+struct AutocompleteDropdown: View {
+    var results: [Restaurant]
+    var body: some View {
+        VStack {
+            ForEach(results) { restaurant in
+                Text(restaurant.name)
+                    .padding(.vertical, 8)
+                    .padding(.horizontal, 16)
+            }
+        }
+        .background(Color.white)
+        .cornerRadius(8)
+        .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 5)
+    }
+}
+
 struct HomeView: View {
-    @StateObject var userService = UserService()
+    @State private var searchResults: [Restaurant] = []
+    @State private var showDropdown: Bool = false
     @ObservedObject private var viewModel = HomeViewModel()
     @State private var selectedTab = 0
     @State private var searchplaceholder = ""
+    @EnvironmentObject var userService: UserService
     var body: some View {
         let restaurants = viewModel.restaurants
         let pizza = restaurants.filter{ $0.type.contains("pizza") }
@@ -93,8 +116,27 @@ struct HomeView: View {
                         Spacer().frame(height: 24)
                         
                         //this isn't showing
-                        IconTextField(icon: "magnifyingglass", text: $searchplaceholder)
+                        IconTextField(icon: "magnifyingglass", text: $searchplaceholder) { searchText in
+                            handleSearch(searchText: searchText)
+                        }
                         
+                    }
+                    
+                    if showDropdown {
+                        VStack(alignment: .leading, spacing: 4) {
+                            ForEach(searchResults, id: \.id) { restaurant in
+                                NavigationLink(destination: RestaurantView(restaurant: restaurant)) {
+                                    Text(restaurant.name)
+                                        .foregroundColor(.primary)
+                                        .padding(.vertical, 8)
+                                }
+                                .buttonStyle(PlainButtonStyle()) // To avoid the blue color on the text
+                            }
+                        }
+                        .padding()
+                        .background(Color(.systemBackground))
+                        .cornerRadius(8)
+                        .shadow(radius: 4)
                     }
                     
                     Spacer().frame(height: 24)
@@ -185,12 +227,32 @@ struct HomeView: View {
             }
         }
         .environmentObject(userService)
+        .edgesIgnoringSafeArea([.top])
         //only for ios 16.0
         //.toolbarBackground(Color.white, for: .tabBar)
     }
+        .navigationBarTitle("", displayMode: .inline)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
+        .edgesIgnoringSafeArea([.top])
+    }
+    
+    private func handleSearch(searchText: String) {
+        let restaurants = viewModel.restaurants
+        if searchText.isEmpty {
+            showDropdown = false
+            return
+        }
+        
+        searchResults = restaurants.filter { restaurant in
+            restaurant.name.lowercased().contains(searchText.lowercased())
+        }
+        
+        showDropdown = !searchResults.isEmpty
     }
         
 }
+
 
 struct HomeView_Previews: PreviewProvider {
         static var previews: some View {
