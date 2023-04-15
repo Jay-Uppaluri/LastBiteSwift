@@ -8,5 +8,6 @@ struct OrdersModel: Identifiable, Codable {
     var status: String
     var timestamp: Date
     var userId: String
+    var amount: Int
 }
 

@@ -65,11 +65,12 @@ module.exports = async (req, res) => {
       
         console.log(response.result);
         console.log(`Order created on Square: ${response.result.order.id}`);
-        await logOrdersInfo(userId, restaurantId, paymentIntent.id, "OPEN", response.result.order.id);
+        await logOrdersInfo(userId, restaurantId, paymentIntent.id, "OPEN", response.result.order.id, paymentIntent.amount);
 
       } catch(error) {
+        // here we refund the customer 
         console.log(error);
-        await logOrdersInfo(userId, restaurantId, paymentIntent.id, "failed", response.result.order.id)
+        //await logOrdersInfo(userId, restaurantId, paymentIntent.id, "failed", response.result.order.id)
       }
     }
 

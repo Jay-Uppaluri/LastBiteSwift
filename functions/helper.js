@@ -49,7 +49,7 @@ async function addCustomerIdToUserDocument(userId, customerId) {
 
 async function logPaymentInfo(paymentIntent) {
   try {
-    const paymentRef = db.collection('Payments').doc(paymentIntent.id);
+    const paymentRef = db.collection('paymentIntents').doc(paymentIntent.id);
     await paymentRef.set({
       amount: paymentIntent.amount,
       currency: paymentIntent.currency,
@@ -64,7 +64,7 @@ async function logPaymentInfo(paymentIntent) {
   }
 }
 
-async function logOrdersInfo(userId, restaurantId, paymentIntentId, status, orderId) {
+async function logOrdersInfo(userId, restaurantId, paymentIntentId, status, orderId, amount) {
   const ordersRef = db.collection("orders");
 
   const newOrder = {
@@ -72,7 +72,8 @@ async function logOrdersInfo(userId, restaurantId, paymentIntentId, status, orde
     restaurantId: restaurantId,
     timestamp: admin.firestore.Timestamp.now(),
     status: status,
-    paymentIntentId: paymentIntentId
+    paymentIntentId: paymentIntentId,
+    amount: amount,
   };
 
   await ordersRef.doc(orderId).set(newOrder);
