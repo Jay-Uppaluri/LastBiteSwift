@@ -3,7 +3,7 @@ const { getFirestore } = require('firebase-admin/firestore');
 const db = getFirestore();
 const admin = require('firebase-admin');
 
-
+// BACKEND, hosted on firebase functions (serverless)
 async function getCustomerIdFromDb(userId) {
   try {
     const userRef = db.collection("users").doc(userId);
@@ -21,6 +21,18 @@ async function getCustomerIdFromDb(userId) {
     return null;
   }
 }
+
+async function getPointOfSaleInfo(restaurantId) {
+  const docRef = db.collection('restaurants').doc(restaurantId);
+  const doc = await docRef.get();
+
+  if (!doc.exists) {
+    throw new Error(`No restaurant found for ID: ${restaurantId}`);
+  }
+
+  return doc.data().pointOfSaleInfo;
+}
+
 
 async function addCustomerIdToUserDocument(userId, customerId) {
   try {
@@ -71,5 +83,6 @@ module.exports = {
   getCustomerIdFromDb,
   addCustomerIdToUserDocument,
   logPaymentInfo,
-  logOrdersInfo
+  logOrdersInfo,
+  getPointOfSaleInfo
 };

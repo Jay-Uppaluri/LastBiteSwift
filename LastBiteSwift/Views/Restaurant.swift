@@ -118,6 +118,26 @@ struct RestaurantView: View {
 
                struct RestaurantView_Previews: PreviewProvider {
                    static var previews: some View {
-                       RestaurantView(restaurant: Restaurant(name: "Test Restaurant", createdOn: Timestamp(), location: GeoPoint(latitude: 37.7749, longitude: -122.4194), ordersRemaining: 10, rating: 4.5, description: "This is a test restaurant.", price: 25.0, ordersLeft: 5, address: "test", type: "Pizza"))
+                       RestaurantCardView(
+                           restaurant: Restaurant(
+                               name: "Restaurant 1",
+                               createdOn: Timestamp(),
+                               location: GeoPoint(latitude: 0, longitude: 0),
+                               ordersRemaining: 0,
+                               rating: 4.9,
+                               description: "A great restaurant",
+                               price: 3.98,
+                               ordersLeft: 3,
+                               address: "421 East Falls Lane",
+                               type: "Healthy",
+                               pointOfSaleInfo: Restaurant.PoSInfo(
+                                   system: "square",
+                                   locationId: "TEST_SQUARE_LOCATION_ID",
+                                   restaurantExternalId: nil
+                               )
+                           ),
+                           isHeartToggled: .constant(false)
+                       )
+                       .environmentObject(UserService())
                    }
                }
