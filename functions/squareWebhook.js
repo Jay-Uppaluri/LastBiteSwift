@@ -14,8 +14,7 @@ const client = new Client({
 });
 
 const squareWebhookListener = async (req, res) => {
-    // You should validate the webhook signature here
-    // Check the Square API documentation for more information
+    //todo: validate webhook signature 
 
     if (req.body.type === 'order.updated') {
       const orderId = req.body.data.id;
