@@ -1,7 +1,4 @@
-
-
 import Foundation
-
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
@@ -18,5 +15,11 @@ struct Restaurant: Identifiable, Codable {
     var distanceFromUser: Double?
     let address: String
     let type: String
+    let pointOfSaleInfo: PoSInfo
+    
+    struct PoSInfo: Codable {
+        let system: String
+        let locationId: String?
+        let restaurantExternalId: String?
+    }
 }
-
