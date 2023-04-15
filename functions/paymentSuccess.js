@@ -31,7 +31,6 @@ module.exports = async (req, res) => {
 
     // Log the payment information to your Firestore database
     await logPaymentInfo(paymentIntent);
-    await logOrdersInfo(userId, restaurantId, paymentIntent.id, true)
 
     const pointOfSaleInfo = await getPointOfSaleInfo(restaurantId);
 
@@ -66,10 +65,14 @@ module.exports = async (req, res) => {
       
         console.log(response.result);
         console.log(`Order created on Square: ${response.result.order.id}`);
+        await logOrdersInfo(userId, restaurantId, paymentIntent.id, "OPEN", response.result.order.id);
+
       } catch(error) {
         console.log(error);
+        await logOrdersInfo(userId, restaurantId, paymentIntent.id, "failed", response.result.order.id)
       }
     }
+
 
 
 

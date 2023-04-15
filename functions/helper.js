@@ -64,20 +64,21 @@ async function logPaymentInfo(paymentIntent) {
   }
 }
 
-async function logOrdersInfo(userId, restaurantId, paymentIntentId, active) {
+async function logOrdersInfo(userId, restaurantId, paymentIntentId, status, orderId) {
   const ordersRef = db.collection("orders");
 
   const newOrder = {
     userId: userId,
     restaurantId: restaurantId,
     timestamp: admin.firestore.Timestamp.now(),
-    active: active,
+    status: status,
     paymentIntentId: paymentIntentId
   };
 
-  const orderDoc = await ordersRef.add(newOrder);
-  console.log(`Order logged with ID: ${orderDoc.id}`);
+  await ordersRef.doc(orderId).set(newOrder);
+  console.log(`Order logged with ID: ${orderId}`);
 }
+
 
 module.exports = {
   getCustomerIdFromDb,

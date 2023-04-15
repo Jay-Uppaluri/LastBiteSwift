@@ -14,12 +14,12 @@ struct OrdersCardView: View {
             Text("Date: \(formattedDate(from: order.timestamp))")
                 .font(.subheadline)
 
-            if order.active {
-                Text("Status: Active")
+            if order.status == "OPEN" || order.status == "PROPOSED" {
+                Text("Status: \(order.status)")
                     .font(.subheadline)
                     .foregroundColor(.green)
             } else {
-                Text("Status: Inactive")
+                Text("Status: \(order.status)")
                     .font(.subheadline)
                     .foregroundColor(.red)
             }
