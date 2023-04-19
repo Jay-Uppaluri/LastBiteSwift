@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Restaurant Sales Graphs</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+  <style>
+    /* Add some basic styling to the canvas container */
+    #canvas-container {
+      width: 80%;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Restaurant Sales Graphs</h1>
+  <div id="canvas-container">
+    <canvas id="chart"></canvas>
+  </div>
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+
+</html>

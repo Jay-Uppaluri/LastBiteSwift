@@ -1,13 +1,7 @@
 const stripe = require('stripe')('sk_test_51Mm5YMJa42zn3jCLGFx3TVg1OsHS5QYnxZXXM3BksjK6muoefYGzLUHwujpZmT2SSAwx5CIlfXK6kWBhZ0rV9DLL000ufSmDld');
-const { logPaymentInfo, logOrdersInfo, getPointOfSaleInfo } = require('./helper');
+const { logPaymentInfo, logOrdersInfo, getPointOfSaleInfo, getRestaurantAccessToken } = require('./helper');
 const { Client } = require('square');
 
-const accessToken = 'EAAAEAT_ae3DaTY2Bg6gyWLDoHA8M2FqiWRJ3NycF8Ona7iqQI1FOV2Ke_GhEqI5';
-
-const client = new Client({
-  environment: 'sandbox', // Or 'production' when not testing
-  accessToken: accessToken,
-});
 
 
 module.exports = async (req, res) => {
@@ -28,6 +22,14 @@ module.exports = async (req, res) => {
     const paymentIntent = event.data.object;
     const userId = paymentIntent.metadata.userId;
     const restaurantId = paymentIntent.metadata.restaurantId;
+
+    const accessToken = await getRestaurantAccessToken(restaurantId);
+
+    const client = new Client({
+      environment: 'sandbox', // Or 'production' when not testing
+      accessToken: accessToken,
+    });
+
 
     // Log the payment information to your Firestore database
     await logPaymentInfo(paymentIntent);
@@ -60,7 +62,10 @@ module.exports = async (req, res) => {
               }
             ],
           },
-          idempotencyKey: paymentIntent.id
+          metadata: {
+            restaurantId: restaurantId,
+          },
+          idempotencyKey: paymentIntent.id,
         });
       
         console.log(response.result);

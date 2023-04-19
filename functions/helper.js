@@ -22,6 +22,37 @@ async function getCustomerIdFromDb(userId) {
   }
 }
 
+async function storeRestaurantAccessToken(restaurantId, accessToken, merchantId) {
+  await db.collection('restaurants').doc(restaurantId).update({
+    accessToken: accessToken,
+    merchantId: merchantId
+  });
+
+  console.log(`Access token stored for restaurant: ${restaurantId}`);
+}
+
+async function getRestaurantIdByMerchantId(merchantId) {
+  const querySnapshot = await db.collection('restaurants').where('merchantId', '==', merchantId).get();
+
+  if (querySnapshot.empty) {
+    throw new Error(`No restaurant found for merchant ID: ${merchantId}`);
+  }
+
+  return querySnapshot.docs[0].id;
+}
+
+
+async function getRestaurantAccessToken(restaurantId) {
+  const docRef = db.collection('restaurants').doc(restaurantId);
+  const doc = await docRef.get();
+
+  if (!doc.exists) {
+    throw new Error(`No restaurant found for ID: ${restaurantId}`);
+  }
+
+  return doc.data().accessToken;
+}
+
 async function getPointOfSaleInfo(restaurantId) {
   const docRef = db.collection('restaurants').doc(restaurantId);
   const doc = await docRef.get();
@@ -86,5 +117,8 @@ module.exports = {
   addCustomerIdToUserDocument,
   logPaymentInfo,
   logOrdersInfo,
-  getPointOfSaleInfo
+  getPointOfSaleInfo,
+  storeRestaurantAccessToken,
+  getRestaurantAccessToken,
+  getRestaurantIdByMerchantId
 };
