@@ -1,27 +1,59 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8">
+    <title>Restaurant Sales Graphs</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+    <style>
+      /* Add some basic styling to the canvas container */
+      #canvas-container {
+        width: 80%;
+        margin: 0 auto;
+      }
+  
+      #total-amount-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+  
+      #total-amount {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+      }
+    </style>
 
-<head>
-  <meta charset="utf-8">
-  <title>Restaurant Sales Graphs</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
-  <style>
-    /* Add some basic styling to the canvas container */
-    #canvas-container {
-      width: 80%;
-      margin: 0 auto;
-    }
-  </style>
-</head>
+    <!-- <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js%22%3E"></script> -->
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase.js"></script>
+    
+  </head>
 
 <body>
   <h1>Restaurant Sales Graphs</h1>
   <div id="canvas-container">
     <canvas id="chart"></canvas>
   </div>
+
+  <div id="counter-container">
+    <h1>Counter</h1>
+    <button onclick="decrease()">-</button>
+    <span id="orders_left_value"></span>
+    <button onclick="increase()">+</button>
+    <br><br>
+    <button onclick="submitValue()">Submit</button>
+  </div>
+
+  <div id="total-amount-container">
+    <h3 id="total-amount"></h3>
+  </div>
+
   <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
-
 </html>
