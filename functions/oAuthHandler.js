@@ -26,11 +26,12 @@ module.exports = async (req, res) => {
           code: authorizationCode,
           grant_type: 'authorization_code'
         });
-
+        const expiresAt = response.data.expires_at;
+        const refreshToken = response.data.refresh_token;
         const accessToken = response.data.access_token;
         const merchantId = response.data.merchant_id;
         // Store the access_token securely in your database
-        await storeRestaurantAccessToken(restaurantId, accessToken, merchantId);
+        await storeRestaurantAccessToken(restaurantId, accessToken, merchantId, refreshToken, expiresAt);
     
         res.send('OAuth flow completed');
     } catch (error) {

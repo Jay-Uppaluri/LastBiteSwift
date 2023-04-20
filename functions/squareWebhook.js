@@ -43,11 +43,11 @@ const getOrderStatus = (order) => {
 
     const restaurantId = await getRestaurantIdByMerchantId(merchantId);
 
-    const accessToken = await getRestaurantAccessToken(restaurantId);
+    const accessTokenInfo = await getRestaurantAccessToken(restaurantId);
 
     const client = new Client({
       environment: 'sandbox', // Or 'production' when not testing
-      accessToken: accessToken,
+      accessToken: accessTokenInfo.accessToken,
     });
     // TODO: validate webhook signature
   
