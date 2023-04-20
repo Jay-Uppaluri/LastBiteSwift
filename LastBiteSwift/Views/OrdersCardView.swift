@@ -7,19 +7,18 @@ struct OrdersCardView: View {
     var body: some View {
         VStack(alignment: .leading) {
 
-
             Text("Restaurant Id: \(order.restaurantId)")
                 .font(.subheadline)
 
             Text("Date: \(formattedDate(from: order.timestamp))")
                 .font(.subheadline)
 
-            if order.active {
-                Text("Status: Active")
+            if order.status == "OPEN" || order.status == "PROPOSED" || order.status == "READY" {
+                Text("Status: \(order.status)")
                     .font(.subheadline)
                     .foregroundColor(.green)
             } else {
-                Text("Status: Inactive")
+                Text("Status: \(order.status)")
                     .font(.subheadline)
                     .foregroundColor(.red)
             }

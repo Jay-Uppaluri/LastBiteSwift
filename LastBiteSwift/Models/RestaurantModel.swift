@@ -16,10 +16,19 @@ struct Restaurant: Identifiable, Codable {
     let address: String
     let type: String
     let pointOfSaleInfo: PoSInfo
+    let accessTokenInfo: AccessTokenInfo
+    let merchantId: String
     
     struct PoSInfo: Codable {
         let system: String
         let locationId: String?
         let restaurantExternalId: String?
     }
+    
+    struct AccessTokenInfo: Codable {
+        let accessToken: String
+        let expiresAt: Timestamp
+        let refreshToken: String
+    }
 }
+

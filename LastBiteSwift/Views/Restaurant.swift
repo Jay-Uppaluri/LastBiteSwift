@@ -134,7 +134,8 @@ struct RestaurantView: View {
                                    system: "square",
                                    locationId: "TEST_SQUARE_LOCATION_ID",
                                    restaurantExternalId: nil
-                               )
+                               ),
+                               accessTokenInfo: Restaurant.AccessTokenInfo(accessToken: "test", expiresAt: Timestamp(), refreshToken: "test"), merchantId: "test"
                            ),
                            isHeartToggled: .constant(false)
                        )
