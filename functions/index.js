@@ -11,4 +11,3 @@ const oAuthHandler = require('./oAuthHandler');
 exports.paymentSheet = functions.https.onRequest(paymentSheet);
 exports.paymentSuccess = functions.https.onRequest(paymentSuccess);
 exports.squareWebhookListener = functions.https.onRequest(squareWebhookListener);
-exports.oAuthHandler = functions.https.onRequest(oAuthHandler);

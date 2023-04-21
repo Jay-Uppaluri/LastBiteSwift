@@ -15,8 +15,8 @@ struct Restaurant: Identifiable, Codable {
     var distanceFromUser: Double?
     let address: String
     let type: String
-    let pointOfSaleInfo: PoSInfo
-    let accessTokenInfo: AccessTokenInfo
+    let pointOfSaleInfo: PoSInfo?
+    let accessTokenInfo: AccessTokenInfo?
     let merchantId: String
     
     struct PoSInfo: Codable {

@@ -4,13 +4,27 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 from firebase_admin import auth
+import pytz
+
+
 import json
-from flask import Flask, render_template, Response, request, redirect, url_for
+from flask import Flask, render_template, Response, request, redirect, url_for, session, make_response
 from flask import jsonify
+import base64
+import secrets
+import requests
+
+SQUARE_SANDBOX_CLIENT_ID = "sandbox-sq0idb--6fEGNSRA_VfU91OGguc_Q"
+SQUARE_SANDBOX_ACCESS_TOKEN = "EAAAEAT_ae3DaTY2Bg6gyWLDoHA8M2FqiWRJ3NycF8Ona7iqQI1FOV2Ke_GhEqI5"
+SQUARE_OAUTH_REDIRECT_URI = "http://127.0.0.1:5000/oauth_callback"
+SQUARE_AUTHORIZE_URL = "https://connect.squareupsandbox.com/oauth2/authorize"
+SQUARE_TOKEN_URL = "https://connect.squareupsandbox.com/oauth2/token"
+
 
 app = Flask(__name__)
+app.secret_key = "test secret key 2123*"
 cred = credentials.Certificate(
-    'C:\\Users\\srina\\Desktop\\lastbite_python\\serviceAccountKey.json')
+    './serviceAccountKey.json')
 firebase_admin.initialize_app(cred)
 
 
@@ -57,6 +71,112 @@ def get_data():
     return jsonify([restaurant_data])
 
 
+""" @app.route('/authorize/<restaurant_id>')
+def authorize(restaurant_id):
+    csrf_token = secrets.token_hex(16)
+    session['csrf_token'] = csrf_token
+
+    state_data = {
+        "restaurantId": restaurant_id,
+        "csrf_token": csrf_token,
+    }
+    state = base64.urlsafe_b64encode(json.dumps(state_data).encode()).decode()
+
+    url_params = {
+        'client_id': SQUARE_SANDBOX_CLIENT_ID,
+        'response_type': 'code',
+        'state': state,
+        'scope': 'MERCHANT_PROFILE_READ PAYMENTS_READ',
+        'redirect_uri': SQUARE_OAUTH_REDIRECT_URI
+    }
+    auth_url = requests.Request('GET', SQUARE_AUTHORIZE_URL, params=url_params).prepare().url
+
+    return redirect(auth_url) """
+
+@app.route('/get_csrf_token', methods=['GET'])
+def get_csrf_token():
+    auth.verify_id_token(session['firebase_token'])
+    csrf_token = request.cookies.get("csrf_token")
+    if csrf_token:
+        return jsonify({"csrf_token": csrf_token}), 200
+    return jsonify({"message": "Failed to get CSRF token"}), 400
+
+
+@app.route('/oauth_callback')
+def oauth_callback():
+    authorization_code = request.args.get('code')
+    print(request)
+    print(authorization_code)
+    encoded_state = request.args.get('state')
+    state = json.loads(base64.urlsafe_b64decode(encoded_state.encode()))
+
+    restaurant_id = state['restaurantId']
+    csrf_token = state['csrf_token']
+
+    # Debug: Print the CSRF tokens
+    print(f"Provided CSRF token: {csrf_token}")
+
+    # Get the user ID from the Firebase Authentication
+    user = auth.verify_id_token(session['firebase_token'])
+    user_id = user['uid']
+
+    # Retrieve the stored CSRF token from the secure, HttpOnly cookie
+    stored_csrf_token = request.cookies.get('csrf_token')
+
+    # Debug: Print the stored CSRF token
+    print(f"Stored CSRF token: {stored_csrf_token}")
+
+    if csrf_token != stored_csrf_token:
+        return "Invalid CSRF token", 403
+
+    # Exchange the authorization_code for an access token
+    token_url = 'https://connect.squareupsandbox.com/oauth2/token'  # Replace with the provider's token endpoint
+    payload = {
+        'grant_type': 'authorization_code',
+        'code': authorization_code,
+        'client_id': 'sandbox-sq0idb--6fEGNSRA_VfU91OGguc_Q',
+        'client_secret': 'sandbox-sq0csb--QLxExckfqwKcmx1sAheDPuESwROWdwBd9qxzU4TIZw',
+        'redirect_uri': 'http://127.0.0.1:5000/oauth_callback',
+    }
+
+    response = requests.post(token_url, data=payload)
+    if response.status_code != 200:
+        return "Failed to obtain access token", 400
+
+    token_data = response.json()
+    print(token_data)
+    access_token = token_data.get('access_token')
+    expires_at = token_data.get('expires_at')
+    refresh_token = token_data.get('refresh_token')
+
+    # Update the restaurant's access token in Firestore
+    try:
+        restaurant_ref = get_firestore_database().collection("restaurants").document(restaurant_id)
+        restaurant_doc = restaurant_ref.get()
+
+        if restaurant_doc.exists:
+
+            ##expires_at = datetime.fromisoformat(expires_at[:-1]).timestamp()
+            expires_at_datetime = datetime.strptime(expires_at, "%Y-%m-%dT%H:%M:%SZ")
+            expires_at_timestamp = expires_at_datetime.replace(tzinfo=pytz.UTC)
+
+            # Update access token info
+            restaurant_ref.update({
+                "accessTokenInfo": {
+                    "accessToken": access_token,
+                    "expiresAt": expires_at_timestamp,
+                    "refreshToken": refresh_token
+                }
+            })
+        else:
+            return "Restaurant not found", 404
+    except Exception as e:
+        print(str(e))
+        return "An error has occurred. Please try again", 500
+
+    # ... (rest of the code for OAuth flow)
+
+    return "OAuth flow completed successfully"
 
 
 def get_running_total_for_restaurant(orders, database, restaurant_id):
@@ -112,13 +232,15 @@ def login():
 def render_signUp():
     return render_template('index.html')
 
-
 @app.route('/signup', methods=['POST'])
 def signup():
     # Get the form data from the request
     email = request.form['email']
     password = request.form['password']
     restaurant_id = request.form['restaurantId']
+
+    # Generate the CSRF token
+    csrf_token = secrets.token_hex(16)
 
     # Create a Firestore client
     db = firestore.client()
@@ -128,18 +250,21 @@ def signup():
         'email': email,
         'password': password,
         'restaurantId': restaurant_id,
+        'csrfToken': csrf_token,
         'createdAt': datetime.now()
     }
-    # db.collection('users').add(user_data)
     # Create a new user in Firebase Authentication
     auth = firebase_admin.auth
     user = auth.create_user(email=email, password=password)
     db.collection('users').document(user.uid).set(user_data)
-    # Add custom claims to the user indicating their restaurant ID
-    # auth.set_custom_user_claims(user.uid, {'restaurant_id': restaurant_id})
+
+    # Set the firebase_token in the session
+    firebase_token = auth.create_custom_token(user.uid)
+    session['firebase_token'] = firebase_token
 
     # Redirect the user to a success page
     return redirect(url_for('index'))
+
 
 def restaurant_to_dict(restaurant):
     restaurant_dict = restaurant.to_dict()
@@ -178,6 +303,24 @@ def update_orders_left(restaurant_id):
     updated_restaurant = restaurant_to_dict(restaurant_ref.get())
     return jsonify({"success": True, "restaurant": updated_restaurant}), 200
 
+def generate_csrf_token():
+    return secrets.token_hex(16)
+
+@app.route('/set_session', methods=['POST'])
+def set_session():
+    firebase_token = request.form['firebase_token']
+    if firebase_token:
+        session['firebase_token'] = firebase_token
+
+        # Generate a CSRF token and store it server-side
+        csrf_token = generate_csrf_token()
+        
+        # Store the CSRF token in a secure, HttpOnly cookie
+        response = make_response(json.dumps({"message": "Session set successfully"}))
+        response.set_cookie('csrf_token', csrf_token, secure=True, httponly=True)
+
+        return response, 200
+    return jsonify({"message": "Failed to set session"}), 400
 
 """ def group_orders_by_restaurant(orders, database):
     restaurant_amounts = {}

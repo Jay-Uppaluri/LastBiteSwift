@@ -155,5 +155,6 @@ module.exports = {
   storeRestaurantAccessToken,
   getRestaurantAccessToken,
   getRestaurantIdByMerchantId,
-  refreshAccessToken
+  refreshAccessToken,
+  updateRestaurantAccessToken
 };
