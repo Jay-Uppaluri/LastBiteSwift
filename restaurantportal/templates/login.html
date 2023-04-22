@@ -29,15 +29,6 @@
         const db = firebase.firestore();
     </script>
     <script>
-        function generateCsrfToken() {
-            const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            let token = '';
-            for (let i = 0; i < 16; i++) {
-                token += charset[Math.floor(Math.random() * charset.length)];
-            }
-            return token;
-        }
-
         async function login() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
@@ -46,9 +37,6 @@
                 await firebase.auth().signInWithEmailAndPassword(email, password);
                 
                 const user = firebase.auth().currentUser;
-                const csrfToken = generateCsrfToken();
-                await db.collection("users").doc(user.uid).update({csrfToken: csrfToken});
-                console.log(csrfToken);
 
                 // Get the Firebase ID token
                 const firebaseToken = await user.getIdToken(true);
@@ -59,7 +47,7 @@
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    body: new URLSearchParams({firebase_token: firebaseToken, state: csrfToken}),
+                    body: new URLSearchParams({firebase_token: firebaseToken}),
                 });
 
                 if (response.ok) {
