@@ -19,7 +19,7 @@ struct RestaurantCardView: View {
 
     
     var body: some View {
-        NavigationLink(destination: RestaurantView(restaurant: restaurant)) {
+        NavigationLink(destination: RestaurantDetailView(restaurant: restaurant).navigationBarBackButtonHidden(true)) {
         VStack {
             VStack(spacing: 8) {
                 Image("card-image")
