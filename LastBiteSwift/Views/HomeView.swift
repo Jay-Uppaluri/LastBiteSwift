@@ -125,7 +125,7 @@ struct HomeView: View {
                     if showDropdown {
                         VStack(alignment: .leading, spacing: 4) {
                             ForEach(searchResults, id: \.id) { restaurant in
-                                NavigationLink(destination: RestaurantView(restaurant: restaurant)) {
+                                NavigationLink(destination: RestaurantDetailView(restaurant: restaurant)) {
                                     Text(restaurant.name)
                                         .foregroundColor(.primary)
                                         .padding(.vertical, 8)

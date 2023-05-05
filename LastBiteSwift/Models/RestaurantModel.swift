@@ -7,7 +7,6 @@ struct Restaurant: Identifiable, Codable {
     let name: String
     let createdOn: Timestamp
     let location: GeoPoint
-    let ordersRemaining: Int
     let rating: Float
     let description: String
     let price: Float
@@ -15,8 +14,8 @@ struct Restaurant: Identifiable, Codable {
     var distanceFromUser: Double?
     let address: String
     let type: String
-    let pointOfSaleInfo: PoSInfo
-    let accessTokenInfo: AccessTokenInfo
+    let pointOfSaleInfo: PoSInfo?
+    let accessTokenInfo: AccessTokenInfo?
     let merchantId: String
     
     struct PoSInfo: Codable {

@@ -19,6 +19,75 @@ async function fetchRestaurantOrders(uid) {
   return data;
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  // ...
+  const connectWithSquareButton = document.getElementById("connect-with-square");
+  if (connectWithSquareButton) {
+    connectWithSquareButton.addEventListener("click", connectWithSquare);
+  }
+  // ...
+});
+
+async function fetchCSRFToken() {
+  try {
+      const response = await fetch('/get_csrf_token');
+      if (response.ok) {
+          const data = await response.json();
+          return data.csrf_token;
+      } else {
+          console.error("Failed to fetch CSRF token");
+          return null;
+      }
+  } catch (error) {
+      console.error("Error fetching CSRF token:", error);
+      return null;
+  }
+}
+
+
+async function connectWithSquare() {
+  const userId = firebase.auth().currentUser.uid;
+  const firestore = firebase.firestore();
+
+  try {
+      const userDoc = await firestore.collection("users").doc(userId).get();
+      const restaurantId = userDoc.data().restaurantId;
+      
+      // Fetch the CSRF token
+      const csrfToken = await fetchCSRFToken();
+      if (!csrfToken) {
+          console.error("Failed to get CSRF token");
+          return;
+      }
+      
+      // Encode the state parameter
+      const stateData = {
+          "restaurantId": restaurantId,
+          "csrf_token": csrfToken
+      };
+      const state = btoa(JSON.stringify(stateData));
+      
+      // Construct the Square authorization URL
+      const urlParams = new URLSearchParams({
+          client_id: "sandbox-sq0idb--6fEGNSRA_VfU91OGguc_Q",
+          response_type: "code",
+          state: state,
+          scope: "MERCHANT_PROFILE_READ PAYMENTS_READ ORDERS_READ ORDERS_WRITE",
+          redirect_uri: "http://127.0.0.1:5000/oauth_callback"
+      });
+
+      const authUrl = `https://connect.squareupsandbox.com/oauth2/authorize?${urlParams.toString()}`;
+
+      // Redirect the user to the Square authorization URL
+      window.location.href = authUrl;
+  } catch (error) {
+      console.error("Error fetching restaurant ID or CSRF token:", error);
+  }
+}
+
+
+
+
 function createChart(data) {
   const ctx = document.getElementById('chart').getContext('2d');
   const datasets = [];
@@ -152,7 +221,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         firestore.collection("restaurants").doc(restaurantId).get().then((doc) => {
           if (doc.exists) {
             const ordersLeft = doc.data().ordersLeft;
-            let value = ordersLeft;
+            value = ordersLeft;
             document.getElementById("orders_left_value").innerText = ordersLeft;
           } else {
             console.log("No such restaurant document!");
@@ -170,6 +239,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     console.log("No user logged in");
   }
 });
+
 
 
 async function main() {
