@@ -9,7 +9,7 @@ struct RootView: View {
         NavigationView { // Wrap the Group with a NavigationView
             Group {
                 if isLoggedIn { // Use the new state variable to check the authentication state
-                    HomeView()
+                    FavoritesPage()
                 } else {
                     LandingPage()
                 }

@@ -11,7 +11,7 @@ class AuthenticationManager {
             self?.user = user
         }
     }
-    
+
     func getUserId() -> String? {
         return user?.uid
     }
@@ -31,7 +31,7 @@ class AuthenticationManager {
             }
         })
     }
-    
+
     func signOut() {
         do {
             try Auth.auth().signOut()
@@ -39,4 +39,12 @@ class AuthenticationManager {
             print("Error signing out: \(signOutError.localizedDescription)")
         }
     }
+
+    func getIDToken() async throws -> String {
+        guard let idToken = try await user?.getIDTokenResult() else {
+            throw NSError(domain: "AuthenticationManager", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to get ID token"])
+        }
+        return idToken.token
+    }
+
 }

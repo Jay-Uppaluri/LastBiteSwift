@@ -8,17 +8,30 @@ var boldCustomFontName: String = "DMSans-Bold"
 var poppinsFontName: String = "Poppins-ExtraBoldItalic"
 
 struct FavoritesPage: View {
-    
+    @ObservedObject private var viewModel = HomeViewModel()
+    @EnvironmentObject private var userService: UserService
+
     var body: some View {
         NavigationView {
             //MARK: CONTENT
             ScrollView(.vertical){
                 VStack(spacing: 24){
-                    ForEach(1..<5) { _ in
-                        RestaurantCardSubView(restaurantName: "Parlor Pizza", restaurantImageName: "restaurant-photo", restaurantIsNew: true, restarauntIsFavorite: true, restaurantPrice: 5.99, restaurantDistanceInMiles: 1.3, restaurantOrdersLeft: 5)
+                    ForEach(viewModel.restaurants.indices, id: \.self) { index in
+                        let isHeartToggled = Binding(
+                            get: { userService.favorites.contains(viewModel.restaurants[index].id!) },
+                            set: { newValue in
+                                if newValue {
+                                    userService.favorites.append(viewModel.restaurants[index].id!)
+                                } else {
+                                    userService.favorites.removeAll { $0 == viewModel.restaurants[index].id! }
+                                }
+                            }
+                        )
+                        RestaurantCardSubView(restaurant: viewModel.restaurants[index], isHeartToggled: isHeartToggled)
                     }
                 }
                 .padding()
+                .padding(.top, -24)
             }
             
             //MARK: TOP BAR
@@ -48,6 +61,15 @@ struct FavoritesPage: View {
                         }
                         .buttonStyle(.plain)
                     }
+                }
+            }
+        }
+        .onAppear {
+            Task {
+                do {
+                    try await viewModel.fetchData()
+                } catch {
+                    print("Error fetching data: \(error)")
                 }
             }
         }
