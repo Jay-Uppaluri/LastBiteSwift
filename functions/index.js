@@ -6,8 +6,9 @@ admin.initializeApp();
 const paymentSheet = require('./paymentSheet');
 const paymentSuccess = require('./paymentSuccess');
 const squareWebhookListener = require('./squareWebhook');
-const oAuthHandler = require('./oAuthHandler');
+const getNearbyRestaurants = require('./getNearbyRestaurants');
 
 exports.paymentSheet = functions.https.onRequest(paymentSheet);
 exports.paymentSuccess = functions.https.onRequest(paymentSuccess);
 exports.squareWebhookListener = functions.https.onRequest(squareWebhookListener);
+exports.getNearbyRestaurants = functions.https.onRequest(getNearbyRestaurants.getNearbyRestaurants);

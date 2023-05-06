@@ -13,7 +13,7 @@ struct SignUp: View {
 
     var body: some View {
         if isSignedUp {
-            HomeView()
+            FavoritesPage()
         } else {
             VStack(alignment: .leading, spacing: 20) {
                 Text("Sign Up")
