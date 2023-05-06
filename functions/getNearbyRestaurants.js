@@ -59,7 +59,7 @@ Promise.all(promises).then((snapshots) => {
       const distanceInKm = geofire.distanceBetween([lat, lng], center);
       const distanceInM = distanceInKm * 1000;
       if (distanceInM <= radius) {
-        matchingDocs.push(doc);
+        matchingDocs.push({doc, distanceInM });
       }
     }
   }
@@ -67,12 +67,35 @@ Promise.all(promises).then((snapshots) => {
   return matchingDocs;
 }).then((matchingDocs) => {
   // Process the matching documents and return as JSON
-  const restaurants = matchingDocs.map(doc => {
+  const restaurants = matchingDocs.map(({ doc, distanceInM }) => {
+    const data = doc.data();
+
+    // Convert the distance in meters to miles
+    const distanceInMi = distanceInM * 0.000621371;
+
     return {
-      ...doc.data(),
-      id: doc.id
+      ...data,
+      id: doc.id,
+      location: {
+        latitude: data.location.latitude,
+        longitude: data.location.longitude,
+      },
+      createdOn: {
+        _seconds: data.createdOn.seconds,
+        _nanoseconds: data.createdOn.nanoseconds,
+      },
+      accessTokenInfo: data.accessTokenInfo
+        ? {
+            ...data.accessTokenInfo,
+            expiresAt: {
+              _seconds: data.accessTokenInfo.expiresAt.seconds,
+              _nanoseconds: data.accessTokenInfo.expiresAt.nanoseconds,
+            },
+          }
+        : null,
+      distanceFromUser: distanceInMi, // Add the distanceFromUser field
     };
-});
+  });
 
 console.log(restaurants);
 res.status(200).json(restaurants);

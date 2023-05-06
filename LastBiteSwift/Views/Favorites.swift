@@ -31,6 +31,7 @@ struct FavoritesPage: View {
                     }
                 }
                 .padding()
+                .padding(.top, -24)
             }
             
             //MARK: TOP BAR

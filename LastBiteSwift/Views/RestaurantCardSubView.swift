@@ -54,7 +54,7 @@ struct RestaurantCardSubView: View {
                             }
                         }
                         Spacer()
-                        Text("5+ left")
+                        Text(String(restaurant.ordersLeft) + " left")
                             .font(.custom(boldCustomFontName, size: 13))
                             .padding(EdgeInsets(top: 4, leading: 12, bottom: 4, trailing: 12))
                             .foregroundColor(Color("1B5346"))
@@ -71,6 +71,7 @@ struct RestaurantCardSubView: View {
                         Text(restaurant.name)
                             .font(.custom(boldCustomFontName, size: 16))
                             .lineLimit(1)
+                            .foregroundColor(.black)
                         
                         HStack(spacing: 8) {
                             if true {
@@ -80,13 +81,15 @@ struct RestaurantCardSubView: View {
                                         .frame(width: 11, height: 10)
                                     Text("New")
                                         .font(.custom(regularCustomFontName, size: 13))
+                                        .foregroundColor(.black)
                                 }
                                 Text("•")
                                     .font(.custom(regularCustomFontName, size: 13))
                                     .opacity(0.30)
                             }
-                            Text(String(format: "%2.1f", "5") +  " miles")
+                            Text(String(format: "%2.1f", restaurant.distanceFromUser ?? 0) +  " miles")
                                 .font(.custom(regularCustomFontName, size: 13))
+                                .foregroundColor(.black)
                         }
                     }
                     Spacer()

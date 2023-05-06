@@ -15,6 +15,10 @@ async function addRestaurantsWithGeoFire() {
   const querySnapshot = await restaurantsRef.get();
 
   querySnapshot.forEach((restaurant) => {
+    console.log(restaurant.data().name);
+    if (restaurant.data().name == "Papa Johns") {
+      
+    
     const docRef = restaurantsRef.doc(restaurant.id);
     const location = [restaurant.data().location.latitude, restaurant.data().location.longitude];
     const geohash = geofire.geohashForLocation([42.000, -42.000]);
@@ -24,10 +28,14 @@ async function addRestaurantsWithGeoFire() {
       ...restaurant.data(),
       geohash: geohash,
       lat: 42.000,
-      lng: -42.000
+      lng: -42.100
     };
 
     batch.update(docRef, updatedData);
+  }
+  else {
+    console.log("skipping restaurant: " + restaurant.name);
+  }
   });
 
   await batch.commit();
