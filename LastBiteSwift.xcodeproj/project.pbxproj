@@ -62,6 +62,8 @@
 		C3EEF25E2A04ABE5006DB2B6 /* ChangeAddressSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3EEF25D2A04ABE5006DB2B6 /* ChangeAddressSubView.swift */; };
 		C3EEF2602A04AC3D006DB2B6 /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3EEF25F2A04AC3D006DB2B6 /* Favorites.swift */; };
 		C3EEF2622A04AC73006DB2B6 /* RestaurantCardSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3EEF2612A04AC73006DB2B6 /* RestaurantCardSubView.swift */; };
+		C3EEF2652A04B115006DB2B6 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = C3EEF2642A04B115006DB2B6 /* FirebaseFunctions */; };
+		C3EFD86E2A06CD0000A7EE5F /* RestaurantResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3EFD86D2A06CD0000A7EE5F /* RestaurantResponse.swift */; };
 		C3F99B07299300B400025BEB /* LastBiteSwiftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F99B06299300B400025BEB /* LastBiteSwiftApp.swift */; };
 		C3F99B0E299300B600025BEB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3F99B0D299300B600025BEB /* Preview Assets.xcassets */; };
 		C3F99B19299301CF00025BEB /* LandingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F99B18299301CF00025BEB /* LandingPage.swift */; };
@@ -125,6 +127,7 @@
 		C3EEF25D2A04ABE5006DB2B6 /* ChangeAddressSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeAddressSubView.swift; sourceTree = "<group>"; };
 		C3EEF25F2A04AC3D006DB2B6 /* Favorites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorites.swift; sourceTree = "<group>"; };
 		C3EEF2612A04AC73006DB2B6 /* RestaurantCardSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCardSubView.swift; sourceTree = "<group>"; };
+		C3EFD86D2A06CD0000A7EE5F /* RestaurantResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantResponse.swift; sourceTree = "<group>"; };
 		C3F99B03299300B400025BEB /* LastBiteSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LastBiteSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3F99B06299300B400025BEB /* LastBiteSwiftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastBiteSwiftApp.swift; sourceTree = "<group>"; };
 		C3F99B0D299300B600025BEB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -140,6 +143,7 @@
 				C3F99B23299302BE00025BEB /* FirebaseDatabase in Frameworks */,
 				C3F99B25299302BE00025BEB /* FirebaseFirestore in Frameworks */,
 				C3F99B1F299302BE00025BEB /* FirebaseAnalytics in Frameworks */,
+				C3EEF2652A04B115006DB2B6 /* FirebaseFunctions in Frameworks */,
 				C39D306429C50DDB00FA1395 /* FirebaseFirestoreSwift in Frameworks */,
 				C3F99B21299302BE00025BEB /* FirebaseAuth in Frameworks */,
 				C3041DC929C2CF0400E44A1F /* StripePaymentSheet in Frameworks */,
@@ -228,6 +232,7 @@
 				1C6C4A1229BBA31300430C90 /* UserModel.swift */,
 				C3558D4129C3907200DD76B0 /* PaymentModel.swift */,
 				C346C03E29DD026E00D946BA /* OrderModel.swift */,
+				C3EFD86D2A06CD0000A7EE5F /* RestaurantResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -366,6 +371,7 @@
 				C3041DC829C2CF0400E44A1F /* StripePaymentSheet */,
 				C3558D3F29C3860600DD76B0 /* Stripe */,
 				C39D306329C50DDB00FA1395 /* FirebaseFirestoreSwift */,
+				C3EEF2642A04B115006DB2B6 /* FirebaseFunctions */,
 			);
 			productName = LastBiteSwift;
 			productReference = C3F99B03299300B400025BEB /* LastBiteSwift.app */;
@@ -398,6 +404,7 @@
 			packageReferences = (
 				C3F99B1D299302BE00025BEB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				C3CB779729C2CE3900D45EA8 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */,
+				C3EEF2632A04B115006DB2B6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = C3F99B04299300B400025BEB /* Products */;
 			projectDirPath = "";
@@ -475,6 +482,7 @@
 				C3F99B07299300B400025BEB /* LastBiteSwiftApp.swift in Sources */,
 				C346C04529DD0DDC00D946BA /* OrderViewModel.swift in Sources */,
 				2C19DBEB299EB67B00BA9FC6 /* Discover.swift in Sources */,
+				C3EFD86E2A06CD0000A7EE5F /* RestaurantResponse.swift in Sources */,
 				1CEA85B2299400FB0082F477 /* VerificationPage.swift in Sources */,
 				1C409BD82994AFA1003F578E /* NotificationsView.swift in Sources */,
 				2C2AC22F29A18C180002BBD9 /* AccountDetailsView.swift in Sources */,
@@ -692,6 +700,14 @@
 				minimumVersion = 23.0.0;
 			};
 		};
+		C3EEF2632A04B115006DB2B6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 		C3F99B1D299302BE00025BEB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -717,6 +733,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C3F99B1D299302BE00025BEB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestoreSwift;
+		};
+		C3EEF2642A04B115006DB2B6 /* FirebaseFunctions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C3EEF2632A04B115006DB2B6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFunctions;
 		};
 		C3F99B1E299302BE00025BEB /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;

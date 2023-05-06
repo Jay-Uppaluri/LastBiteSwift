@@ -10,7 +10,7 @@ struct LogIn: View {
 
     var body: some View {
         if isLoggedIn {
-            HomeView()
+            FavoritesPage()
         } else {
             VStack(alignment: .leading, spacing: 20) {
                 Text("Log In")

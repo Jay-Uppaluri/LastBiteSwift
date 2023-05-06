@@ -2,6 +2,8 @@ import SwiftUI
 import Combine
 import Firebase
 import MapKit
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 struct RestaurantDetailView: View {
     let restaurant: Restaurant
@@ -9,6 +11,8 @@ struct RestaurantDetailView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var isFavorite: Bool = false
     @ObservedObject var userService = UserService()
+    @State private var showPaymentPopUp: Bool = false
+
 
     init(restaurant: Restaurant) {
         self.restaurant = restaurant
@@ -73,6 +77,11 @@ struct RestaurantDetailView: View {
                         Text("from 8AM to 10PM")
                             .font(.custom("DMSans-Regular", size: 16))
                     }
+                    
+                    Text(String(format: "%2.1f", restaurant.distanceFromUser ?? 0) +  " miles")
+                        .font(.custom("DM-Sans-Bold", size: 16))
+
+                    
 
                     VStack(alignment: .leading) {
                         Text("Location")
@@ -186,22 +195,39 @@ struct RestaurantDetailView: View {
             .frame(height: 1)
             .background(Color(red: 0.85, green: 0.85, blue: 0.85))
             .edgesIgnoringSafeArea([.horizontal])
-        
-        Button(action: {
-            print("reserve tapped")
-        }) {
-            Text("Reserve")
-                .frame(minWidth: 0, maxWidth: .infinity)
-                .font(.custom("DMSans-Medium", size: 18))
-                .padding()
-                .foregroundColor(.white)
+        if (!showPaymentPopUp) {
+            Button(action: {
+                print("reserve tapped")
+                showPaymentPopUp.toggle()
+
+            }) {
+                Text("Reserve")
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .font(.custom("DMSans-Medium", size: 18))
+                    .padding()
+                    .foregroundColor(.white)
+            }
+            
+            .frame(height: 51)
+            .background(Color.accentColor)
+            .cornerRadius(37)
+            .padding(.bottom, 24)
+            .padding(.top, 24)
+            .padding(.horizontal, 24)
         }
-        .frame(height: 51)
-        .background(Color.accentColor)
-        .cornerRadius(37)
-        .padding(.bottom, 24)
-        .padding(.top, 24)
-        .padding(.horizontal, 24)
+
+        if showPaymentPopUp {
+            Color.black.opacity(0.4)
+                .edgesIgnoringSafeArea(.all)
+                .onTapGesture {
+                    showPaymentPopUp = false
+                }
+            
+            PaymentPopUpView()
+                .padding(.horizontal, 24)
+                .padding(.bottom, 24)
+                .animation(.easeInOut)
+        }
     }
     func createMapURL() -> URL {
         let latitude = restaurant.location.latitude

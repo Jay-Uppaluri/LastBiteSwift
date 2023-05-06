@@ -67,7 +67,7 @@ struct MarkerView: View {
 
     var body: some View {
         VStack {
-            NavigationLink(destination: RestaurantView(restaurant: restaurant), isActive: $isActive) {
+            NavigationLink(destination: RestaurantDetailView(restaurant: restaurant), isActive: $isActive) {
                 EmptyView()
             }
             Button(action: {
