@@ -59,7 +59,6 @@
 		C3A4C52629C3DB23007E59F1 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A4C52529C3DB23007E59F1 /* UserService.swift */; };
 		C3A4C52929C42177007E59F1 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A4C52829C42177007E59F1 /* AuthenticationManager.swift */; };
 		C3CB778A29C2B62300D45EA8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C3CB778929C2B62300D45EA8 /* GoogleService-Info.plist */; };
-		C3CFC5C02A05E761006FE0C1 /* RestaurantVMModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CFC5BF2A05E761006FE0C1 /* RestaurantVMModel.swift */; };
 		C3EEF25E2A04ABE5006DB2B6 /* ChangeAddressSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3EEF25D2A04ABE5006DB2B6 /* ChangeAddressSubView.swift */; };
 		C3EEF2602A04AC3D006DB2B6 /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3EEF25F2A04AC3D006DB2B6 /* Favorites.swift */; };
 		C3EEF2622A04AC73006DB2B6 /* RestaurantCardSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3EEF2612A04AC73006DB2B6 /* RestaurantCardSubView.swift */; };
@@ -124,7 +123,6 @@
 		C3A4C52529C3DB23007E59F1 /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		C3A4C52829C42177007E59F1 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		C3CB778929C2B62300D45EA8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		C3CFC5BF2A05E761006FE0C1 /* RestaurantVMModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantVMModel.swift; sourceTree = "<group>"; };
 		C3EEF25D2A04ABE5006DB2B6 /* ChangeAddressSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeAddressSubView.swift; sourceTree = "<group>"; };
 		C3EEF25F2A04AC3D006DB2B6 /* Favorites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorites.swift; sourceTree = "<group>"; };
 		C3EEF2612A04AC73006DB2B6 /* RestaurantCardSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCardSubView.swift; sourceTree = "<group>"; };
@@ -232,7 +230,6 @@
 				1C6C4A1229BBA31300430C90 /* UserModel.swift */,
 				C3558D4129C3907200DD76B0 /* PaymentModel.swift */,
 				C346C03E29DD026E00D946BA /* OrderModel.swift */,
-				C3CFC5BF2A05E761006FE0C1 /* RestaurantVMModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -440,7 +437,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C346C03F29DD026E00D946BA /* OrderModel.swift in Sources */,
-				C3CFC5C02A05E761006FE0C1 /* RestaurantVMModel.swift in Sources */,
 				C30F060C29A02382007D5807 /* HomeViewModel.swift in Sources */,
 				C39D306D29C57CDA00FA1395 /* CheckoutView.swift in Sources */,
 				1C409BDC2994B92E003F578E /* FavoritesView.swift in Sources */,
