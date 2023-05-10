@@ -12,11 +12,35 @@ struct RestaurantDetailView: View {
     @State private var isFavorite: Bool = false
     @ObservedObject var userService = UserService()
     @State private var showPaymentPopUp: Bool = false
+    @EnvironmentObject var paymentService: PaymentService
+    @StateObject private var orderViewModel = OrderViewModel(userId: AuthenticationManager.shared.getUserId()!)
+
+
 
 
     init(restaurant: Restaurant) {
         self.restaurant = restaurant
 
+    }
+    
+    private func openAddressInMaps() {
+        let address = restaurant.address
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(address) { (placemarks, error) in
+            if let placemark = placemarks?.first, let location = placemark.location {
+                let regionDistance: CLLocationDistance = 10000
+                let coordinates = location.coordinate
+                let regionSpan = MKCoordinateRegion(center: coordinates, latitudinalMeters: regionDistance, longitudinalMeters: regionDistance)
+                let options = [
+                    MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
+                    MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
+                ]
+                let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+                let mapItem = MKMapItem(placemark: placemark)
+                mapItem.name = address
+                mapItem.openInMaps(launchOptions: options)
+            }
+        }
     }
 
     var body: some View {
@@ -92,9 +116,11 @@ struct RestaurantDetailView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 20, height: 20)
-                            Link(destination: createMapURL()) {
+                            
+                            Button(action: openAddressInMaps) {
                                 Text(restaurant.address)
                             }
+                            
                         }
                         .frame(height: 24)
 
@@ -190,6 +216,9 @@ struct RestaurantDetailView: View {
                 Spacer()
             }
         }
+        .onAppear {
+            paymentService.preparePaymentSheet(restaurantId: restaurant.id!) {}
+            }
         
         Divider()
             .frame(height: 1)
@@ -216,6 +245,7 @@ struct RestaurantDetailView: View {
             .padding(.horizontal, 24)
         }
 
+
         if showPaymentPopUp {
             Color.black.opacity(0.4)
                 .edgesIgnoringSafeArea(.all)
@@ -223,19 +253,14 @@ struct RestaurantDetailView: View {
                     showPaymentPopUp = false
                 }
             
-            PaymentPopUpView()
+            PaymentPopUpView(restaurant: restaurant)
                 .padding(.horizontal, 24)
                 .padding(.bottom, 24)
-                .animation(.easeInOut)
+                .environmentObject(orderViewModel)
+                //.animation(.easeInOut)
         }
     }
-    func createMapURL() -> URL {
-        let latitude = restaurant.location.latitude
-        let longitude = restaurant.location.longitude
-        let addressEncoded = urlEncodedAddress(restaurant.address)
-        let url = URL(string: "https://www.google.com/maps?q=\(addressEncoded)&ll=\(latitude),\(longitude)")!
-        return url
-    }
+
 
     
     func urlEncodedAddress(_ address: String) -> String {

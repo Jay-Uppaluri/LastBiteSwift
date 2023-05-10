@@ -34,6 +34,28 @@ async function storeRestaurantAccessToken(restaurantId, accessToken, merchantId,
   console.log(`Access token stored for restaurant: ${restaurantId}`);
 }
 
+async function updateRestaurantsOrdersLeft(restaurantId) {
+  const restaurantRef = db.collection('restaurants').doc(restaurantId);
+
+  await db.runTransaction(async (transaction) => {
+    const restaurantDoc = await transaction.get(restaurantRef);
+
+    if (!restaurantDoc.exists) {
+      throw new Error('Restaurant not found');
+    }
+
+    const ordersLeft = restaurantDoc.data().ordersLeft;
+
+    if (ordersLeft <= 0) {
+      throw new Error('No orders left');
+    }
+
+    transaction.update(restaurantRef, {
+      'ordersLeft': ordersLeft - 1
+    });
+  });
+}
+
 async function getRestaurantIdByMerchantId(merchantId) {
   const querySnapshot = await db.collection('restaurants').where('merchantId', '==', merchantId).get();
 
@@ -62,6 +84,12 @@ async function refreshAccessToken(restaurantId, refreshToken) {
     console.error('Error refreshing access token:', error.message);
     throw error;
   }
+}
+
+async function generateRandomFourDigitNumber() {
+  const min = 1000;
+  const max = 9999;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 
@@ -119,7 +147,7 @@ async function logPaymentInfo(paymentIntent) {
   }
 }
 
-async function logOrdersInfo(userId, restaurantId, paymentIntentId, status, orderId, amount) {
+async function logOrdersInfo(userId, restaurantId, paymentIntentId, status, amount, orderNumber, address) {
   const ordersRef = db.collection("orders");
 
   const newOrder = {
@@ -129,11 +157,18 @@ async function logOrdersInfo(userId, restaurantId, paymentIntentId, status, orde
     status: status,
     paymentIntentId: paymentIntentId,
     amount: amount,
+    orderNumber: orderNumber,
+    address: address
   };
 
-  await ordersRef.doc(orderId).set(newOrder);
+  const newDocRef = ordersRef.doc();
+  const orderId = newDocRef.id;
+  newOrder.orderId = orderId;
+
+  await newDocRef.set(newOrder);
   console.log(`Order logged with ID: ${orderId}`);
 }
+
 
 
 async function updateRestaurantAccessToken(restaurantId, newAccessToken, newExpiresAt) {
@@ -143,6 +178,17 @@ async function updateRestaurantAccessToken(restaurantId, newAccessToken, newExpi
   });
 
   console.log(`Access token updated for restaurant: ${restaurantId}`);
+}
+
+async function getRestaurant(restaurantId) {
+  const docRef = db.collection('restaurants').doc(restaurantId);
+  const doc = await docRef.get();
+
+  if (!doc.exists) {
+    throw new Error(`No restaurant found for ID: ${restaurantId}`);
+  }
+
+  return doc.data();
 }
 
 
@@ -156,5 +202,8 @@ module.exports = {
   getRestaurantAccessToken,
   getRestaurantIdByMerchantId,
   refreshAccessToken,
-  updateRestaurantAccessToken
+  updateRestaurantAccessToken,
+  updateRestaurantsOrdersLeft,
+  generateRandomFourDigitNumber,
+  getRestaurant
 };

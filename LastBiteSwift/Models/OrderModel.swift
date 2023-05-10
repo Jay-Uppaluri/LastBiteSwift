@@ -9,5 +9,7 @@ struct OrdersModel: Identifiable, Codable {
     var timestamp: Date
     var userId: String
     var amount: Int
+    var orderNumber: Int
+    var address: String
 }
 

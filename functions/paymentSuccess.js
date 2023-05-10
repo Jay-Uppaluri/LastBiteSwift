@@ -1,5 +1,5 @@
 const stripe = require('stripe')('sk_test_51Mm5YMJa42zn3jCLGFx3TVg1OsHS5QYnxZXXM3BksjK6muoefYGzLUHwujpZmT2SSAwx5CIlfXK6kWBhZ0rV9DLL000ufSmDld');
-const { logPaymentInfo, logOrdersInfo, getPointOfSaleInfo, getRestaurantAccessToken, refreshAccessToken, updateRestaurantAccessToken } = require('./helper');
+const { logPaymentInfo, logOrdersInfo, getPointOfSaleInfo, getRestaurantAccessToken, refreshAccessToken, updateRestaurantAccessToken, updateRestaurantsOrdersLeft, generateRandomFourDigitNumber, getRestaurant } = require('./helper');
 const { Client } = require('square');
 
 module.exports = async (req, res) => {
@@ -16,14 +16,18 @@ module.exports = async (req, res) => {
 
   // Handle the payment_intent.succeeded event
   if (event.type === 'payment_intent.succeeded') {
-    console.log("starting payment intent succeeded event");
+    //console.log("starting payment intent succeeded event");
     const paymentIntent = event.data.object;
     const userId = paymentIntent.metadata.userId;
     const restaurantId = paymentIntent.metadata.restaurantId;
+    const orderNumber = await generateRandomFourDigitNumber();
 
-    const accessTokenInfo = await getRestaurantAccessToken(restaurantId);
+    const restaurant = await getRestaurant(restaurantId);
 
+    const accessTokenInfo = restaurant.accessTokenInfo;
+    const address = restaurant.address;
 
+    await logOrdersInfo(userId, restaurantId, paymentIntent.id, "OPEN", paymentIntent.amount, orderNumber, address);
 // Check if the access token has expired
     if (Date.now() >= accessTokenInfo.expiresAt.toMillis()) {
       // Request a new access token using the refresh token
@@ -43,8 +47,9 @@ module.exports = async (req, res) => {
     });
 
 
-    // Log the payment information to your Firestore database
     await logPaymentInfo(paymentIntent);
+
+    
 
     const pointOfSaleInfo = await getPointOfSaleInfo(restaurantId);
 
@@ -82,7 +87,7 @@ module.exports = async (req, res) => {
       
         console.log(response.result);
         console.log(`Order created on Square: ${response.result.order.id}`);
-        await logOrdersInfo(userId, restaurantId, paymentIntent.id, "OPEN", response.result.order.id, paymentIntent.amount);
+        await updateRestaurantsOrdersLeft(restaurantId);
 
       } catch(error) {
         // here we refund the customer 

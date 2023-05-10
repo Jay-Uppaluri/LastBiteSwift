@@ -8,6 +8,18 @@
 import SwiftUI
 
 struct PaymentPopUpView: View {
+    @EnvironmentObject var paymentService: PaymentService
+    @EnvironmentObject var orderViewModel: OrderViewModel
+
+    @State private var showPaymentConfirmationView = false
+    @State private var openOrAcceptedOrder: OrdersModel?
+    
+    
+    
+
+
+    var restaurant: Restaurant
+
     private var regularCustomFontName: String = "DMSans-Regular"
     private var mediumCustomFontName: String = "DMSans-Medium"
     private var boldCustomFontName: String = "DMSans-Bold"
@@ -20,10 +32,12 @@ struct PaymentPopUpView: View {
     
     private var numberOfSurpriseBites: Int = 1
     
-    private var subtotalAmount: Double = 5.99
-    private var salesTaxAmount: Double = 0.47
     
     private var paymentOnHand: String = "Visa..x4444"
+    
+    init(restaurant: Restaurant) {
+        self.restaurant = restaurant
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16){
@@ -34,7 +48,7 @@ struct PaymentPopUpView: View {
                         VStack(alignment: .center, spacing: 2){
                             HStack{
                                 Spacer()
-                                Text(nameOfRestaurant)
+                                Text(restaurant.name)
                                     .font(.custom(boldCustomFontName, size: 13))
                                 Spacer()
                             }
@@ -91,7 +105,7 @@ struct PaymentPopUpView: View {
                         Text("Subtotal")
                             .font(.custom(regularCustomFontName, size: 13))
                         Spacer()
-                        Text("$\(String(format: "%0.2f", subtotalAmount))")
+                        Text("$\(String(format: "%0.2f", Double(restaurant.price)))")
                             .font(.custom(regularCustomFontName, size: 13))
                     }
                     .opacity(0.70)
@@ -100,7 +114,7 @@ struct PaymentPopUpView: View {
                         Text("Sales Tax")
                             .font(.custom(regularCustomFontName, size: 13))
                         Spacer()
-                        Text("$\(String(format: "%0.2f", salesTaxAmount))")
+                        Text("$\(String(format: "%0.2f", Double(restaurant.price * 0.07)))")
                             .font(.custom(regularCustomFontName, size: 13))
                     }
                     .opacity(0.70)
@@ -109,7 +123,7 @@ struct PaymentPopUpView: View {
                         Text("Total")
                             .font(.custom(regularCustomFontName, size: 16))
                         Spacer()
-                        Text("$\(String(format: "%0.2f", subtotalAmount + salesTaxAmount))")
+                        Text("$\(String(format: "%0.2f", Double(restaurant.price) + Double(restaurant.price * 0.07)))")
                             .font(.custom(regularCustomFontName, size: 16))
                     }
                 }
@@ -147,7 +161,9 @@ struct PaymentPopUpView: View {
                         .opacity(0.40)
                     
                     //MARK: PLACE ORDER BUTTON
-                    NavigationLink(destination: PaymentConfirmationView()) {
+                    Button(action: {
+                        paymentService.presentPaymentSheet()
+                    }) {
                         HStack{
                             Spacer()
                             Text("Place Order")
@@ -160,16 +176,29 @@ struct PaymentPopUpView: View {
                         .cornerRadius(UIScreen.main.bounds.width * 0.20)
                         .buttonStyle(.plain)
                     }
+                    .fullScreenCover(isPresented: $showPaymentConfirmationView) {
+                        PaymentConfirmationView(order: orderViewModel.openOrAcceptedOrder!)
+
+                    }
+
                 }
             }
         }
         .padding(16)
         .cornerRadius(10)
+        .onAppear {
+            paymentService.onPaymentSuccess = {
+                print("Payment Successful!!!!")
+                orderViewModel.findOpenOrAcceptedOrder { order in
+                    showPaymentConfirmationView = true
+                }
+            }
+        }
+
+
     }
+    
+    
 }
 
-struct PaymentPopUpView_Previews: PreviewProvider {
-    static var previews: some View {
-        PaymentPopUpView()
-    }
-}
+

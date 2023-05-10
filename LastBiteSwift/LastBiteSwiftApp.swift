@@ -25,9 +25,11 @@ struct LastBiteSwiftApp: App {
     
     var body: some Scene {
         let userService = UserService()
+        let paymentService = PaymentService()
         WindowGroup {
             RootView()
                 .environmentObject(userService)
+                .environmentObject(paymentService)
         }
     }
 }

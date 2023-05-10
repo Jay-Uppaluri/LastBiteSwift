@@ -1,13 +1,25 @@
 import StripePaymentSheet
 import SwiftUI
 import FirebaseAuth
+import Combine
+import Dispatch
 
 class PaymentService: ObservableObject {
     let backendCheckoutUrl = URL(string: "https://us-central1-lastbite-907b1.cloudfunctions.net/paymentSheet")!
     @Published var paymentSheet: PaymentSheet?
     @Published var paymentResult: PaymentSheetResult?
 
-    func preparePaymentSheet(restaurantId: String) {
+    private var currentRestaurantId: String?
+    private var paymentSheetPreparation: AnyCancellable?
+    private var paymentIntentClientSecret: String?
+    private var customerId: String?
+    private var customerEphemeralKeySecret: String?
+
+
+
+    func preparePaymentSheet(restaurantId: String, completion: @escaping () -> Void) {
+        STPAPIClient.shared.publishableKey = "pk_test_51Mm5YMJa42zn3jCLDGyMInDAgUBxKBCNjFLeqCdpSi2QTwZwKFahXKbvd23gHy18En2nS3eqCfthgRPNEZwxZy4V00chCbTmqB"
+
         let userId = AuthenticationManager.shared.getUserId()
         let paymentData = Payment(amount: 499, userId: userId!, restaurantId: restaurantId, orderType: "vegetarian")
         
@@ -34,25 +46,74 @@ class PaymentService: ObservableObject {
                     // Handle error
                     return
                 }
-                
-                STPAPIClient.shared.publishableKey = "pk_test_51Mm5YMJa42zn3jCLDGyMInDAgUBxKBCNjFLeqCdpSi2QTwZwKFahXKbvd23gHy18En2nS3eqCfthgRPNEZwxZy4V00chCbTmqB"
-                // MARK: Create a PaymentSheet instance
-                var configuration = PaymentSheet.Configuration()
-                configuration.merchantDisplayName = "Vinny's Pizzeria and Winery"
-                configuration.customer = .init(id: customerId, ephemeralKeySecret: customerEphemeralKeySecret)
-                configuration.allowsDelayedPaymentMethods = true
-
                 DispatchQueue.main.async {
+                    var configuration = PaymentSheet.Configuration()
+                    configuration.merchantDisplayName = "Vinny's Pizzeria and Winery"
+                    configuration.customer = .init(id: customerId, ephemeralKeySecret: customerEphemeralKeySecret)
+                    configuration.allowsDelayedPaymentMethods = true
+
                     self.paymentSheet = PaymentSheet(paymentIntentClientSecret: paymentIntentClientSecret, configuration: configuration)
+                    completion()
                 }
             })
             task.resume()
         })
     }
-    
+
+
+
+
     func onPaymentCompletion(result: PaymentSheetResult) {
         self.paymentResult = result
         self.paymentSheet = nil
+        self.paymentIntentClientSecret = nil
+        self.customerId = nil
+        self.customerEphemeralKeySecret = nil
+        
+        if case .completed = result {
+            onPaymentSuccess?()
+        }
     }
+    
+
+
+
+
+    
+
+    var onPaymentSuccess: (() -> Void)?
+
+
+    func presentPaymentSheet() {
+        guard let paymentSheet = self.paymentSheet else { return }
+
+        if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene,
+           let rootViewController = scene.windows.first?.rootViewController {
+               
+            // Dismiss the currently presented view controller if there is one
+            if let presentedViewController = rootViewController.presentedViewController {
+                presentedViewController.dismiss(animated: false) {
+                    paymentSheet.present(from: rootViewController) { result in
+                        self.onPaymentCompletion(result: result)
+                    }
+                }
+            } else {
+                paymentSheet.present(from: rootViewController) { result in
+                    self.onPaymentCompletion(result: result)
+                }
+            }
+        }
+    }
+
+
+
+
+    
+
+    
+    
 }
+
+
+
 
