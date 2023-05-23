@@ -37,6 +37,7 @@
 		C3041DC929C2CF0400E44A1F /* StripePaymentSheet in Frameworks */ = {isa = PBXBuildFile; productRef = C3041DC829C2CF0400E44A1F /* StripePaymentSheet */; };
 		C30F060C29A02382007D5807 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30F060B29A02382007D5807 /* HomeViewModel.swift */; };
 		C30F060E29A03883007D5807 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30F060D29A03883007D5807 /* HomeView.swift */; };
+		C33A0D502A0B51AC002B9874 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33A0D4F2A0B51AC002B9874 /* LocationManager.swift */; };
 		C33A957129E487D0001F4594 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33A957029E487D0001F4594 /* RootView.swift */; };
 		C346C03F29DD026E00D946BA /* OrderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C346C03E29DD026E00D946BA /* OrderModel.swift */; };
 		C346C04129DD028B00D946BA /* OrdersCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C346C04029DD028B00D946BA /* OrdersCardView.swift */; };
@@ -104,6 +105,7 @@
 		C30F060B29A02382007D5807 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		C30F060D29A03883007D5807 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		C30F061129A04434007D5807 /* LastBiteSwift.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LastBiteSwift.entitlements; sourceTree = "<group>"; };
+		C33A0D4F2A0B51AC002B9874 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		C33A957029E487D0001F4594 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		C346C03E29DD026E00D946BA /* OrderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderModel.swift; sourceTree = "<group>"; };
 		C346C04029DD028B00D946BA /* OrdersCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersCardView.swift; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 				C3F99B0C299300B600025BEB /* Preview Content */,
 				2C19DBE8299EB32700BA9FC6 /* Components.swift */,
 				2C19DBEA299EB67B00BA9FC6 /* Discover.swift */,
+				C33A0D4F2A0B51AC002B9874 /* LocationManager.swift */,
 			);
 			path = LastBiteSwift;
 			sourceTree = "<group>";
@@ -459,6 +462,7 @@
 				1C6C4A1329BBA31300430C90 /* UserModel.swift in Sources */,
 				C3828A3029F9D8B200613904 /* utils.swift in Sources */,
 				C3EEF2602A04AC3D006DB2B6 /* Favorites.swift in Sources */,
+				C33A0D502A0B51AC002B9874 /* LocationManager.swift in Sources */,
 				1C6C4A1529BBA37B00430C90 /* UserViewModel.swift in Sources */,
 				2C2AC23B29A18D6B0002BBD9 /* SplashScreenView.swift in Sources */,
 				1C409BC52994635E003F578E /* SignUp.swift in Sources */,
@@ -619,6 +623,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LastBiteSwift/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need access to your location to help provide accurate restaurant recommendations.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -629,7 +634,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.lastbite.lastbite;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.lastbite.lastbite-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -650,6 +655,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LastBiteSwift/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need access to your location to help provide accurate restaurant recommendations.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -660,7 +666,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.lastbite.lastbite;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.lastbite.lastbite-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

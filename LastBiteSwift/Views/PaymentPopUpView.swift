@@ -14,7 +14,7 @@ struct PaymentPopUpView: View {
     @State private var showPaymentConfirmationView = false
     @State private var openOrAcceptedOrder: OrdersModel?
     
-    
+    //TODO: Animation from bottom
     
 
 

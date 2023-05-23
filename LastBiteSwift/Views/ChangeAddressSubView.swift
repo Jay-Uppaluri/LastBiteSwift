@@ -1,57 +1,101 @@
-//
-//  ChangeZipCodeSubView.swift
-//  jayuppaluri-2
-//
-//  Created by Aiden Seibel on 5/2/23.
-//
-
 import SwiftUI
+import MapKit
+import Combine
+import Foundation
+
+struct MapMarkerOverlay: View {
+    var body: some View {
+        Image(systemName: "mappin.circle.fill")
+            .resizable()
+            .scaledToFit()
+            .frame(height: 30) // Adjust the size here
+            .offset(x: 0, y: -30) // Adjust offset if needed
+    }
+}
+
+class Coordinator: NSObject, MKMapViewDelegate {
+    @Binding var centerCoordinate: CLLocationCoordinate2D
+    @Binding var regionSpan: MKCoordinateSpan
+
+    init(centerCoordinate: Binding<CLLocationCoordinate2D>, regionSpan: Binding<MKCoordinateSpan>) {
+        _centerCoordinate = centerCoordinate
+        _regionSpan = regionSpan
+    }
+
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        centerCoordinate = mapView.centerCoordinate
+        regionSpan = mapView.region.span
+    }
+}
+
+struct CustomMapView: UIViewRepresentable {
+    @Binding var centerCoordinate: CLLocationCoordinate2D
+    @Binding var regionSpan: MKCoordinateSpan
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(centerCoordinate: $centerCoordinate, regionSpan: $regionSpan)
+    }
+
+    func makeUIView(context: Context) -> MKMapView {
+        let mapView = MKMapView()
+        mapView.delegate = context.coordinator
+        return mapView
+    }
+
+    func updateUIView(_ view: MKMapView, context: Context) {
+        let region = MKCoordinateRegion(center: centerCoordinate, span: regionSpan)
+        view.setRegion(region, animated: true)
+    }
+}
+
 
 struct ChangeAddressSubView: View {
-    @State var textFieldText: String = ""
+    @State private var centerCoordinate = CLLocationCoordinate2D(latitude: 44.9778, longitude: -93.2650) // Default to Minneapolis, MN
+    @State private var regionSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1) // Default zoom level
+    @State private var address: String = ""
     @Environment(\.colorScheme) var colorScheme
-    
+    @StateObject private var locationManager = LocationManager()
+
     var body: some View {
-        VStack(alignment: .center, spacing: 0){
-            
-            //MARK: HEADER
-            ZStack(alignment: .top){
-                Text("Change your Location")
-                    .font(.custom(boldCustomFontName, size: 13))
-                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0))
-                HStack{
-                    Spacer()
-                    Button {
-                        //MARK: CANCEL POPUP ACTION
-                    } label: {
-                        Image(systemName: "xmark")
-                    }
-                    .buttonStyle(.plain)
-                }
+        VStack(alignment: .center, spacing: 0) {
+            ZStack {
+                CustomMapView(centerCoordinate: $centerCoordinate, regionSpan: $regionSpan)
+                    .frame(height: 300)
+                MapMarkerOverlay()
             }
             
-            //MARK: TEXT FIELD
             HStack(spacing: 9){
                 Spacer()
                 Image(systemName: "magnifyingglass")
                     .resizable()
                     .opacity(0.30)
                     .frame(width: 17, height: 17)
-                TextField("Enter your Zip Code", text: $textFieldText)
-                    .font(.custom(boldCustomFontName, size: 16))
-                    .foregroundColor(colorScheme == .dark ? .black : .white)
-                    .multilineTextAlignment(.center)
-                    .frame(width: 153)
+                TextField("Enter your Address", text: $address, onCommit: {
+                    locationManager.search(address: address)
+                })
+                .keyboardType(.default)
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+                .font(.custom(boldCustomFontName, size: 16))
+                .foregroundColor(.black)
+                .multilineTextAlignment(.center)
+                .frame(width: 153)
                 Spacer()
             }
             .padding(15)
             .background(Color("F4F4F6"))
             .cornerRadius(8)
-            
-            
-            //MARK: BUTTONS
+            .onChange(of: locationManager.selectedLocation) { newLocation in
+                if let newLocation = newLocation, newLocation != centerCoordinate {
+                    centerCoordinate = newLocation
+                    regionSpan = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+                }
+            }
+
+
             Button {
                 //MARK: APPLY BUTTON ACTION
+                print(centerCoordinate)
             } label: {
                 HStack{
                     Spacer()
@@ -65,12 +109,14 @@ struct ChangeAddressSubView: View {
                 .cornerRadius(UIScreen.main.bounds.width * 0.20)
                 .buttonStyle(.plain)
                 .padding(EdgeInsets(top: 31, leading: 0, bottom: 15, trailing: 0))
-
             }.buttonStyle(.plain)
-            
-            
+
             Button {
-                //MARK: USE CURRENT LOCATION BUTTON ACTION
+                locationManager.requestLocation()
+                    if let location = locationManager.location {
+                    centerCoordinate = location.coordinate
+                    regionSpan = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+                }
             } label: {
                 HStack(alignment: .center, spacing: 8){
                     Image("location-sprite")
@@ -94,4 +140,11 @@ struct ChangeAddressSubView_Previews: PreviewProvider {
         ChangeAddressSubView()
     }
 }
+
+extension CLLocationCoordinate2D: Equatable {
+    public static func == (lhs: CLLocationCoordinate2D, rhs: CLLocationCoordinate2D) -> Bool {
+        return lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude
+    }
+}
+
 
