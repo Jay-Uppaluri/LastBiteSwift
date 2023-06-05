@@ -70,6 +70,44 @@ class UserService: ObservableObject {
         }
     }
     
+    
+    func updateUserLocation(uid: String, location: GeoPoint, radius: Double, completion: @escaping (Bool) -> Void) {
+        let db = Firestore.firestore()
+        let userRef = db.collection("users").document(uid)
+
+        userRef.updateData([
+            "location": location,
+            "radius": radius
+        ]) { error in
+            if let error = error {
+                print("Error updating user location: \(error.localizedDescription)")
+                completion(false)
+            } else {
+                completion(true)
+            }
+        }
+    }
+    
+    func fetchUserLocation() async throws -> (location: GeoPoint, radius: Double) {
+        guard let userId = AuthenticationManager.shared.getUserId() else {
+            throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey : "User is not logged in"])
+        }
+
+        let db = Firestore.firestore()
+        let userRef = db.collection("users").document(userId)
+
+        let documentSnapshot = try await userRef.getDocument()
+
+        guard let location = documentSnapshot.data()?["location"] as? GeoPoint,
+              let radius = documentSnapshot.data()?["radius"] as? Double else {
+            throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey : "Failed to fetch user location and radius"])
+        }
+
+        return (location, radius)
+    }
+
+
+    
     func fetchUserFavorites(completion: @escaping ([String]?) -> Void) {
         guard let userId = AuthenticationManager.shared.getUserId() else {
             completion(nil)

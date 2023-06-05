@@ -122,7 +122,9 @@ struct RestaurantCardView_Previews: PreviewProvider {static var previews: some V
                 locationId: "TEST_SQUARE_LOCATION_ID",
                 restaurantExternalId: nil
             ),
-            accessTokenInfo: Restaurant.AccessTokenInfo(accessToken: "test", expiresAt: Timestamp(), refreshToken: "test"), merchantId: "test"
+            accessTokenInfo: Restaurant.AccessTokenInfo(accessToken: "test", expiresAt: Timestamp(), refreshToken: "test"), merchantId: "test",
+            lat: 30.0000,
+            lng: -3.222
         ),
         isHeartToggled: .constant(false)
     )

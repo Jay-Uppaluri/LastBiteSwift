@@ -35,7 +35,7 @@ class OrderViewModel: ObservableObject {
     }
     
     func findOpenOrAcceptedOrder(completion: @escaping (OrdersModel?) -> Void) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.db.collection("orders")
                 .whereField("userId", isEqualTo: self.userId)
                 .whereField("status", in: ["OPEN", "ACCEPTED"])

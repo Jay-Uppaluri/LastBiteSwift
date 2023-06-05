@@ -2,6 +2,9 @@ import SwiftUI
 import MapKit
 import Combine
 import Foundation
+import FirebaseFirestoreSwift
+import FirebaseFirestore
+import Firebase
 
 struct MapMarkerOverlay: View {
     var body: some View {
@@ -50,11 +53,16 @@ struct CustomMapView: UIViewRepresentable {
 
 
 struct ChangeAddressSubView: View {
+    
+    var onApply: () -> Void  // Add this line
     @State private var centerCoordinate = CLLocationCoordinate2D(latitude: 44.9778, longitude: -93.2650) // Default to Minneapolis, MN
     @State private var regionSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1) // Default zoom level
     @State private var address: String = ""
     @Environment(\.colorScheme) var colorScheme
+    @State private var radius: Double = 20.00
     @StateObject private var locationManager = LocationManager()
+    @StateObject private var userService = UserService()
+
 
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
@@ -62,6 +70,13 @@ struct ChangeAddressSubView: View {
                 CustomMapView(centerCoordinate: $centerCoordinate, regionSpan: $regionSpan)
                     .frame(height: 300)
                 MapMarkerOverlay()
+            }
+            HStack {
+                Slider(value: $radius, in: 1.0...100.0, step: 1.0)
+                    .padding(.horizontal, 15)
+                    .padding(.vertical, 20)
+                
+                Text(String(radius) + " miles")
             }
             
             HStack(spacing: 9){
@@ -94,8 +109,17 @@ struct ChangeAddressSubView: View {
 
 
             Button {
-                //MARK: APPLY BUTTON ACTION
+                let geoPoint = GeoPoint(latitude: centerCoordinate.latitude, longitude: centerCoordinate.longitude)
+                let radius = radius
+                userService.updateUserLocation(uid: AuthenticationManager.shared.getUserId()!, location: geoPoint, radius: radius) { success in
+                    if success {
+                        print("Successfully updated user location")
+                    } else {
+                        print("Failed to update user location")
+                    }
+                }
                 print(centerCoordinate)
+                onApply()
             } label: {
                 HStack{
                     Spacer()
@@ -132,12 +156,25 @@ struct ChangeAddressSubView: View {
         .padding(16)
         .background(colorScheme == .dark ? .black : .white)
         .cornerRadius(8)
+        .onAppear {
+            Task {
+                do {
+                    let (location, userRadius) = try await userService.fetchUserLocation()
+                    centerCoordinate = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+                    radius = userRadius
+                } catch {
+                    print("Failed to fetch user location: \(error)")
+                }
+            }
+        }
     }
 }
 
 struct ChangeAddressSubView_Previews: PreviewProvider {
     static var previews: some View {
-        ChangeAddressSubView()
+        ChangeAddressSubView(onApply: { 
+            print("Apply pressed in preview")
+        })
     }
 }
 

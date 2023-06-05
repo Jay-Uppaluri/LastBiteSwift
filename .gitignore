@@ -5,6 +5,10 @@
 ## User settings
 xcuserdata/
 
+## Config plist
+LastBiteSwift/Config-Debug.plist
+
+node_modules
 
 GoogleService-Info.plist
 ## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)

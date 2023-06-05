@@ -21,14 +21,14 @@ async function addRestaurantsWithGeoFire() {
     
     const docRef = restaurantsRef.doc(restaurant.id);
     const location = [restaurant.data().location.latitude, restaurant.data().location.longitude];
-    const geohash = geofire.geohashForLocation([42.000, -42.000]);
+    const geohash = geofire.geohashForLocation([45.9778, -93.26500]);
 
     // Add GeoFire data
     const updatedData = {
       ...restaurant.data(),
       geohash: geohash,
-      lat: 42.000,
-      lng: -42.100
+      lat: 45.9778,
+      lng: -92.26500
     };
 
     batch.update(docRef, updatedData);
