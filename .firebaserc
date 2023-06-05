@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "lastbite-907b1"
-  }
+    "default": "lastbite-907b1",
+    "development": "lastbite-907b1"
+  },
+  "targets": {},
+  "etags": {}
 }

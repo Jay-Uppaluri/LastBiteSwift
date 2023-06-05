@@ -292,7 +292,9 @@ struct RestaurantDetailView_Previews: PreviewProvider {
                     locationId: "TEST_SQUARE_LOCATION_ID",
                     restaurantExternalId: nil
                 ),
-                accessTokenInfo: Restaurant.AccessTokenInfo(accessToken: "test", expiresAt: Timestamp(), refreshToken: "test"), merchantId: "test"
+                accessTokenInfo: Restaurant.AccessTokenInfo(accessToken: "test", expiresAt: Timestamp(), refreshToken: "test"), merchantId: "test",
+                lat: 42.000,
+                lng: -42.000
             )
         )
     }

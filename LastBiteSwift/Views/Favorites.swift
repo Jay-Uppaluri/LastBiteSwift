@@ -6,6 +6,22 @@ var boldCustomFontName: String = "DMSans-Bold"
 var poppinsFontName: String = "Poppins-ExtraBoldItalic"
 
 struct FavoritesPage: View {
+    @State private var selectedTab = 0
+
+    
+    
+    func applyAndFetchData() {
+        Task {
+            do {
+                try await viewModel.fetchData()
+            } catch {
+                print("Error fetching data: \(error)")
+            }
+        }
+        withAnimation {
+            self.isChangeAddressViewShowing = false
+        }
+    }
     @ObservedObject private var viewModel = HomeViewModel()
     @EnvironmentObject private var userService: UserService
 
@@ -15,6 +31,7 @@ struct FavoritesPage: View {
     var body: some View {
         ZStack {
             NavigationView {
+                TabView(selection: $selectedTab) {
                 ScrollView(.vertical){
                     VStack(spacing: 24){
                         ForEach(viewModel.restaurants.indices, id: \.self) { index in
@@ -34,6 +51,40 @@ struct FavoritesPage: View {
                     .padding()
                     .padding(.top, -20)
                 }
+                .tabItem {
+                    Image(systemName: "safari")
+                        
+                    Text("Explore")
+                        .font(.custom("DMSans-Regular", size: 13.0))
+                    
+                }
+                .tag(0)
+                
+                ContentView()
+                    .tabItem {
+                        Image(systemName: "map")
+                        Text("Discover")
+                            .font(.custom("DMSans-Regular", size: 13.0))
+                    }
+                    .tag(1)
+                
+                FavoritesView()
+                    .environmentObject(userService)
+                    .environmentObject(viewModel)
+                    .tabItem {
+                        Image(systemName: "heart")
+                        Text("Favorites")
+                            .font(.custom("DMSans-Regular", size: 13.0))
+                    }
+                    .tag(2)
+                
+                SettingsView()
+                    .tabItem {
+                        Image(systemName: "gearshape")
+                        Text("Settings")
+                            .font(.custom("DMSans-Regular", size: 13.0))
+                    }
+                    .tag(3)                }
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar{
                     ToolbarItem(placement: .principal) {
@@ -45,6 +96,7 @@ struct FavoritesPage: View {
                             Spacer()
                             
                             Button {
+                                print("Change address")
                                 // Toggle isChangeAddressViewShowing to true when the button is tapped
                                 self.isChangeAddressViewShowing = true
                             } label: {
@@ -79,26 +131,32 @@ struct FavoritesPage: View {
 
             // Add this to present the ChangeAddressSubView when isChangeAddressViewShowing is true
             if isChangeAddressViewShowing {
-                VStack {
-                    Spacer()
+                            VStack {
+                                Spacer()
 
-                    ChangeAddressSubView()
-                        .transition(.move(edge: .bottom))
-                        //.animation(.default)
-                }
-                .background(
-                    Color.black.opacity(0.4)
-                        .edgesIgnoringSafeArea(.all)
-                        .onTapGesture {
-                            withAnimation {
-                                self.isChangeAddressViewShowing = false
+                                ChangeAddressSubView(onApply: applyAndFetchData)  // Add the callback here
+                                    .transition(.move(edge: .bottom))
                             }
+                            .background(
+                                Color.black.opacity(0.4)
+                                    .edgesIgnoringSafeArea(.all)
+                                    .onTapGesture {
+                                        withAnimation {
+                                            self.isChangeAddressViewShowing = false
+                                        }
+                                    }
+                            )
+                
+
+            
+                
+                
                         }
-                )
+            
+                    }
+        
+                }
             }
-        }
-    }
-}
 
 struct FavoritesPage_Previews: PreviewProvider {
     static var previews: some View {

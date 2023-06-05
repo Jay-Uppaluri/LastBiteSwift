@@ -1,7 +1,11 @@
-const stripe = require('stripe')('sk_test_51Mm5YMJa42zn3jCLGFx3TVg1OsHS5QYnxZXXM3BksjK6muoefYGzLUHwujpZmT2SSAwx5CIlfXK6kWBhZ0rV9DLL000ufSmDld');
+const functions = require('firebase-functions');
+const stripeSecretKey = functions.config().stripe.secret;
+const stripe = require('stripe')(stripeSecretKey);
 const { getCustomerIdFromDb, addCustomerIdToUserDocument } = require('./helper');
 const validAmounts = [499, 599, 699];
 const admin = require('firebase-admin');
+const stripePublishableKey = functions.config().stripe.publishable;
+
 
 // Initialize firebase-admin
 if (!admin.apps.length) {
@@ -55,7 +59,8 @@ module.exports = async (req, res) => {
         paymentIntent: paymentIntent.client_secret,
         ephemeralKey: ephemeralKey.secret,
         customer: customer.id,
-        publishableKey: 'pk_test_51Mm5YMJa42zn3jCLDGyMInDAgUBxKBCNjFLeqCdpSi2QTwZwKFahXKbvd23gHy18En2nS3eqCfthgRPNEZwxZy4V00chCbTmqB'
+        publishableKey: stripePublishableKey
+
       });
   } catch (error) {
     console.log('Error: ', error);

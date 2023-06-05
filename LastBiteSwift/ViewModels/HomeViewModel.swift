@@ -6,23 +6,31 @@ import FirebaseFirestore
 import MapKit
 import FirebaseFirestoreSwift
 import FirebaseFunctions
+import Combine
+import Foundation
 
 class HomeViewModel: ObservableObject {
     
     @Published var restaurants = [Restaurant]()
     
+    private var userService = UserService()
     private var db = Firestore.firestore()
     
     
     func milesToMeters(miles: Double) async throws -> Double{
         return miles * 1609.34
     }
+    
+    
         
     func fetchData() async throws {
+        
+        let (location, radius) = try await userService.fetchUserLocation()
+        
         let data: [String: Any] = [
-            "latitude": 42.000,
-            "longitude": -42.005,
-            "radius": try await milesToMeters(miles: 100.00)
+            "latitude": location.latitude,
+            "longitude": location.longitude,
+            "radius": try await milesToMeters(miles: radius)
         ]
         
         if !AuthenticationManager.shared.isUserLoggedIn() {
@@ -57,7 +65,8 @@ class HomeViewModel: ObservableObject {
                                type: restaurantResponse.type,
                                pointOfSaleInfo: restaurantResponse.pointOfSaleInfo.map { Restaurant.PoSInfo(system: $0.system, locationId: $0.locationId, restaurantExternalId: $0.restaurantExternalId) },
                                accessTokenInfo: restaurantResponse.accessTokenInfo.map { Restaurant.AccessTokenInfo(accessToken: $0.accessToken, expiresAt: Timestamp(date: $0.expiresAt.asDate), refreshToken: $0.refreshToken) },
-                               merchantId: restaurantResponse.merchantId)
+                               merchantId: restaurantResponse.merchantId,
+                               lat: restaurantResponse.lat, lng: restaurantResponse.lng)
                 }
             }
         } catch {
@@ -75,9 +84,9 @@ class HomeViewModel: ObservableObject {
         let maxLongitude = region.center.longitude + region.span.longitudeDelta / 2
 
         return restaurants.filter { restaurant in
-            let lat = restaurant.location.latitude
-            let lon = restaurant.location.longitude
-            return lat >= minLatitude && lat <= maxLatitude && lon >= minLongitude && lon <= maxLongitude
+            let lat = restaurant.lat
+            let lon = restaurant.lng
+            return lat! >= minLatitude && lat! <= maxLatitude && lon! >= minLongitude && lon! <= maxLongitude
         }
     }
 

@@ -71,9 +71,6 @@ struct FavoritesView: View {
     
     var body: some View {
             VStack {
-                Text("Your Favorite Restaurants")
-                    .font(.title)
-                    .padding()
                 
                 ScrollView {
                     VStack {
@@ -88,7 +85,7 @@ struct FavoritesView: View {
                                     }
                                 }
                             )
-                            RestaurantCardView(restaurant: restaurant, isHeartToggled: isHeartToggled) {
+                            RestaurantCardSubView(restaurant: restaurant, isHeartToggled: isHeartToggled) {
                                 if let index = favorites.firstIndex(of: restaurant.id ?? "") {
                                     favorites.remove(at: index)
                                 }

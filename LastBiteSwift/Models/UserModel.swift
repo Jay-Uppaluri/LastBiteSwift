@@ -8,6 +8,7 @@ struct User: Identifiable {
     let createdOn: Timestamp
     let phoneNumber: String
     let ordersPlaced: Int
+    let location: GeoPoint
 
     //maybe the user also notifications boolean on or off
     //maybe users also has whether or not they get emails sent to them

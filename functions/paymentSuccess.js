@@ -1,6 +1,9 @@
-const stripe = require('stripe')('sk_test_51Mm5YMJa42zn3jCLGFx3TVg1OsHS5QYnxZXXM3BksjK6muoefYGzLUHwujpZmT2SSAwx5CIlfXK6kWBhZ0rV9DLL000ufSmDld');
-const { logPaymentInfo, logOrdersInfo, getPointOfSaleInfo, getRestaurantAccessToken, refreshAccessToken, updateRestaurantAccessToken, updateRestaurantsOrdersLeft, generateRandomFourDigitNumber, getRestaurant } = require('./helper');
+const functions = require('firebase-functions');
+const stripeSecretKey = functions.config().stripe.secret;
+const stripe = require('stripe')(stripeSecretKey);const { logPaymentInfo, logOrdersInfo, getPointOfSaleInfo, getRestaurantAccessToken, refreshAccessToken, updateRestaurantAccessToken, updateRestaurantsOrdersLeft, generateRandomFourDigitNumber, getRestaurant } = require('./helper');
 const { Client } = require('square');
+const stripeWebhookSecret = functions.config().stripe.webhooksecret;
+
 
 module.exports = async (req, res) => {
   // Verify the signature of the Stripe webhook event
@@ -8,7 +11,7 @@ module.exports = async (req, res) => {
   let event;
 
   try {
-    event = stripe.webhooks.constructEvent(req.rawBody, sig, "whsec_c9fwm3kaAwLthkptFLqPL8Xj2TFzm3a5");
+    event = stripe.webhooks.constructEvent(req.rawBody, sig, stripeWebhookSecret);
   } catch (err) {
     console.log(`Webhook error: ${err.message}`);
     return res.status(400).send(`Webhook Error: ${err.message}`);

@@ -20,9 +20,10 @@ class UserViewModel: ObservableObject {
                 let phoneNumber = data["phone"] as? String ?? ""
                 let createdOn = data["CreatedOn"] as! Timestamp
                 let ordersPlaced = data["ordersPlaced"] as! Int
+                let location = data["location"] as! GeoPoint
 
                 return User(id: queryDocumentSnapshot.documentID, name: name,createdOn: createdOn, phoneNumber: phoneNumber,
-                                  ordersPlaced: ordersPlaced)
+                            ordersPlaced: ordersPlaced, location: location)
 
             }
         }

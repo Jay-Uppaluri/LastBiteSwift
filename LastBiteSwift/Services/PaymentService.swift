@@ -5,7 +5,7 @@ import Combine
 import Dispatch
 
 class PaymentService: ObservableObject {
-    let backendCheckoutUrl = URL(string: "https://us-central1-lastbite-907b1.cloudfunctions.net/paymentSheet")!
+    var backendCheckoutUrl: URL?
     @Published var paymentSheet: PaymentSheet?
     @Published var paymentResult: PaymentSheetResult?
 
@@ -15,11 +15,33 @@ class PaymentService: ObservableObject {
     private var customerId: String?
     private var customerEphemeralKeySecret: String?
 
+    init() {
+        let configFileName: String
+        #if DEBUG
+        configFileName = "Config-Debug"
+        #elseif STAGING
+        configFileName = "Config-Staging"
+        #else
+        configFileName = "Config-Release"
+        #endif
 
+        if let path = Bundle.main.path(forResource: configFileName, ofType: "plist"),
+           let dict = NSDictionary(contentsOfFile: path) as? [String: AnyObject],
+           let publishableKey = dict["StripePublishableKey"] as? String,
+           let backendCheckoutUrlString = dict["BackendCheckoutUrl"] as? String,
+           let backendCheckoutUrl = URL(string: backendCheckoutUrlString) {
+            STPAPIClient.shared.publishableKey = publishableKey
+            self.backendCheckoutUrl = backendCheckoutUrl
+        } else {
+            print("Failed to load configuration from \(configFileName).plist")
+        }
+    }
 
     func preparePaymentSheet(restaurantId: String, completion: @escaping () -> Void) {
-        STPAPIClient.shared.publishableKey = "pk_test_51Mm5YMJa42zn3jCLDGyMInDAgUBxKBCNjFLeqCdpSi2QTwZwKFahXKbvd23gHy18En2nS3eqCfthgRPNEZwxZy4V00chCbTmqB"
-
+        guard let backendCheckoutUrl = backendCheckoutUrl else {
+            print("Backend checkout URL is not set")
+            return
+        }
         let userId = AuthenticationManager.shared.getUserId()
         let paymentData = Payment(amount: 499, userId: userId!, restaurantId: restaurantId, orderType: "vegetarian")
         
@@ -29,7 +51,7 @@ class PaymentService: ObservableObject {
                 return
             }
             
-            var request = URLRequest(url: self.backendCheckoutUrl)
+            var request = URLRequest(url: backendCheckoutUrl)
             request.httpMethod = "POST"
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.setValue("Bearer \(idToken)", forHTTPHeaderField: "Authorization")
