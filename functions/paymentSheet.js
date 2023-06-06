@@ -1,11 +1,8 @@
 const functions = require('firebase-functions');
-const stripeSecretKey = functions.config().stripe.secret;
-const stripe = require('stripe')(stripeSecretKey);
+const { stripe, stripePublishableKey } = require('./stripeInit');
 const { getCustomerIdFromDb, addCustomerIdToUserDocument } = require('./helper');
 const validAmounts = [499, 599, 699];
 const admin = require('firebase-admin');
-const stripePublishableKey = functions.config().stripe.publishable;
-
 
 // Initialize firebase-admin
 if (!admin.apps.length) {
