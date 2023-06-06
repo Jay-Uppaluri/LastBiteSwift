@@ -11,7 +11,21 @@ import Stripe
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-      StripeAPI.defaultPublishableKey = "pk_test_51Mm5YMJa42zn3jCLDGyMInDAgUBxKBCNjFLeqCdpSi2QTwZwKFahXKbvd23gHy18En2nS3eqCfthgRPNEZwxZy4V00chCbTmqB"
+        let configFileName: String
+        #if DEBUG
+        configFileName = "Config-Debug"
+        #elseif STAGING
+        configFileName = "Config-Staging"
+        #else
+        configFileName = "Config-Release"
+        #endif
+        if let path = Bundle.main.path(forResource: configFileName, ofType: "plist"),
+           let dict = NSDictionary(contentsOfFile: path) as? [String: AnyObject],
+           let publishableKey = dict["StripePublishableKey"] as? String {
+            STPAPIClient.shared.publishableKey = publishableKey
+        } else {
+            print("Failed to load configuration from \(configFileName).plist")
+        }
       FirebaseApp.configure()
         
 

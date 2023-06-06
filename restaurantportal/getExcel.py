@@ -5,7 +5,7 @@ from firebase_admin import firestore
 import openpyxl
 
 def get_firestore_database():
-    cred = credentials.Certificate('C:\\Users\\srina\\Desktop\\lastbite_python\\serviceAccountKey.json')
+    cred = credentials.Certificate('C:\\Users\\\\Desktop\\lastbite_python\\serviceAccountKey.json')
     firebase_admin.initialize_app(cred)
     return firestore.client()
 
