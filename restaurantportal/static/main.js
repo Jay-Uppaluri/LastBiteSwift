@@ -2,15 +2,8 @@
 let uid = null;
 let value = 0;
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAzrBi9zuKrJDnZowoR9s9jJPqZX2egXUA",
-  authDomain: "lastbite-907b1.firebaseapp.com",
-  projectId: "lastbite-907b1",
-  storageBucket: "lastbite-907b1.appspot.com",
-  messagingSenderId: "342058562429",
-  appId: "1:342058562429:web:f2fef939342130176f1214",
-  measurementId: "G-9Z27YN7XJX"
-};
+
+const firebaseConfig = window._appConfig.firebaseConfig;
 firebase.initializeApp(firebaseConfig);
 
 async function fetchRestaurantOrders(uid) {

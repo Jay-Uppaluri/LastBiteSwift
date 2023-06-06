@@ -13,9 +13,14 @@ from flask import jsonify
 import base64
 import secrets
 import requests
+from dotenv import load_dotenv
+import os
 
-SQUARE_SANDBOX_CLIENT_ID = "sandbox-sq0idb--6fEGNSRA_VfU91OGguc_Q"
-SQUARE_SANDBOX_ACCESS_TOKEN = "EAAAEAT_ae3DaTY2Bg6gyWLDoHA8M2FqiWRJ3NycF8Ona7iqQI1FOV2Ke_GhEqI5"
+load_dotenv()
+
+SQUARE_SANDBOX_CLIENT_ID = os.getenv("SQUARE_SANDBOX_CLIENT_ID")
+SQUARE_SANDBOX_ACCESS_TOKEN = os.getenv("SQUARE_SANDBOX_ACCESS_TOKEN")
+
 SQUARE_OAUTH_REDIRECT_URI = "http://127.0.0.1:5000/oauth_callback"
 SQUARE_AUTHORIZE_URL = "https://connect.squareupsandbox.com/oauth2/authorize"
 SQUARE_TOKEN_URL = "https://connect.squareupsandbox.com/oauth2/token"
@@ -30,7 +35,15 @@ firebase_admin.initialize_app(cred)
 
 @app.route('/a')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', firebase_config={
+        'apiKey': os.getenv('FIREBASE_API_KEY'),
+        'authDomain': os.getenv('FIREBASE_AUTH_DOMAIN'),
+        'projectId': os.getenv('FIREBASE_PROJECT_ID'),
+        'storageBucket': os.getenv('FIREBASE_STORAGE_BUCKET'),
+        'messagingSenderId': os.getenv('FIREBASE_MESSAGING_SENDER_ID'),
+        'appId': os.getenv('FIREBASE_APP_ID'),
+        'measurementId': os.getenv('FIREBASE_MEASUREMENT_ID')
+    })
 
 
 def get_firestore_database():
@@ -220,7 +233,15 @@ def get_restaurant(database, restaurant_id):
 
 @app.route('/abc')
 def render_login():
-    return render_template('login.html')
+    return render_template('login.html', firebase_config={
+        'apiKey': os.getenv('FIREBASE_API_KEY'),
+        'authDomain': os.getenv('FIREBASE_AUTH_DOMAIN'),
+        'projectId': os.getenv('FIREBASE_PROJECT_ID'),
+        'storageBucket': os.getenv('FIREBASE_STORAGE_BUCKET'),
+        'messagingSenderId': os.getenv('FIREBASE_MESSAGING_SENDER_ID'),
+        'appId': os.getenv('FIREBASE_APP_ID'),
+        'measurementId': os.getenv('FIREBASE_MEASUREMENT_ID')
+    })
 
 
 @app.route('/')
@@ -230,7 +251,15 @@ def login():
 
 @app.route('/11')
 def render_signUp():
-    return render_template('index.html')
+    return render_template('index.html', firebase_config={
+        'apiKey': os.getenv('FIREBASE_API_KEY'),
+        'authDomain': os.getenv('FIREBASE_AUTH_DOMAIN'),
+        'projectId': os.getenv('FIREBASE_PROJECT_ID'),
+        'storageBucket': os.getenv('FIREBASE_STORAGE_BUCKET'),
+        'messagingSenderId': os.getenv('FIREBASE_MESSAGING_SENDER_ID'),
+        'appId': os.getenv('FIREBASE_APP_ID'),
+        'measurementId': os.getenv('FIREBASE_MEASUREMENT_ID')
+    })
 
 @app.route('/signup', methods=['POST'])
 def signup():

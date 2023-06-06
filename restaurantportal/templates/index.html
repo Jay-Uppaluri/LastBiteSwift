@@ -32,6 +32,20 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js%22%3E"></script> -->
     <!-- Add Firebase products that you want to use -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase.js"></script>
+
+    <script>
+      window._appConfig = {
+        firebaseConfig: {
+          apiKey: "{{ firebase_config['apiKey'] }}",
+          authDomain: "{{ firebase_config['authDomain'] }}",
+          projectId: "{{ firebase_config['projectId'] }}",
+          storageBucket: "{{ firebase_config['storageBucket'] }}",
+          messagingSenderId: "{{ firebase_config['messagingSenderId'] }}",
+          appId: "{{ firebase_config['appId'] }}",
+          measurementId: "{{ firebase_config['measurementId'] }}"
+        }
+      };
+      </script>
     
   </head>
 

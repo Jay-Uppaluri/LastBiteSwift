@@ -15,15 +15,15 @@
     <script>
         // Initialize Firebase with your configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyAzrBi9zuKrJDnZowoR9s9jJPqZX2egXUA",
-            authDomain: "lastbite-907b1.firebaseapp.com",
-            projectId: "lastbite-907b1",
-            storageBucket: "lastbite-907b1.appspot.com",
-            messagingSenderId: "342058562429",
-            appId: "1:342058562429:web:f2fef939342130176f1214",
-            measurementId: "G-9Z27YN7XJX"
-        };
-        firebase.initializeApp(firebaseConfig);
+  apiKey: "{{ firebase_config['apiKey'] }}",
+  authDomain: "{{ firebase_config['authDomain'] }}",
+  projectId: "{{ firebase_config['projectId'] }}",
+  storageBucket: "{{ firebase_config['storageBucket'] }}",
+  messagingSenderId: "{{ firebase_config['messagingSenderId'] }}",
+  appId: "{{ firebase_config['appId'] }}",
+  measurementId: "{{ firebase_config['measurementId'] }}"
+};
+firebase.initializeApp(firebaseConfig);
         firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
         const db = firebase.firestore();
