@@ -34,6 +34,7 @@
 		2C2AC23629A18C530002BBD9 /* PaymentMethodEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2AC23329A18C530002BBD9 /* PaymentMethodEmpty.swift */; };
 		2C2AC23729A18C530002BBD9 /* NewPaymentMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2AC23429A18C530002BBD9 /* NewPaymentMethod.swift */; };
 		2C2AC23B29A18D6B0002BBD9 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2AC23A29A18D6B0002BBD9 /* SplashScreenView.swift */; };
+		2C931BEC2A302A1600BF8118 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C931BEB2A302A1600BF8118 /* GoogleService-Info.plist */; };
 		C3041DC929C2CF0400E44A1F /* StripePaymentSheet in Frameworks */ = {isa = PBXBuildFile; productRef = C3041DC829C2CF0400E44A1F /* StripePaymentSheet */; };
 		C30F060C29A02382007D5807 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30F060B29A02382007D5807 /* HomeViewModel.swift */; };
 		C30F060E29A03883007D5807 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30F060D29A03883007D5807 /* HomeView.swift */; };
@@ -61,7 +62,6 @@
 		C39D307729C67A3D00FA1395 /* DiscoverMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39D307629C67A3D00FA1395 /* DiscoverMap.swift */; };
 		C3A4C52629C3DB23007E59F1 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A4C52529C3DB23007E59F1 /* UserService.swift */; };
 		C3A4C52929C42177007E59F1 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A4C52829C42177007E59F1 /* AuthenticationManager.swift */; };
-		C3CB778A29C2B62300D45EA8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C3CB778929C2B62300D45EA8 /* GoogleService-Info.plist */; };
 		C3EEF25E2A04ABE5006DB2B6 /* ChangeAddressSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3EEF25D2A04ABE5006DB2B6 /* ChangeAddressSubView.swift */; };
 		C3EEF2602A04AC3D006DB2B6 /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3EEF25F2A04AC3D006DB2B6 /* Favorites.swift */; };
 		C3EEF2622A04AC73006DB2B6 /* RestaurantCardSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3EEF2612A04AC73006DB2B6 /* RestaurantCardSubView.swift */; };
@@ -104,6 +104,7 @@
 		2C2AC23329A18C530002BBD9 /* PaymentMethodEmpty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodEmpty.swift; sourceTree = "<group>"; };
 		2C2AC23429A18C530002BBD9 /* NewPaymentMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPaymentMethod.swift; sourceTree = "<group>"; };
 		2C2AC23A29A18D6B0002BBD9 /* SplashScreenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
+		2C931BEB2A302A1600BF8118 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../LastBite Swtift Extra file/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C30F060B29A02382007D5807 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		C30F060D29A03883007D5807 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		C30F061129A04434007D5807 /* LastBiteSwift.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LastBiteSwift.entitlements; sourceTree = "<group>"; };
@@ -129,7 +130,6 @@
 		C39D307629C67A3D00FA1395 /* DiscoverMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverMap.swift; sourceTree = "<group>"; };
 		C3A4C52529C3DB23007E59F1 /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		C3A4C52829C42177007E59F1 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
-		C3CB778929C2B62300D45EA8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C3EEF25D2A04ABE5006DB2B6 /* ChangeAddressSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeAddressSubView.swift; sourceTree = "<group>"; };
 		C3EEF25F2A04AC3D006DB2B6 /* Favorites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorites.swift; sourceTree = "<group>"; };
 		C3EEF2612A04AC73006DB2B6 /* RestaurantCardSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCardSubView.swift; sourceTree = "<group>"; };
@@ -329,8 +329,8 @@
 			children = (
 				C3A4C52729C4216A007E59F1 /* Authentication */,
 				C3A4C52429C3DB23007E59F1 /* Services */,
-				C3CB778929C2B62300D45EA8 /* GoogleService-Info.plist */,
 				C30F061129A04434007D5807 /* LastBiteSwift.entitlements */,
+				2C931BEB2A302A1600BF8118 /* GoogleService-Info.plist */,
 				C36DEAEE29A00EAB00AAF23D /* Views */,
 				C36DEAE929A0091000AAF23D /* ViewModels */,
 				C36DEAE629A008F200AAF23D /* Models */,
@@ -433,11 +433,11 @@
 				C32D0CE52A3025F200DF4B58 /* Config-Staging.plist in Resources */,
 				1C409BD229946514003F578E /* DMSans-Regular.ttf in Resources */,
 				C32D0CE32A2E4E1A00DF4B58 /* Config-Debug.plist in Resources */,
-				C3CB778A29C2B62300D45EA8 /* GoogleService-Info.plist in Resources */,
 				1C409BD429946514003F578E /* DMSans-MediumItalic.ttf in Resources */,
 				1CF755B52994BB81009EAD0D /* Assets.xcassets in Resources */,
 				1C409BD029946514003F578E /* DMSans-Italic.ttf in Resources */,
 				1C409BCF29946514003F578E /* DMSans-BoldItalic.ttf in Resources */,
+				2C931BEC2A302A1600BF8118 /* GoogleService-Info.plist in Resources */,
 				1C409BD129946514003F578E /* DMSans-Medium.ttf in Resources */,
 				1C409BD329946514003F578E /* DMSans-Bold.ttf in Resources */,
 			);
@@ -627,10 +627,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LastBiteSwift/Preview Content\"";
-				DEVELOPMENT_TEAM = 5X65B9BLRN;
+				DEVELOPMENT_TEAM = GLGW75V62Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LastBiteSwift/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "The camera needs to be accessed for barcode scanning.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need access to your location to help provide accurate restaurant recommendations.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -659,10 +660,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LastBiteSwift/Preview Content\"";
-				DEVELOPMENT_TEAM = 5X65B9BLRN;
+				DEVELOPMENT_TEAM = GLGW75V62Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LastBiteSwift/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "The camera needs to be accessed for barcode scanning.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need access to your location to help provide accurate restaurant recommendations.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
