@@ -88,6 +88,7 @@ struct ChangeAddressSubView: View {
                 TextField("Enter your Address", text: $address, onCommit: {
                     locationManager.search(address: address)
                 })
+                .submitLabel(.search)
                 .keyboardType(.default)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
