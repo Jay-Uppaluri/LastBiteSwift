@@ -3,6 +3,7 @@ const geofire = require("geofire-common");
 
 // Initialize Firebase Admin SDK with your service account key
 const serviceAccount = require("./serviceAccountKey.json");
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
@@ -10,33 +11,50 @@ admin.initializeApp({
 const firestore = admin.firestore();
 const restaurantsRef = firestore.collection("restaurants");
 
+// Set of random restaurant names
+const randomRestaurantNames = ["Lobster House", "Spaghetti Factory", "Taco Palace"];
+
 async function addRestaurantsWithGeoFire() {
   const batch = firestore.batch();
   const querySnapshot = await restaurantsRef.get();
 
   querySnapshot.forEach((restaurant) => {
     console.log(restaurant.data().name);
-    if (restaurant.data().name == "Papa Johns") {
-      
-    
-    const docRef = restaurantsRef.doc(restaurant.id);
-    const location = [restaurant.data().location.latitude, restaurant.data().location.longitude];
-    const geohash = geofire.geohashForLocation([45.9778, -93.26500]);
-
-    // Add GeoFire data
-    const updatedData = {
-      ...restaurant.data(),
-      geohash: geohash,
-      lat: 45.9778,
-      lng: -92.26500
-    };
-
-    batch.update(docRef, updatedData);
-  }
-  else {
-    console.log("skipping restaurant: " + restaurant.name);
-  }
+  
+    if (restaurant.data().name === "Papa Johns") {
+      const data = restaurant.data();
+      const seattleLocation = [47.6062, -122.3321];
+      const seattleGeohash = geofire.geohashForLocation(seattleLocation);
+  
+      // Update "Papa Johns" restaurant location
+      const updatedData = {
+        ...data,
+        geohash: seattleGeohash,
+        lat: seattleLocation[0],
+        lng: seattleLocation[1]
+      };
+      batch.update(restaurant.ref, updatedData);
+  
+      // Create new restaurants
+      randomRestaurantNames.forEach((name, index) => {
+        const newRestaurantRef = restaurantsRef.doc();
+        const newData = {
+          ...data,
+          name: name,
+          address: "123 Seattle Way, Seattle, WA, 98101",
+          geohash: seattleGeohash,
+          location: { latitude: seattleLocation[0], longitude: seattleLocation[1] },
+          lat: seattleLocation[0],
+          lng: seattleLocation[1],
+        };
+  
+        batch.set(newRestaurantRef, newData);
+      });
+    } else {
+      console.log("Skipping restaurant: " + restaurant.name);
+    }
   });
+  
 
   await batch.commit();
   console.log("Restaurants updated successfully with GeoFire data.");
