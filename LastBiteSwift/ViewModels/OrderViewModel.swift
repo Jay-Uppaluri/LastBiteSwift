@@ -7,32 +7,37 @@ class OrderViewModel: ObservableObject {
     @Published var orders: [OrdersModel] = []
     @Published var openOrAcceptedOrder: OrdersModel?
     private var db = Firestore.firestore()
-    private var userId: String // assuming you have the current user's ID available
-    private var listener: ListenerRegistration?
+    private var userId: String
+    
+    var orderListener: ListenerRegistration?
+
 
     init(userId: String) {
         self.userId = userId
-        listenForOrderUpdates()
     }
+
     
-
-
-
-
-    func listenForOrderUpdates() {
-        listener = db.collection("orders")
-            .whereField("userId", isEqualTo: userId)
+    func startListeningForOpenOrAcceptedOrder() {
+        self.orderListener = db.collection("orders")
+            .whereField("userId", isEqualTo: self.userId)
+            .whereField("status", in: ["OPEN", "ACCEPTED"])
             .addSnapshotListener { querySnapshot, error in
                 guard let documents = querySnapshot?.documents else {
-                    print("Error fetching order updates: \(error!)")
+                    print("Error fetching open or accepted order")
                     return
                 }
-
-                self.orders = documents.compactMap { queryDocumentSnapshot -> OrdersModel? in
-                    return try? queryDocumentSnapshot.data(as: OrdersModel.self)
-                }
+                self.openOrAcceptedOrder = documents.compactMap { queryDocumentSnapshot -> OrdersModel? in
+                    try? queryDocumentSnapshot.data(as: OrdersModel.self)
+                }.first
             }
     }
+
+    // Add this method to stop listening
+    func stopListeningForOpenOrAcceptedOrder() {
+        self.orderListener?.remove()
+        self.orderListener = nil
+    }
+
     
     func findOpenOrAcceptedOrder(completion: @escaping (OrdersModel?) -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0) {
@@ -61,11 +66,4 @@ class OrderViewModel: ObservableObject {
         }
     }
 
-
-
-
-
-    deinit {
-        listener?.remove()
-    }
 }
