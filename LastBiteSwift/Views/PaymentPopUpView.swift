@@ -187,18 +187,34 @@ struct PaymentPopUpView: View {
         .padding(16)
         .cornerRadius(10)
         .onAppear {
+            // Start listening when the view appears
+            orderViewModel.startListeningForOpenOrAcceptedOrder()
+
+            // Existing payment success handling
             paymentService.onPaymentSuccess = {
                 print("Payment Successful!!!!")
-                orderViewModel.findOpenOrAcceptedOrder { order in
+                if orderViewModel.openOrAcceptedOrder != nil {
+                    print("found open or accepted order")
                     showPaymentConfirmationView = true
                 }
             }
         }
-
-
+        .onDisappear {
+            // Stop listening when the view disappears
+            orderViewModel.stopListeningForOpenOrAcceptedOrder()
+        }
+        .fullScreenCover(isPresented: $showPaymentConfirmationView) {
+            PaymentConfirmationView(order: orderViewModel.openOrAcceptedOrder!)
+        }
     }
-    
-    
 }
+
+
+
+
+
+
+
+
 
 
