@@ -191,13 +191,16 @@ struct PaymentPopUpView: View {
             orderViewModel.startListeningForOpenOrAcceptedOrder()
 
             // Existing payment success handling
-            paymentService.onPaymentSuccess = {
-                print("Payment Successful!!!!")
-                if orderViewModel.openOrAcceptedOrder != nil {
-                    print("found open or accepted order")
-                    showPaymentConfirmationView = true
+                paymentService.onPaymentSuccess = {
+                    print("Payment Successful!!!!")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { 
+                        if orderViewModel.openOrAcceptedOrder != nil {
+                            print("found open or accepted order")
+                            showPaymentConfirmationView = true
+                        }
+                    }
                 }
-            }
+
         }
         .onDisappear {
             // Stop listening when the view disappears
