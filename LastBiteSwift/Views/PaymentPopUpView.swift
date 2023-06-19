@@ -1,23 +1,11 @@
-//
-//  PopUpView.swift
-//  jayuppaluri
-//
-//  Created by Aiden Seibel on 4/27/23.
-//
-
 import SwiftUI
 
 struct PaymentPopUpView: View {
     @EnvironmentObject var paymentService: PaymentService
     @EnvironmentObject var orderViewModel: OrderViewModel
 
-    @State private var showPaymentConfirmationView = false
     @State private var openOrAcceptedOrder: OrdersModel?
     
-    //TODO: Animation from bottom
-    
-
-
     var restaurant: Restaurant
 
     private var regularCustomFontName: String = "DMSans-Regular"
@@ -31,8 +19,6 @@ struct PaymentPopUpView: View {
     private var pickUpTimeEnds: String = "10PM"
     
     private var numberOfSurpriseBites: Int = 1
-    
-    
     private var paymentOnHand: String = "Visa..x4444"
     
     init(restaurant: Restaurant) {
@@ -99,33 +85,30 @@ struct PaymentPopUpView: View {
             Group{
                 Text("Order Summary")
                     .font(.custom(boldCustomFontName, size: 13))
+                HStack{
+                    Text("Order")
+                        .font(.custom(regularCustomFontName, size: 13))
+                    Spacer()
+                    Text("$\(String(format: "%0.2f", Double(restaurant.price)))")
+                        .font(.custom(regularCustomFontName, size: 13))
+                }
+                .opacity(0.70)
 
-                VStack(alignment: .center, spacing: 8){
-                    HStack{
-                        Text("Subtotal")
-                            .font(.custom(regularCustomFontName, size: 13))
-                        Spacer()
-                        Text("$\(String(format: "%0.2f", Double(restaurant.price)))")
-                            .font(.custom(regularCustomFontName, size: 13))
-                    }
-                    .opacity(0.70)
+                HStack{
+                    Text("Tax")
+                        .font(.custom(regularCustomFontName, size: 13))
+                    Spacer()
+                    Text("$\(String(format: "%0.2f", Double(restaurant.price * 0.07)))")
+                        .font(.custom(regularCustomFontName, size: 13))
+                }
+                .opacity(0.70)
 
-                    HStack{
-                        Text("Sales Tax")
-                            .font(.custom(regularCustomFontName, size: 13))
-                        Spacer()
-                        Text("$\(String(format: "%0.2f", Double(restaurant.price * 0.07)))")
-                            .font(.custom(regularCustomFontName, size: 13))
-                    }
-                    .opacity(0.70)
-
-                    HStack{
-                        Text("Total")
-                            .font(.custom(regularCustomFontName, size: 16))
-                        Spacer()
-                        Text("$\(String(format: "%0.2f", Double(restaurant.price) + Double(restaurant.price * 0.07)))")
-                            .font(.custom(regularCustomFontName, size: 16))
-                    }
+                HStack{
+                    Text("Total")
+                        .font(.custom(regularCustomFontName, size: 16))
+                    Spacer()
+                    Text("$\(String(format: "%0.2f", Double(restaurant.price) + Double(restaurant.price * 0.07)))")
+                        .font(.custom(regularCustomFontName, size: 16))
                 }
                 Divider()
             }
@@ -155,7 +138,7 @@ struct PaymentPopUpView: View {
             //MARK: FOOTER / PLACE ORDER
             Group{
                 VStack(alignment: .center, spacing: 8){
-                    Text("If you have any questions about allergens or specifc ingredients, please contact the store.")
+                    Text("If you have any questions about allergens or specific ingredients, please contact the store.")
                         .font(.custom(regularCustomFontName, size: 11))
                         .multilineTextAlignment(.center)
                         .opacity(0.40)
@@ -176,11 +159,6 @@ struct PaymentPopUpView: View {
                         .cornerRadius(UIScreen.main.bounds.width * 0.20)
                         .buttonStyle(.plain)
                     }
-                    .fullScreenCover(isPresented: $showPaymentConfirmationView) {
-                        PaymentConfirmationView(order: orderViewModel.openOrAcceptedOrder!)
-
-                    }
-
                 }
             }
         }
@@ -191,33 +169,31 @@ struct PaymentPopUpView: View {
             orderViewModel.startListeningForOpenOrAcceptedOrder()
 
             // Existing payment success handling
-                paymentService.onPaymentSuccess = {
-                    print("Payment Successful!!!!")
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { 
-                        if orderViewModel.openOrAcceptedOrder != nil {
-                            print("found open or accepted order")
-                            showPaymentConfirmationView = true
-                        }
+            paymentService.onPaymentSuccess = {
+                print("Payment Successful!!!!")
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                    if let order = orderViewModel.openOrAcceptedOrder {
+                        print("found open or accepted order")
+                        openOrAcceptedOrder = order
                     }
                 }
-
+            }
         }
         .onDisappear {
             // Stop listening when the view disappears
             orderViewModel.stopListeningForOpenOrAcceptedOrder()
         }
-        .fullScreenCover(isPresented: $showPaymentConfirmationView) {
-            PaymentConfirmationView(order: orderViewModel.openOrAcceptedOrder!)
-        }
+        .background(
+            openOrAcceptedOrder.map {
+                NavigationLink(
+                    destination: PaymentConfirmationView(order: $0)
+                                        .navigationBarHidden(true)
+                                        .navigationBarBackButtonHidden(true),
+                    isActive: .constant(true)
+                ) {
+                    EmptyView()
+                }
+            }
+        )
     }
 }
-
-
-
-
-
-
-
-
-
-
