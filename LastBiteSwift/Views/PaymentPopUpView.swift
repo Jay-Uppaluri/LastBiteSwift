@@ -171,7 +171,7 @@ struct PaymentPopUpView: View {
             // Existing payment success handling
             paymentService.onPaymentSuccess = {
                 print("Payment Successful!!!!")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) {
                     if let order = orderViewModel.openOrAcceptedOrder {
                         print("found open or accepted order")
                         openOrAcceptedOrder = order
