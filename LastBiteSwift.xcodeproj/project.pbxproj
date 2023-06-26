@@ -60,6 +60,8 @@
 		C39D306F29C57DE800FA1395 /* PaymentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39D306E29C57DE800FA1395 /* PaymentService.swift */; };
 		C39D307329C649B500FA1395 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39D307229C649B500FA1395 /* Restaurant.swift */; };
 		C39D307729C67A3D00FA1395 /* DiscoverMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39D307629C67A3D00FA1395 /* DiscoverMap.swift */; };
+		C3A231182A49390900B5C383 /* OrderHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A231172A49390900B5C383 /* OrderHistoryView.swift */; };
+		C3A2311A2A49395800B5C383 /* OrderHistoryDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A231192A49395800B5C383 /* OrderHistoryDetailsView.swift */; };
 		C3A4C52629C3DB23007E59F1 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A4C52529C3DB23007E59F1 /* UserService.swift */; };
 		C3A4C52929C42177007E59F1 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A4C52829C42177007E59F1 /* AuthenticationManager.swift */; };
 		C3EEF25E2A04ABE5006DB2B6 /* ChangeAddressSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3EEF25D2A04ABE5006DB2B6 /* ChangeAddressSubView.swift */; };
@@ -128,6 +130,8 @@
 		C39D306E29C57DE800FA1395 /* PaymentService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentService.swift; sourceTree = "<group>"; };
 		C39D307229C649B500FA1395 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		C39D307629C67A3D00FA1395 /* DiscoverMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverMap.swift; sourceTree = "<group>"; };
+		C3A231172A49390900B5C383 /* OrderHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryView.swift; sourceTree = "<group>"; };
+		C3A231192A49395800B5C383 /* OrderHistoryDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryDetailsView.swift; sourceTree = "<group>"; };
 		C3A4C52529C3DB23007E59F1 /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		C3A4C52829C42177007E59F1 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		C3EEF25D2A04ABE5006DB2B6 /* ChangeAddressSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeAddressSubView.swift; sourceTree = "<group>"; };
@@ -277,6 +281,8 @@
 				C3EEF25D2A04ABE5006DB2B6 /* ChangeAddressSubView.swift */,
 				C3EEF25F2A04AC3D006DB2B6 /* Favorites.swift */,
 				C3EEF2612A04AC73006DB2B6 /* RestaurantCardSubView.swift */,
+				C3A231172A49390900B5C383 /* OrderHistoryView.swift */,
+				C3A231192A49395800B5C383 /* OrderHistoryDetailsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -459,6 +465,7 @@
 				C33A957129E487D0001F4594 /* RootView.swift in Sources */,
 				C3828A3329F9D92A00613904 /* CategoriesCard.swift in Sources */,
 				C3558D4229C3907200DD76B0 /* PaymentModel.swift in Sources */,
+				C3A2311A2A49395800B5C383 /* OrderHistoryDetailsView.swift in Sources */,
 				2C19DBE7299EB2E300BA9FC6 /* HelpCenter.swift in Sources */,
 				2C19DBE9299EB32700BA9FC6 /* Components.swift in Sources */,
 				2C2AC23629A18C530002BBD9 /* PaymentMethodEmpty.swift in Sources */,
@@ -486,6 +493,7 @@
 				C3F99B19299301CF00025BEB /* LandingPage.swift in Sources */,
 				C39D307729C67A3D00FA1395 /* DiscoverMap.swift in Sources */,
 				C36DEAF029A00ED400AAF23D /* RestaurantCardView.swift in Sources */,
+				C3A231182A49390900B5C383 /* OrderHistoryView.swift in Sources */,
 				2C2AC23029A18C180002BBD9 /* EditName.swift in Sources */,
 				C3828A2E29F9D89300613904 /* RestaurantDetailView.swift in Sources */,
 				2C2AC22E29A18C180002BBD9 /* EditEmail.swift in Sources */,
