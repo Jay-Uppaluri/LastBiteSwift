@@ -33,6 +33,14 @@ struct FavoritesPage: View {
         ZStack {
             NavigationView {
                 TabView(selection: $selectedTab) {
+                    if viewModel.restaurants.isEmpty {
+                        EmptyHomeView()
+                            .tabItem {
+                                Image(systemName: "safari")
+                                Text("Explore")
+                                    .font(.custom(regularCustomFontName, size: 13.0))
+                            }
+                        .tag(0) } else {
                 ScrollView(.vertical){
                     VStack(spacing: 24){
                         ForEach(viewModel.restaurants.indices, id: \.self) { index in
@@ -60,6 +68,7 @@ struct FavoritesPage: View {
                     
                 }
                 .tag(0)
+                        }
                 
                 ContentView()
                     .tabItem {

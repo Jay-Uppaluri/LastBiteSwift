@@ -62,6 +62,7 @@
 		C39D307729C67A3D00FA1395 /* DiscoverMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39D307629C67A3D00FA1395 /* DiscoverMap.swift */; };
 		C3A231182A49390900B5C383 /* OrderHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A231172A49390900B5C383 /* OrderHistoryView.swift */; };
 		C3A2311A2A49395800B5C383 /* OrderHistoryDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A231192A49395800B5C383 /* OrderHistoryDetailsView.swift */; };
+		C3A2311C2A4957C400B5C383 /* EmptyHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A2311B2A4957C400B5C383 /* EmptyHomeView.swift */; };
 		C3A4C52629C3DB23007E59F1 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A4C52529C3DB23007E59F1 /* UserService.swift */; };
 		C3A4C52929C42177007E59F1 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A4C52829C42177007E59F1 /* AuthenticationManager.swift */; };
 		C3EEF25E2A04ABE5006DB2B6 /* ChangeAddressSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3EEF25D2A04ABE5006DB2B6 /* ChangeAddressSubView.swift */; };
@@ -132,6 +133,7 @@
 		C39D307629C67A3D00FA1395 /* DiscoverMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverMap.swift; sourceTree = "<group>"; };
 		C3A231172A49390900B5C383 /* OrderHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryView.swift; sourceTree = "<group>"; };
 		C3A231192A49395800B5C383 /* OrderHistoryDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryDetailsView.swift; sourceTree = "<group>"; };
+		C3A2311B2A4957C400B5C383 /* EmptyHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyHomeView.swift; sourceTree = "<group>"; };
 		C3A4C52529C3DB23007E59F1 /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		C3A4C52829C42177007E59F1 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		C3EEF25D2A04ABE5006DB2B6 /* ChangeAddressSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeAddressSubView.swift; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 				C3EEF2612A04AC73006DB2B6 /* RestaurantCardSubView.swift */,
 				C3A231172A49390900B5C383 /* OrderHistoryView.swift */,
 				C3A231192A49395800B5C383 /* OrderHistoryDetailsView.swift */,
+				C3A2311B2A4957C400B5C383 /* EmptyHomeView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -473,6 +476,7 @@
 				C36DEAE829A0090500AAF23D /* RestaurantModel.swift in Sources */,
 				C39D306F29C57DE800FA1395 /* PaymentService.swift in Sources */,
 				C376118529FC51DD00C49BAE /* PaymentConfirmationView.swift in Sources */,
+				C3A2311C2A4957C400B5C383 /* EmptyHomeView.swift in Sources */,
 				1C7B81ED29BAA70C00109DE5 /* LogIn.swift in Sources */,
 				1C6C4A1329BBA31300430C90 /* UserModel.swift in Sources */,
 				C3828A3029F9D8B200613904 /* utils.swift in Sources */,
