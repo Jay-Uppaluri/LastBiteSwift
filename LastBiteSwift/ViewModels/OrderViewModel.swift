@@ -14,6 +14,27 @@ class OrderViewModel: ObservableObject {
 
     init(userId: String) {
         self.userId = userId
+        fetchAllOrders()
+    }
+
+    
+    func fetchAllOrders() {
+        db.collection("orders")
+            .whereField("userId", isEqualTo: self.userId)
+            .getDocuments { querySnapshot, error in
+                if let error = error {
+                    print("Error fetching all orders: \(error)")
+                } else {
+                    self.orders = querySnapshot?.documents.compactMap { queryDocumentSnapshot -> OrdersModel? in
+                        do {
+                            return try queryDocumentSnapshot.data(as: OrdersModel.self)
+                        } catch {
+                            print("Error decoding OrdersModel: \(error)")
+                            return nil
+                        }
+                    } ?? []
+                }
+            }
     }
 
     

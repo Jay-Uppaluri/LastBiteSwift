@@ -71,12 +71,13 @@ class UserService: ObservableObject {
     }
     
     
-    func updateUserLocation(uid: String, location: GeoPoint, radius: Double, completion: @escaping (Bool) -> Void) {
+    func updateUserLocation(uid: String, location: GeoPoint, cityName: String, radius: Double, completion: @escaping (Bool) -> Void) {
         let db = Firestore.firestore()
         let userRef = db.collection("users").document(uid)
 
         userRef.updateData([
             "location": location,
+            "city": cityName,
             "radius": radius
         ]) { error in
             if let error = error {
@@ -87,6 +88,28 @@ class UserService: ObservableObject {
             }
         }
     }
+    
+    func fetchUserCityName(completion: @escaping (String?) -> Void) {
+        guard let userId = AuthenticationManager.shared.getUserId() else {
+            completion(nil)
+            return
+        }
+
+        let db = Firestore.firestore()
+        let userRef = db.collection("users").document(userId)
+
+        userRef.getDocument { documentSnapshot, error in
+            if let error = error {
+                print("Error fetching user city: \(error.localizedDescription)")
+                completion(nil)
+            } else {
+                let cityName = documentSnapshot?.data()?["city"] as? String ?? "Unknown City"
+                completion(cityName)
+            }
+        }
+    }
+
+    
     
     func fetchUserLocation() async throws -> (location: GeoPoint, radius: Double) {
         guard let userId = AuthenticationManager.shared.getUserId() else {

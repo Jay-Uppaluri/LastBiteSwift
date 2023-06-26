@@ -23,7 +23,7 @@ struct SettingsView: View {
                         }
                     }
                     VStack(spacing: 20) {
-                        NavigationLink(destination:OrdersView()) {
+                        NavigationLink(destination:OrderHistoryView()) {
                             HStack {
                                 Text("Orders")
                                     .font(.custom("DMSans-Regular", size: 18))
@@ -32,7 +32,7 @@ struct SettingsView: View {
                             }
                             .foregroundColor(.black)
                             .background(
-                                NavigationLink("", destination: OrdersView())
+                                NavigationLink("", destination: OrderHistoryView())
                                     .opacity(0)
                             )
                         }
