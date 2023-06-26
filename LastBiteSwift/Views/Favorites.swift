@@ -8,9 +8,10 @@ var poppinsFontName: String = "Poppins-ExtraBoldItalic"
 struct FavoritesPage: View {
     @State private var selectedTab = 0
 
-    
-    
-    func applyAndFetchData() {
+    @State private var cityName: String = "Loading City..."
+
+    func applyAndFetchData(newCityName: String) {
+        cityName = newCityName
         Task {
             do {
                 try await viewModel.fetchData()
@@ -101,7 +102,7 @@ struct FavoritesPage: View {
                                 self.isChangeAddressViewShowing = true
                             } label: {
                                 HStack{
-                                    Text("Minneapolis, MN")
+                                    Text(cityName)
                                         .font(.custom(boldCustomFontName, size: 13))
                                         .lineLimit(1)
                                     Image(systemName: "chevron.down")
@@ -123,6 +124,9 @@ struct FavoritesPage: View {
                 Task {
                     do {
                         try await viewModel.fetchData()
+                        userService.fetchUserCityName { cityName in
+                            self.cityName = cityName ?? "Unknown City"
+                        }
                     } catch {
                         print("Error fetching data: \(error)")
                     }
@@ -134,7 +138,7 @@ struct FavoritesPage: View {
                             VStack {
                                 Spacer()
 
-                                ChangeAddressSubView(onApply: applyAndFetchData)  // Add the callback here
+                                ChangeAddressSubView(onApply: applyAndFetchData)
                                     .transition(.move(edge: .bottom))
                             }
                             .background(

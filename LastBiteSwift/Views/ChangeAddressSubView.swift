@@ -6,6 +6,7 @@ import FirebaseFirestoreSwift
 import FirebaseFirestore
 import Firebase
 
+
 struct MapMarkerOverlay: View {
     var body: some View {
         Image(systemName: "mappin.circle.fill")
@@ -53,8 +54,39 @@ struct CustomMapView: UIViewRepresentable {
 
 
 struct ChangeAddressSubView: View {
+    @State private var cityName: String = "Loading City..."
+    private let geocoder = CLGeocoder()
+
+    private func fetchCityName() {
+        let geocoder = CLGeocoder()
+        let location = CLLocation(latitude: centerCoordinate.latitude, longitude: centerCoordinate.longitude)
+        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+            if let error = error {
+                print("Failed to fetch city name: \(error)")
+            } else {
+                let placemark = placemarks?.first
+                cityName = placemark?.locality ?? "Unknown City"
+                
+                let geoPoint = GeoPoint(latitude: self.centerCoordinate.latitude, longitude: self.centerCoordinate.longitude)
+                let radius = self.radius
+                
+                // Now we're sure cityName has been set, so we can update the user location
+                userService.updateUserLocation(uid: AuthenticationManager.shared.getUserId()!, location: geoPoint, cityName: self.cityName, radius: radius) { success in
+                    if success {
+                        print("Successfully updated user location")
+                    } else {
+                        print("Failed to update user location")
+                    }
+                }
+                print(self.centerCoordinate)
+            }
+            onApply(cityName) // Move this inside geocoder's completion block
+        }
+    }
+
+
     
-    var onApply: () -> Void  // Add this line
+    var onApply: (String) -> Void  
     @State private var centerCoordinate = CLLocationCoordinate2D(latitude: 44.9778, longitude: -93.2650) // Default to Minneapolis, MN
     @State private var regionSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1) // Default zoom level
     @State private var address: String = ""
@@ -110,17 +142,13 @@ struct ChangeAddressSubView: View {
 
 
             Button {
-                let geoPoint = GeoPoint(latitude: centerCoordinate.latitude, longitude: centerCoordinate.longitude)
-                let radius = radius
-                userService.updateUserLocation(uid: AuthenticationManager.shared.getUserId()!, location: geoPoint, radius: radius) { success in
-                    if success {
-                        print("Successfully updated user location")
-                    } else {
-                        print("Failed to update user location")
-                    }
-                }
+
+                // Fetch city name before updating user location
+                fetchCityName()
+                print(cityName)
+                // At this point, cityName has been set by fetchCityName function
+
                 print(centerCoordinate)
-                onApply()
             } label: {
                 HStack{
                     Spacer()
@@ -173,7 +201,7 @@ struct ChangeAddressSubView: View {
 
 struct ChangeAddressSubView_Previews: PreviewProvider {
     static var previews: some View {
-        ChangeAddressSubView(onApply: { 
+        ChangeAddressSubView(onApply: { _ in 
             print("Apply pressed in preview")
         })
     }
