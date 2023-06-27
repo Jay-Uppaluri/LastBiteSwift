@@ -48,7 +48,7 @@ struct CustomMapView: UIViewRepresentable {
 
     func updateUIView(_ view: MKMapView, context: Context) {
         let region = MKCoordinateRegion(center: centerCoordinate, span: regionSpan)
-        view.setRegion(region, animated: true)
+        view.setRegion(region, animated: false)
     }
 }
 
