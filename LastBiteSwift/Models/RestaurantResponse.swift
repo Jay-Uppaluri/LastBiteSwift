@@ -16,7 +16,6 @@ struct RestaurantResponse: Identifiable, Codable {
     var id: String?
     let name: String
     let createdOn: TimestampContainer
-    let location: GeoPoint
     let rating: Float
     let description: String
     let price: Float

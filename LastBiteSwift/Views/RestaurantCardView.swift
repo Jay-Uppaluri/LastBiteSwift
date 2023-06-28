@@ -110,7 +110,6 @@ struct RestaurantCardView_Previews: PreviewProvider {static var previews: some V
         restaurant: Restaurant(
             name: "Restaurant 1",
             createdOn: Timestamp(),
-            location: GeoPoint(latitude: 0, longitude: 0),
             rating: 4.9,
             description: "A great restaurant",
             price: 3.98,

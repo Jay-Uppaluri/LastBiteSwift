@@ -29,7 +29,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             Map(coordinateRegion: $region, annotationItems: viewModel.annotationsForVisibleRegion(region: region)) { restaurant in
-                MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: restaurant.location.latitude, longitude: restaurant.location.longitude)) {
+                MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: restaurant.lat!, longitude: restaurant.lng!)) {
                     MarkerView(restaurant: restaurant)
                 }
             }

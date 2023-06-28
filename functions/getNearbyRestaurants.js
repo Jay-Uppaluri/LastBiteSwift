@@ -76,10 +76,6 @@ Promise.all(promises).then((snapshots) => {
     return {
       ...data,
       id: doc.id,
-      location: {
-        latitude: data.location.latitude,
-        longitude: data.location.longitude,
-      },
       createdOn: {
         _seconds: data.createdOn.seconds,
         _nanoseconds: data.createdOn.nanoseconds,

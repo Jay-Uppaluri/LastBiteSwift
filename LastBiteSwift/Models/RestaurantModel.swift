@@ -6,7 +6,6 @@ struct Restaurant: Identifiable, Codable {
     @DocumentID var id: String?
     let name: String
     let createdOn: Timestamp
-    let location: GeoPoint
     let rating: Float
     let description: String
     let price: Float

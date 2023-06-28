@@ -55,7 +55,6 @@ class HomeViewModel: ObservableObject {
                     Restaurant(id: restaurantResponse.id,
                                name: restaurantResponse.name,
                                createdOn: Timestamp(date: restaurantResponse.createdOn.asDate),
-                               location: restaurantResponse.location,
                                rating: restaurantResponse.rating,
                                description: restaurantResponse.description,
                                price: restaurantResponse.price,
@@ -78,10 +77,11 @@ class HomeViewModel: ObservableObject {
 
     
     func annotationsForVisibleRegion(region: MKCoordinateRegion) -> [Restaurant] {
-        let minLatitude = region.center.latitude - region.span.latitudeDelta / 2
-        let maxLatitude = region.center.latitude + region.span.latitudeDelta / 2
-        let minLongitude = region.center.longitude - region.span.longitudeDelta / 2
-        let maxLongitude = region.center.longitude + region.span.longitudeDelta / 2
+        let buffer = 0.1 // Adjust the buffer value as per your needs
+        let minLatitude = region.center.latitude - (region.span.latitudeDelta / 2) - buffer
+        let maxLatitude = region.center.latitude + (region.span.latitudeDelta / 2) + buffer
+        let minLongitude = region.center.longitude - (region.span.longitudeDelta / 2) - buffer
+        let maxLongitude = region.center.longitude + (region.span.longitudeDelta / 2) + buffer
 
         return restaurants.filter { restaurant in
             let lat = restaurant.lat
@@ -89,5 +89,6 @@ class HomeViewModel: ObservableObject {
             return lat! >= minLatitude && lat! <= maxLatitude && lon! >= minLongitude && lon! <= maxLongitude
         }
     }
+
 
 }
